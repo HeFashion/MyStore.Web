@@ -1,0 +1,13 @@
+{
+	"web":
+	{
+		"client_id":"1076248056848-kc8ph7l3gpk86b2hsspkn3jkpm7ftrj2.apps.googleusercontent.com",
+		"project_id":"hes-fashion",
+		"auth_uri":"https://accounts.google.com/o/oauth2/auth",
+		"token_uri":"https://accounts.google.com/o/oauth2/token",
+		"auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+		"client_secret":"x5oUuyHPzY5Q5em7zVynxUxw",
+		"redirect_uris":["https://localhost:44300/signin-google"],
+		"javascript_origins":["https://localhost:44300"]
+	}
+}

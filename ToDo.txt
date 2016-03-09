@@ -1,0 +1,18 @@
+Advitisement Manager
+ + Index: filter, ajax form quick view
+
+Fix external login in Login Page
+
+Change top of share button of PageHeaderPartial
+
+Fix problem with like button in Detail page
+
+Order Manager
+ + Design order manager page
+ + Edit order
+Blog
+ + Blog database
+ + Blog list
+ + Blog detail
+ + Blog comment
+

@@ -1,0 +1,48 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+    </title>
+    <link rel="shortcut icon" href="<%: Url.Content("~/favicon.ico") %>" type="image/x-icon">
+
+    <%: Styles.Render("~/Content/themes/mystyle/bootstrap") %>
+    <%: Styles.Render("~/Content/themes/mystyle/css") %>
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+    <!--header-->
+    <%:Html.Partial("_PageHeaderPartial") %>
+    <asp:ContentPlaceHolder ID="FeaturedContent" runat="server" />
+
+    <section>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-3">
+                    <%: Html.Partial("_LeftMenuPartial") %>
+                </div>
+
+                <div class="col-sm-9 padding-right">
+                    <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+                </div>
+            </div>
+        </div>
+    </section>
+    <%:Html.Partial("_PageFooterPartial") %>
+
+    <%: Scripts.Render("~/bundles/jquery") %>
+    <%: Scripts.Render("~/bundles/jqueryextend") %>
+    <asp:ContentPlaceHolder ID="ScriptsSection" runat="server" />
+
+</body>
+</html>
