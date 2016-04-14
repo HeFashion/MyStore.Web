@@ -17,12 +17,13 @@ namespace MyStore.App.ViewModels
     {
         public CheckoutStep CurrentStep { get; set; }
 
-        public bool? IsPassword { get; set; }
+        public bool IsPassword { get; set; }
 
         [Display(Name = "Địa chỉ email")]
         [Required(ErrorMessage = "Địa chỉ email của quý khách")]
         [EmailAddress(ErrorMessage = "Địa chỉ email ko hợp lệ")]
         public string UserName { get; set; }
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Vui lòng cho biết tên")]
@@ -31,7 +32,7 @@ namespace MyStore.App.ViewModels
         public string OrderAddress { get; set; }
 
         [Required(ErrorMessage = "Vui lòng cho biết số điện thoại")]
-        [RegularExpression(@"(?(^(01))^[0-9]{11}$|(?(^(09))^[0-9]{10}$|\d))", ErrorMessage = "Số điên thoại không đúng(bắt đầu là 01 là 11 số hoặc 09 là 10 số)")]
+        [RegularExpression(@"(^01\d{9}$|^09\d{8}$)", ErrorMessage = "Số điên thoại không đúng(bắt đầu là 01 là 11 số hoặc 09 là 10 số)")]
         public string PhoneNumber { get; set; }
         public string OrderDescription { get; set; }
     }

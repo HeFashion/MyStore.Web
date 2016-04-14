@@ -1,46 +1,32 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<MyStore.App.ViewModels.CheckoutViewModel>" %>
-<script type="text/javascript">
-    $(document).ready(function () {
-        if ($("#rdbUsePass").attr("checked")) {
-            $("#Password").show();
-        }
-        else
-            $("#Password").hide();
+<div class="breadcrumbs">
+    <ol class="breadcrumb">
+        <li><a href="<%:Url.Action("Index", "Product") %>">Trang Chủ</a></li>
+        <li class="active">Tính Tiền</li>
+    </ol>
+</div>
+<!--/breadcrums-->
 
-        $("#rdbUsePass, #rdbUnusePass").change(function () {
-            //internalPassAction();
-            if ($("#rdbUsePass").attr("checked")) {
-                $("#Password").show();
-            }
-            else
-                $("#Password").hide();
-        });
-    });
-   
-</script>
 <div class="step-one">
     <h2 class="heading">Bước 1: Thông Tin Người Đặt Hàng</h2>
 </div>
 <div class="register-req">
     <p>Xin quý khách vui lòng đăng ký hoặc <b>Đăng nhập bằng tài khoản của website</b> để có thể theo dõi thông tin đơn hàng, hoặc quý khách có thể sử dụng chức năng <b>Không Cần Tài Khoản</b></p>
 </div>
-<%using (Html.BeginForm("AuthenticationMethod", "Checkout", FormMethod.Post))%>
-<%{ %>
-<%:Html.AntiForgeryToken() %>
+
 <div class="checkout-options">
     <ul class="nav">
         <li>
             <label>
-                <%:Html.RadioButtonFor(m => m.IsPassword, true, new { @checked="checked",@id="rdbUsePass" })%>
+                <input type="radio" id="rdbUsePass" name="IsPassword" <%: Model.IsPassword?"checked='checked'":string.Empty %> />
                 Đăng nhập bằng tài khoản của website
             </label>
         </li>
         <li>
             <label>
-                <%:Html.RadioButtonFor(m => m.IsPassword, false, new {@id="rdbUnusePass" })%>
+                <input type="radio" id="rdbUnusePass" name="IsPassword" <%: Model.IsPassword?string.Empty:"checked='checked'" %> />
                 Không cần tài khoản của website
             </label>
-
         </li>
 
     </ul>
@@ -49,22 +35,54 @@
 
 <div class="shopper-informations">
     <div class="row">
-        <div class="col-sm-3">
-            <div class="shopper-info">
-                <%:Html.ValidationSummary(true) %>
-                <br />
-                <%:Html.ValidationMessageFor(m=>m.UserName) %>
-                <%:Html.TextBoxFor(m => m.UserName, new {@placeholder=Html.DisplayNameFor(m => m.UserName)})%>
-                <br />
-                <%:Html.ValidationMessageFor(m=>m.Password) %>
-                <%:Html.PasswordFor(m => m.Password)%>
-                <%:Html.HiddenFor(p=>p.CurrentStep) %>
+        <div class="col-sm-4 col-sm-offset-1">
+            <div class="shopper-info" id="frmOne">
+                <%using (Html.BeginForm("AuthenticationMethod", "Checkout", FormMethod.Post))%>
+                <%{ %>
+                <%:Html.AntiForgeryToken()%>
+                <%: Html.ValidationSummary(true)%>
+
+                <%:Html.ValidationMessageFor(m => m.UserName)%>
+                <%:Html.TextBoxFor(m => m.UserName, new { @placeholder = Html.DisplayNameFor(m => m.UserName) })%>
+
+                <%:Html.ValidationMessageFor(m => m.Password)%>
+                <%:Html.PasswordFor(m => m.Password, new { @placeholder = Html.DisplayNameFor(m => m.Password) })%>
+
+                <input type="hidden" name="IsPassword" value="true" />
+                <%:Html.HiddenFor(p => p.CurrentStep)%>
+
                 <button type="submit" class="btn btn-primary">
                     Tiếp tục >>
                 </button>
+                <%} %>
+            </div>
+            <div class="shopper-info" id="frmTwo">
+                <%using (Html.BeginForm("AuthenticationMethod", "Checkout", FormMethod.Post))%>
+                <%{ %>
+                <%:Html.AntiForgeryToken()%>
+                <%: Html.ValidationSummary(true)%>
+                <input type="hidden" name="IsPassword" value="false" />
+                <%:Html.HiddenFor(p => p.CurrentStep)%>
 
+                <%:Html.ValidationMessageFor(m => m.UserName)%>
+                <%:Html.TextBoxFor(m => m.UserName, new { @placeholder = Html.DisplayNameFor(m => m.UserName) })%>
+
+                <button type="submit" class="btn btn-primary">
+                    Tiếp tục >>
+                </button>
+                <%} %>
             </div>
         </div>
+
     </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="external-login-form social-icons pull-left">
+                <h2>Hoặc đăng nhập với</h2>
+                <%:Html.Action("ExternalLoginsList", "Account", new {returnUrl= Url.Action("Index","Checkout")}) %>
+            </div>
+        </div>
+
+    </div>
+
 </div>
-<%} %>

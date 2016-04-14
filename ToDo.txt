@@ -1,18 +1,45 @@
 Advitisement Manager
- + Index: filter, ajax form quick view
+ + Edit: upload + select img from sever before saving.(done)
+ + New(done)
+ + Delete(done)
+ + fix layout for file list image(done)
 
-Fix external login in Login Page
+Fix external login in Login Page(done)
 
-Change top of share button of PageHeaderPartial
+Search function in Index of Product(done)
+ + background-image clickable(done)
 
-Fix problem with like button in Detail page
+Replace script in _authenticationpartial(done)
+ + Add checking Shopping-cart is empty when call Index of CheckoutController(done)
+ + Make screen more beauty(done)
+
+Fix problem with like button in Detail page(done)
+
+Fix problem with regular expression check on phone number(Checkout)(done)
 
 Order Manager
- + Design order manager page
+ + Design order manager page(done)
+ + Details order page.(done)
+ + Design Shipping database(done)
  + Edit order
+	1. Switch Order step by step(done)
+	2. Input Shipping Code & Shipping Date when choose shipping step(done)
+	3. Send mail to user when input shipping step
+	4. Allow Admin edit shipping items
+	5. Allow admin input actual amount	
+ + Emails interface when send to user.
+
 Blog
- + Blog database
+ + Blog database(80%)
  + Blog list
  + Blog detail
  + Blog comment
 
+About Us
+ + Index
+
+Fix problem on Home/Index(slider display some ugly text)
+Add link to social-network icon
+
+Custom HTTP Not Found page
+Create compare product page

@@ -4,13 +4,16 @@
 <div class="modal-content">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4>Đã thêm vào giỏ hàng</h4>
+        <h4 class="title text-center">Đã thêm vào giỏ hàng</h4>
     </div>
     <div class="modal-body">
         <%:Html.Partial("_RecommendItemsPartial",Model) %>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-
+        <a class="btn btn-default get" href="<%:Url.Action("Index", "Checkout") %>">
+            <i class="fa fa-money"></i>
+            Thanh toán
+        </a>
+        <a class="btn btn-default get" data-dismiss="modal">Tiếp Tục>></a>
     </div>
 </div>

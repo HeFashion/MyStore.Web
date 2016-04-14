@@ -34,5 +34,7 @@ namespace MyStore.App.Models.MyData
         public DbSet<Unit_Of_Measure> Unit_Of_Measure { get; set; }
         public DbSet<User_Advices> User_Advices { get; set; }
         public DbSet<Ad_Sliders> Ad_Sliders { get; set; }
+        public DbSet<Shipping_Bills> Shipping_Bills { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
     }
 }

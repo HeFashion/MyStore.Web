@@ -6,11 +6,11 @@
     <edmx:Diagrams>
       <Diagram DiagramId="3e8845f68cba4644a3ea0eb879447357" Name="Diagram1" ZoomLevel="93">
         <EntityTypeShape EntityType="MyStoreModel.Order_Items" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyStoreModel.Order_Status_Codes" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyStoreModel.Order" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyStoreModel.Order_Status_Codes" Width="1.5" PointX="7" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyStoreModel.Order" Width="1.5" PointX="4.875" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MyStoreModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyStoreModel.Ref_Order_Item_Status_Codes" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyStoreModel.Ref_Product_Type" Width="2" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyStoreModel.Ref_Order_Item_Status_Codes" Width="1.5" PointX="7" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyStoreModel.Ref_Product_Type" Width="2" PointX="0.5" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="MyStoreModel.Unit_Of_Measure" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
         <AssociationConnector Association="MyStoreModel.fk_OrderItem_OrderId" ManuallyRouted="false" />
         <AssociationConnector Association="MyStoreModel.fk_OrderItem_OrderStatusId" ManuallyRouted="false" />
@@ -20,7 +20,10 @@
         <AssociationConnector Association="MyStoreModel.fk_Product_ProductUOM" ManuallyRouted="false" />
         <AssociationConnector Association="MyStoreModel.fk_Parent_ProductId" ManuallyRouted="false" />
         <EntityTypeShape EntityType="MyStoreModel.User_Advices" Width="1.5" PointX="8" PointY="1.375" />
-        <EntityTypeShape EntityType="MyStoreModel.Ad_Sliders" Width="1.5" PointX="2.1184204994320965" PointY="9.5779172971741851" />
+        <EntityTypeShape EntityType="MyStoreModel.Ad_Sliders" Width="1.5" PointX="9.875" PointY="1.375" />
+        <EntityTypeShape EntityType="MyStoreModel.Shipping_Bills" Width="1.5" PointX="7.75" PointY="13.375" />
+        <AssociationConnector Association="MyStoreModel.FK_Orders_Shipping_Bills" />
+        <EntityTypeShape EntityType="MyStoreModel.Blog" Width="1.5" PointX="11.625" PointY="1.375" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

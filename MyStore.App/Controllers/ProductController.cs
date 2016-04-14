@@ -69,33 +69,43 @@ namespace MyStore.App.Controllers
 
         //
         // GET: /Product/
-        public ActionResult Index(int? prodType, int? page)
+        public ActionResult Index(int? prodType, int? page, string searchString)
         {
             ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
 
             int pageSize = Convert.ToInt32(this.Session[GeneralContanstClass.PageSize_Session_Key]);
             int pageNum = page ?? 1;
-            int productType = prodType ?? GetDefaultProductType();
 
-            ViewBag.ProductTypeName = GetProductTypeName(productType);
-            ViewData.Add("prodType", productType);
+            var products = from pro in db.Products.Include("Unit_Of_Measure")
+                           select pro;
 
-            var products = from pro in db.Products
-                           join puom in db.Unit_Of_Measure on pro.product_uom_id equals puom.UOM_id
-                           where pro.product_type_id == productType
-                           orderby pro.product_created_date descending
-                           select new ProductModel()
-                           {
-                               Id = pro.product_id,
-                               Name = pro.product_name,
-                               Description = pro.product_description,
-                               UOM = puom.UOM_description,
-                               Price = pro.product_price,
-                               Image = pro.product_image,
-                               DateCreated = pro.product_created_date ?? DateTime.Now
-                           };
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                ViewBag.ProductTypeName = MvcHtmlString.Create(string.Format("\"{0}\"", searchString));
+                ViewBag.SearchString = searchString;
+                products = products.Where(p => p.product_name.StartsWith(searchString));
+            }
+            else
+            {
+                prodType = prodType ?? GetDefaultProductType();
+                ViewBag.ProductTypeName = GetProductTypeName(prodType ?? 0);
+                ViewData.Add("prodType", prodType);
+                products = products.Where(p => p.product_type_id == prodType);
+            }
 
-            return View(products.ToPagedList(pageNum, pageSize));
+            var result = products.OrderByDescending(p => p.product_created_date)
+                                 .Select(p => new ProductModel()
+                                 {
+                                     Id = p.product_id,
+                                     Name = p.product_name,
+                                     Description = p.product_description,
+                                     UOM = p.Unit_Of_Measure.UOM_description,
+                                     Price = p.product_price,
+                                     Image = p.product_image,
+                                     DateCreated = p.product_created_date ?? DateTime.Now
+                                 });
+
+            return View(result.ToPagedList(pageNum, pageSize));
         }
 
         //
@@ -138,10 +148,12 @@ namespace MyStore.App.Controllers
             return PartialView("_CompletedAddToCart", GetRecommendProduct(selectedId));
         }
 
-        public ActionResult ShoppingCartList(IList<ShoppingCartViewModel> Model)
+        [HttpGet]
+        public PartialViewResult ShoppingCartList(IEnumerable<ShoppingCartViewModel> dataModel)
         {
-            if (Model != null)
-                return PartialView("_CartTablePartial", Model);
+            
+            if (dataModel != null)
+                return PartialView("_CartTablePartial", dataModel);
             else
                 return PartialView("_CartTablePartial", CartHelper.GetCartDetail(this.HttpContext));
         }
@@ -153,14 +165,6 @@ namespace MyStore.App.Controllers
             ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
 
             return PartialView("_ListItemPartial", partialModel);
-        }
-
-        public ActionResult SearchProduct(string productName)
-        {
-            if (string.IsNullOrEmpty(productName)) return Index(null, null);
-            var searchQuery = db.Products.Where(p => p.product_name.Contains(productName));
-
-            return View("Index", searchQuery);
         }
 
         protected override void Dispose(bool disposing)

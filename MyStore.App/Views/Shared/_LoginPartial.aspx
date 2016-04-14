@@ -9,7 +9,7 @@
     <%if (Request.IsAuthenticated)%>
     <%{ %>
     <li class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+        <button type="button" class="btn btn-default dropdown-toggle user-account" data-toggle="dropdown">
             Xin chào, <%:User.Identity.Name %> !
 			<span class="caret"></span>
         </button>

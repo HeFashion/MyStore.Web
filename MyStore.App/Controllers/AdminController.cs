@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using PagedList;
 
 using MyStore.App.Models.MyData;
+using MyStore.App.ViewModels;
 using MyStore.App.Utilities;
 
 namespace MyStore.App.Controllers
@@ -430,12 +431,201 @@ namespace MyStore.App.Controllers
         #endregion
 
         #region Ad-Slider Management
+
         [Authorize(Roles = "Admin")]
-        public ActionResult ListOfSlider()
+        public ActionResult ListOfSlider(bool isActive = true)
         {
-            var model = db.Ad_Sliders;
-            return View("AdvertiseList", model.ToList());
+            ViewData["IsActive"] = isActive;
+            var model = db.Ad_Sliders
+                          .Where(p => p.slider_active == isActive);
+            return View("IndexAdvertisement", model.ToList());
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult CreateAd()
+        {
+            return View("CreateAdvertisement");
+        }
+
+        //
+        // POST: /Admin/Create
+
+        //
+        // POST: /Product/Create
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAd(Ad_Sliders obj)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Ad_Sliders.Add(obj);
+                db.Entry(obj).State = EntityState.Added;
+                db.SaveChanges();
+                return RedirectToAction("ListOfSlider");
+            }
+
+            return View("CreateAdvertisement", obj);
+        }
+        [Authorize(Roles = "Admin")]
+        public ActionResult EditSlider(int id = 0)
+        {
+            var obj = db.Ad_Sliders
+                          .Where(p => p.slider_id == id)
+                          .SingleOrDefault();
+            if (obj == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View("EditAdvertisement", obj);
+        }
+
+        //
+        // POST: /Admin/Edit/5
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSlider(Ad_Sliders updateObj)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Ad_Sliders.Attach(updateObj);
+                db.Entry(updateObj).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("ListOfSlider");
+            }
+
+            return View(updateObj);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteAd(int id = 0)
+        {
+            Ad_Sliders obj = db.Ad_Sliders.Single(p => p.slider_id == id);
+            if (obj == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View("DeleteAdvertisement", obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteAdConfirmed(int id)
+        {
+            Ad_Sliders obj = db.Ad_Sliders.Single(p => p.slider_id == id);
+            db.Ad_Sliders.Remove(obj);
+            db.SaveChanges();
+            return RedirectToAction("ListOfSlider");
         }
         #endregion
+
+        #region Order Management
+
+        public ActionResult ListOfOrder()
+        {
+            var lstOrders = db.Orders
+                              .Include("Order_Status_Codes ")
+                              .Include("Shipping_Bills")
+                              .Select(o => new OrderViewModel()
+                              {
+                                  OrderNumber = o.order_id,
+                                  Status = o.Order_Status_Codes.order_status_description,
+                                  Address = o.order_address,
+                                  DateCreated = o.date_order_placed ?? DateTime.Now,
+                                  StatusId = o.order_status_id,
+                                  PhoneNumber = o.phone_number,
+                                  ReceiverName = o.receipter_name,
+                                  ShippingDate = o.Shipping_Bills.shipping_date,
+                                  ShippingCode = o.Shipping_Bills.shipping_code
+                              });
+            ViewData["OrderStatus"] = db.Order_Status_Codes
+                                        .Select(p => p.order_status_description)
+                                        .ToList();
+            return View("IndexOrders", lstOrders);
+        }
+
+        private const string SHIP_ORDER_SESSION_KEY = "ShipOrdersSession";
+        [HttpPost]
+        public PartialViewResult ShipOrders(IList<string> selectedOrder)
+        {
+            this.HttpContext.Session[SHIP_ORDER_SESSION_KEY] = selectedOrder;
+            return PartialView("_ShipProductPartial");
+        }
+        [HttpPost]
+        public ActionResult ShipOrdersConfirmed(ShippingInfoViewModel model)
+        {
+            string[] selectedOrder = this.HttpContext.Session[SHIP_ORDER_SESSION_KEY] as string[];
+            if (selectedOrder == null ||
+                selectedOrder.Length == 0)
+            {
+                ModelState.AddModelError(string.Empty, "Nothing was selected. Cannot save.");
+                return ListOfOrder();
+            }
+            else
+            {
+                Shipping_Bills newShipBill = new Shipping_Bills();
+                newShipBill.shipping_date = model.ShipDate;
+                newShipBill.shipping_code = model.ShipCode;
+
+                foreach (string item in selectedOrder)
+                {
+                    var order = db.Orders.Find(Convert.ToInt32(item));
+                    if (order == null) continue;
+                    order.order_status_id = OrderStatus.Shipping;
+
+                    newShipBill.Orders.Add(order);
+                }
+                db.Shipping_Bills.Add(newShipBill);
+                db.SaveChanges();
+                return RedirectToAction("ListOfOrder");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ChangeOrderToComplete(IList<string> selectedOrder)
+        {
+            return ChangeOrderStatus(selectedOrder, OrderStatus.Done);
+        }
+
+        [HttpPost]
+        public ActionResult ChangeOrderToCancel(IList<string> selectedOrder)
+        {
+            return ChangeOrderStatus(selectedOrder, OrderStatus.Cancel);
+        }
+
+        private ActionResult ChangeOrderStatus(IList<string> selectedOrder, OrderStatus status)
+        {
+            if (selectedOrder != null &&
+                selectedOrder.Count != 0)
+            {
+                foreach (var orderId in selectedOrder)
+                {
+                    var obj = db.Orders.Find(Convert.ToInt32(orderId));
+                    if (obj == null) continue;
+                    obj.order_status_id = status;
+                }
+                db.SaveChanges();
+                return RedirectToAction("ListOfOrder");
+            }
+
+            ModelState.AddModelError(string.Empty, "Nothing was selected. Cannot save.");
+            return ListOfOrder();
+        }
+        #endregion
+        public PartialViewResult GetFileListPartial(string folderName)
+        {
+            string virtualPath = System.IO.Path.Combine("~/Images", folderName);
+            string physicalPath = Server.MapPath(virtualPath);
+            IList<string> listFiles = new List<string>();
+            foreach (var item in System.IO.Directory.GetFiles(physicalPath))
+            {
+                string pathTemp = System.IO.Path.Combine(virtualPath, System.IO.Path.GetFileName(item)).Replace("\\", "/");
+                listFiles.Add(pathTemp);
+            }
+            return PartialView("_ListFilePartial", listFiles);
+        }
     }
 }

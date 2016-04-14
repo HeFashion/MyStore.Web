@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<ICollection<MyStore.App.ViewModels.ShoppingCartViewModel>>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IEnumerable<MyStore.App.ViewModels.ShoppingCartViewModel>>" %>
 
 <table class="table table-condensed">
     <thead>
@@ -12,7 +12,7 @@
         </tr>
     </thead>
     <tbody>
-        <%if (Model == null || Model.Count == 0)%>
+        <%if (Model == null || Model.Count() == 0)%>
         <%{ %>
         <tr>
             <td colspan="6" class="text-center">Quý khách chưa có bất kỳ sản phẩm nào trong giỏ hàng
@@ -58,23 +58,23 @@
             <td colspan="4">&nbsp;</td>
             <td colspan="2">
                 <table class="table table-condensed total-result">
-						<tr>
-							<td>Tổng cộng tiền hàng</td>
-							<td><%:Model.Sum(p=>p.TotalAmount).ToString("#,###.#") %> VND</td>
-						</tr>
-						<tr>
-							<td>Thuế VAT</td>
-							<td>0 VND</td>
-						</tr>
-						<tr class="shipping-cost">
-							<td>Chi phí vận chuyển</td>
-							<td>Free</td>
-						</tr>
-						<tr>
-							<td>Tổng cộng</td>
-							<td><span><%:Model.Sum(p=>p.TotalAmount).ToString("#,###.#") %> VND</span></td>
-						</tr>
-					</table>
+                    <tr>
+                        <td>Tổng cộng tiền hàng</td>
+                        <td><%:Model.Sum(p=>p.TotalAmount).ToString("#,###.#") %> VND</td>
+                    </tr>
+                    <tr>
+                        <td>Thuế VAT</td>
+                        <td>0 VND</td>
+                    </tr>
+                    <tr class="shipping-cost">
+                        <td>Chi phí vận chuyển</td>
+                        <td>Free</td>
+                    </tr>
+                    <tr>
+                        <td>Tổng cộng</td>
+                        <td><span><%:Model.Sum(p=>p.TotalAmount).ToString("#,###.#") %> VND</span></td>
+                    </tr>
+                </table>
             </td>
         </tr>
         <%} %>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -206,10 +207,15 @@ namespace MyStore.App.ViewModels
     {
         public int ProductId { get; set; }
         public string ProductDescription { get; set; }
+        [DisplayName("Sản Phẩm")]
         public string ProductImage { get; set; }
+        [DisplayName("Mã Hàng")]
         public string ProductName { get; set; }
+        [DisplayName("Đơn Giá")]
         public decimal Price { get; set; }
+        [DisplayName("Số Lượng")]
         public double TotalQuantity { get; set; }
+        [DisplayName("Tổng Tiền")]
         public decimal TotalAmount { get { return (Price * ((decimal)TotalQuantity)); } }
     }
 }

@@ -17,19 +17,17 @@ You are using <strong><%: String.Join(",", Microsoft.Web.WebPages.OAuth.OAuthWeb
 <% } %>
 <% else %>
 <% { %>
-<ul id="socialLoginList" class="nav navbar-nav">
-    <%using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "externalLoginForm" }))
-      { %>
-    <%: Html.AntiForgeryToken() %>
-    <% foreach (Microsoft.Web.WebPages.OAuth.AuthenticationClientData p in Model) %>
-    <% { %>
+<%using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "externalLoginForm" }))
+  { %>
+<%: Html.AntiForgeryToken() %>
+<% foreach (Microsoft.Web.WebPages.OAuth.AuthenticationClientData p in Model) %>
+<% { %>
 
-    <li>
-        <button type="submit" name="provider" value="<%:p.AuthenticationClient.ProviderName %>" class="btn btn-social-icon btn-<%:p.AuthenticationClient.ProviderName %>" title="<%:p.DisplayName %>">
-            <%switch (p.AuthenticationClient.ProviderName)%>
+<button type="submit" name="provider" value="<%:p.AuthenticationClient.ProviderName %>" class="btn btn-block btn-social btn-<%:p.AuthenticationClient.ProviderName %>" title="<%:p.DisplayName %>">
+    <%-- <%switch (p.AuthenticationClient.ProviderName)%>
             <%{%>
             <%case "facebook":%>
-            <i class="fa fa-facebook-square fa-2x"></i>
+            <span class="fa fa-facebook-square fa-2x"></span>
             <%break;%>
             <%case "twitter":%>
             <i class="fa fa-twitter-square fa-2x"></i>
@@ -45,14 +43,12 @@ You are using <strong><%: String.Join(",", Microsoft.Web.WebPages.OAuth.OAuthWeb
             <i class="fa fa-facebook-square fa-2x"></i>
             <%break;%>
 
-            <%} %>
-        </button>
+    <%} %>--%>
+    <span class="fa fa-<%:p.AuthenticationClient.ProviderName %>"></span>Đăng nhập với <%:p.DisplayName %>
+</button>
 
-    </li>
 
-    <%}%>
-</ul>
+<%}%>
 <% }%>
 <% } %>
-
-<% }%>
+<%} %>

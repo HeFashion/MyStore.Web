@@ -28,27 +28,11 @@
                     </div>
                 </div>
                 <%int dateDiff = Convert.ToInt32((DateTime.Now - item.DateCreated).TotalDays); %>
-                <%-- <%dateDiff = Math.Abs(dateDiff); %>--%>
                 <%if (dateDiff <= ViewBag.DateCompare)%>
                 <%{%>
                 <img src="<%:Url.Content("~/Images/home/new.png") %>" class="new" alt="" />
                 <%} %>
             </div>
-            <%-- <div class="choose">
-                <ul class="nav nav-pills nav-justified">
-
-                    <li>
-                        <%if (User.IsInRole("Admin"))%>
-                        <%{ %>
-                        <a href="<%:Url.Action("Delete", "Product", new { id=item.Id })%>">
-                            <i class="fa fa-plus-square"></i>
-                            Delete
-                        </a>
-                        <%} %>
-                            
-                    </li>
-                </ul>
-            </div>--%>
         </div>
     </div>
     <%} %>

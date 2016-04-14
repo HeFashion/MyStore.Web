@@ -78,5 +78,19 @@ namespace MyStore.App.Controllers
             MvcCaptcha.ResetCaptcha("SimpleCaptcha");
             return View("Contact", model);
         }
+
+        public PartialViewResult ItemSliderPartial(int sliderId, bool isActive = false)
+        {
+            MyStore.App.Models.MyData.Ad_Sliders slider = null;
+            using (MyStore.App.Models.MyData.MyStoreEntities db = new Models.MyData.MyStoreEntities())
+            {
+                slider = db.Ad_Sliders
+                           .Where(p => p.slider_id == sliderId)
+                           .SingleOrDefault();
+            }
+
+            ViewBag.ActiveItem = isActive;
+            return PartialView("_ItemSliderPartial", slider);
+        }
     }
 }

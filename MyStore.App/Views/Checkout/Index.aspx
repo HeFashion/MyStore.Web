@@ -7,14 +7,7 @@
 <asp:Content ID="mainContent" ContentPlaceHolderID="MainContent" runat="server">
     <section id="cart_items">
         <div class="container">
-            <div class="breadcrumbs">
-                <ol class="breadcrumb">
-                    <li><a href="#">Trang Chủ</a></li>
-                    <li class="active">Tính Tiền</li>
-                </ol>
-            </div>
-           
-            <!--/breadcrums-->
+
             <%if (Model.CurrentStep == MyStore.App.ViewModels.CheckoutStep.Authentication)%>
             <%{ %>
             <%:Html.Partial("_AuthenticationPartial", Model) %>
@@ -33,4 +26,6 @@
 </asp:Content>
 
 <asp:Content ID="scriptsSection" ContentPlaceHolderID="ScriptsSection" runat="server">
+    <%:Scripts.Render("~/bundles/jqueryval") %>
+    <%:Scripts.Render("~/Scripts/check_out.js") %>
 </asp:Content>

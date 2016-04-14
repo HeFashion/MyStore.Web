@@ -14,6 +14,7 @@ using MyStore.App.Models;
 using MyStore.App.Models.MyData;
 using MyStore.App.Utilities;
 using System.Threading;
+using MyStore.App.Filters;
 
 namespace MyStore.App.Controllers
 {
@@ -76,12 +77,17 @@ namespace MyStore.App.Controllers
 
         //
         // GET: /Checkout/
+        [CheckShoppingCart]
+        [InitializeSimpleMembership]
         public ActionResult Index()
         {
+
             CheckoutViewModel checkoutObj = this.Session[CHECKOUT_SESSION_KEY] as CheckoutViewModel;
+
             if (checkoutObj == null)
             {
                 checkoutObj = new ViewModels.CheckoutViewModel();
+                checkoutObj.IsPassword = true;
                 if (!Request.IsAuthenticated)
                 {
                     checkoutObj.CurrentStep = ViewModels.CheckoutStep.Authentication;
@@ -96,16 +102,24 @@ namespace MyStore.App.Controllers
                 }
 
             }
+            else
+            {
+                checkoutObj.CurrentStep = Request.IsAuthenticated ? ViewModels.CheckoutStep.BillingInfo : ViewModels.CheckoutStep.Authentication;
+            }
+
             return View("Index", checkoutObj);
         }
 
         [HttpPost]
+        [CheckShoppingCart]
         [ValidateAntiForgeryToken]
+        [InitializeSimpleMembership]
         public ActionResult AuthenticationMethod(CheckoutViewModel viewModel)
         {
+            ModelErrorClear(ModelState);
             if (ModelState.IsValidField("UserName"))
             {
-                if (viewModel.IsPassword ?? true)
+                if (viewModel.IsPassword)
                 {
                     if (string.IsNullOrEmpty(viewModel.Password))
                     {
@@ -126,7 +140,6 @@ namespace MyStore.App.Controllers
                     viewModel.CurrentStep = CheckoutStep.BillingInfo;
                 }
 
-                ModelErrorClear(ModelState);
             }
             this.Session[CHECKOUT_SESSION_KEY] = viewModel;
 
@@ -134,7 +147,8 @@ namespace MyStore.App.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [CheckShoppingCart]
+        [InitializeSimpleMembership]
         public ActionResult DeliveryInformation(CheckoutViewModel viewModel)
         {
             if (ModelState.IsValidField("CustomerName") &&
@@ -165,73 +179,64 @@ namespace MyStore.App.Controllers
             return View("Index", viewModel);
         }
 
+        [CheckShoppingCart]
         public ActionResult CreateOrder()
         {
             CheckoutViewModel model = this.Session[CHECKOUT_SESSION_KEY] as CheckoutViewModel;
-            if (model == null)
+            int newOrderId = 0;
+            if (model.CurrentStep != CheckoutStep.PaymentInfo)
             {
-                return RedirectToAction("ShowCart", "Product");
+                return Index();
             }
             else
             {
-                int newOrderId = 0;
-                if (model.CurrentStep != CheckoutStep.PaymentInfo)
+                using (MyStoreEntities db = new MyStoreEntities())
                 {
-                    return Index();
-                }
-                else
-                {
-                    using (MyStoreEntities db = new MyStoreEntities())
+                    Order newOrder = new Order();
+                    newOrder.Order_Status_Codes = db.Order_Status_Codes.Where(p => p.order_status_description == "New").SingleOrDefault();
+                    newOrder.date_order_placed = DateTime.Now;
+
+                    if (model.IsPassword)
+                        newOrder.user_id = WebSecurity.CurrentUserId;
+                    else
+                        newOrder.email_address = model.UserName;
+                    newOrder.receipter_name = model.CustomerName;
+                    newOrder.order_address = model.OrderAddress;
+                    newOrder.phone_number = model.PhoneNumber;
+                    newOrder.order_description = model.OrderDescription;
+                    var cartDetailsList = CartHelper.GetCartDetail(this.HttpContext);
+                    if (cartDetailsList != null)
                     {
-                        Order newOrder = new Order();
-                        newOrder.Order_Status_Codes = db.Order_Status_Codes.Where(p => p.order_status_description == "New").SingleOrDefault();
-                        newOrder.date_order_placed = DateTime.Now;
-
-                        if (model.IsPassword ?? true)
-                            newOrder.user_id = WebSecurity.CurrentUserId;
-                        else
-                            newOrder.email_address = model.UserName;
-                        newOrder.receipter_name = model.CustomerName;
-                        newOrder.order_address = model.OrderAddress;
-                        newOrder.phone_number = model.PhoneNumber;
-                        newOrder.order_description = model.OrderDescription;
-                        var cartDetailsList = CartHelper.GetCartDetail(this.HttpContext);
-                        if (cartDetailsList != null)
+                        foreach (var item in cartDetailsList)
                         {
-                            foreach (var item in cartDetailsList)
-                            {
-                                Order_Items newItem = new Order_Items();
-                                var inventory = db.Products.Where(p => p.product_id == item.ProductId)
-                                                           .Select(p => p.product_quantity)
-                                                           .SingleOrDefault();
-                                if (inventory < item.TotalQuantity)
-                                    newItem.Ref_Order_Item_Status_Codes = db.Ref_Order_Item_Status_Codes.Where(p => p.order_item_status_description == "Out Of Stock")
-                                                                                                        .SingleOrDefault();
-                                else
-                                    newItem.Ref_Order_Item_Status_Codes = db.Ref_Order_Item_Status_Codes.Where(p => p.order_item_status_description == "Normal")
-                                                                                                        .SingleOrDefault();
-                                newItem.product_id = item.ProductId;
-                                newItem.order_item_quantity = item.TotalQuantity;
-                                newItem.order_item_amount = item.TotalAmount;
-                                newOrder.Order_Items.Add(newItem);
-                            }
+                            Order_Items newItem = new Order_Items();
+                            var inventory = db.Products.Where(p => p.product_id == item.ProductId)
+                                                       .Select(p => p.product_quantity)
+                                                       .SingleOrDefault();
+                            if (inventory < item.TotalQuantity)
+                                newItem.Ref_Order_Item_Status_Codes = db.Ref_Order_Item_Status_Codes.Where(p => p.order_item_status_description == "Out Of Stock")
+                                                                                                    .SingleOrDefault();
+                            else
+                                newItem.Ref_Order_Item_Status_Codes = db.Ref_Order_Item_Status_Codes.Where(p => p.order_item_status_description == "Normal")
+                                                                                                    .SingleOrDefault();
+                            newItem.product_id = item.ProductId;
+                            newItem.order_item_quantity = item.TotalQuantity;
+                            newItem.order_item_amount = item.TotalAmount;
+                            newOrder.Order_Items.Add(newItem);
                         }
-
-                        db.Orders.Add(newOrder);
-                        db.SaveChanges();
-                        newOrderId = newOrder.order_id;
                     }
-                    //Send mail to Web's Owner
-                    SendMail(newOrderId);
 
-                    this.Session[CHECKOUT_SESSION_KEY] = null;
-                    Utilities.CartHelper.EmptyCart(this.HttpContext);
-                    return RedirectToAction("Index", "Product");
+                    db.Orders.Add(newOrder);
+                    db.SaveChanges();
+                    newOrderId = newOrder.order_id;
                 }
+                //Send mail to Web's Owner
+                SendMail(newOrderId);
 
+                this.Session[CHECKOUT_SESSION_KEY] = null;
+                Utilities.CartHelper.EmptyCart(this.HttpContext);
+                return RedirectToAction("Index", "Product");
             }
         }
-
-
     }
 }

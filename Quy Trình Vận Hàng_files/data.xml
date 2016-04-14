@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisioDocument>
+	<DocumentProperties>
+		<Title></Title>
+		<HyperlinkBase href=""></HyperlinkBase>
+	</DocumentProperties>
+	<Pages>
+		<Page ID="0" Name="Page-1" NameU="Page-1">
+			<Layer IX="0">
+				<Name>Connector</Name>
+				<NameUniv>Connector</NameUniv>
+				<Visible>1</Visible>
+			</Layer>
+			<Shapes>
+				<Shape ID="1" UniqueID="{CD02104B-0FE7-476C-9B65-2FADC1ACD81A}" Name="Customer service" NameU="Customer service" Master="2">
+					<Text>Khách Hàng</Text>
+					<XForm>
+						<PinX Unit="IN_F">0.884290540540540</PinX>
+						<PinY Unit="IN_F">5.874999999999999</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="30" UniqueID="{96B9FFFD-B95C-4DC6-AD26-945EAB5444AC}" Name="Human resources" NameU="Human resources" Master="4">
+					<Text>Đơn Hàng</Text>
+					<XForm>
+						<PinX Unit="IN_F">3.562499999999996</PinX>
+						<PinY Unit="IN_F">5.874999999999999</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="47" UniqueID="{BAC7CC62-974B-4A8C-BC94-176233A753B5}" Name="Design" NameU="Design" Master="5">
+					<Text>Chù Hàng</Text>
+					<XForm>
+						<PinX Unit="IN_F">6.353040540540537</PinX>
+						<PinY Unit="IN_F">5.874999999999999</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="79" UniqueID="{9669C6B5-D76F-49E6-ABFA-D5865092B4F0}" Name="Dynamic connector" NameU="Dynamic connector" Master="6">
+					<Text>Tạo Đơn Hàng</Text>
+					<XForm>
+						<PinX Unit="IN_F">2.219845575261732</PinX>
+						<PinY Unit="IN_F">5.875000000000000</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="80" UniqueID="{72EE6643-FA97-4859-97F6-84BD90680ADB}" Name="Dynamic connector.80" NameU="Dynamic connector.80" Master="6">
+					<Text>Gửi Đơn Hàng</Text>
+					<XForm>
+						<PinX Unit="IN_F">4.979428334476140</PinX>
+						<PinY Unit="IN_F">5.875000000000000</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="81" UniqueID="{A09319F2-A857-4FD7-9AAC-5CA751896017}" Name="Telecommunications" NameU="Telecommunications" Master="7">
+					<Text>Gọi Điện Thoại Xác Nhận</Text>
+					<XForm>
+						<PinX Unit="IN_F">8.512246621621618</PinX>
+						<PinY Unit="IN_F">5.843273628048775</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="104" UniqueID="{787E255F-1D27-4BB8-9E39-18ED05C925F3}" Name="Dynamic connector.104" NameU="Dynamic connector.104" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">7.578469381726086</PinX>
+						<PinY Unit="IN_F">5.843273628048775</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="105" UniqueID="{25AB63E3-66C5-4276-82DF-DDDCDE388C7E}" Name="Packaging" NameU="Packaging" Master="8">
+					<Text>Đóng Gói Hàng</Text>
+					<XForm>
+						<PinX Unit="IN_F">10.961148648648667</PinX>
+						<PinY Unit="IN_F">5.874999999999999</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="134" UniqueID="{9E8DE9F2-E585-4C63-A756-587C94E45628}" Name="Shipping" NameU="Shipping" Master="9">
+					<Text>Vận Chuyển Đến Khách Hàng</Text>
+					<XForm>
+						<PinX Unit="IN_F">14.077702702702698</PinX>
+						<PinY Unit="IN_F">5.874999999999999</PinY>
+					</XForm>
+				</Shape>
+				<Shape ID="170" UniqueID="{3715152C-F026-45BD-830C-9F68BB5436E2}" Name="Dynamic connector.170" NameU="Dynamic connector.170" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">12.512002886630039</PinX>
+						<PinY Unit="IN_F">5.874999999999999</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="171" UniqueID="{AB1C9BAF-15DE-4D27-97F5-B45D88D7AE47}" Name="Dynamic connector.171" NameU="Dynamic connector.171" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">9.471834765133126</PinX>
+						<PinY Unit="IN_F">5.815264463816614</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+				</Shape>
+				<Shape ID="172" UniqueID="{D8FA1E46-25B0-4202-AE9E-50E40885C396}" Name="Dynamic connector.172" NameU="Dynamic connector.172" Master="6">
+					<XForm>
+						<PinX Unit="IN_F">7.480996621621619</PinX>
+						<PinY Unit="IN_F">6.365883514180752</PinY>
+					</XForm>
+					<LayerMem>
+						<LayerMember>0</LayerMember>
+					</LayerMem>
+				</Shape>
+			</Shapes>
+		</Page>
+	</Pages>
+</VisioDocument>

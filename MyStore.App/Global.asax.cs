@@ -29,6 +29,7 @@ namespace MyStore.App
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
         }
 
         protected void Session_Start(object sender, EventArgs e)

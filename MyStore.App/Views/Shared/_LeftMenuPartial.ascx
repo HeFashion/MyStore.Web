@@ -6,6 +6,10 @@
     <div class="panel-group category-products" id="accordian">
         <!--category-productsr-->
         <%IList<MyStore.App.Models.Menu> myMenu = this.Session[MyStore.App.Utilities.GeneralContanstClass.Menu_Session_Key] as List<MyStore.App.Models.Menu>; %>
+        <%if (myMenu == null)
+          {
+              myMenu = MyStore.App.Models.MyMenu.BuildMenu();
+          } %>
         <%foreach (var menuItem in myMenu)
           {%>
         <div class="panel panel-default">
@@ -46,7 +50,7 @@
         </div>
         <% } %>
 
-<%--        <!--price-range-->
+        <%--        <!--price-range-->
         <div class="price-range">
             <h2>Phân loại theo giá</h2>
             <div class="well">

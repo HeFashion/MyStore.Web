@@ -7,14 +7,32 @@
     <Schema Namespace="MyStoreModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="MyStoreModelStoreContainer">
           <EntitySet Name="Ad_Sliders" EntityType="MyStoreModel.Store.Ad_Sliders" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Blogs" EntityType="MyStoreModel.Store.Blogs" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Order_Items" EntityType="MyStoreModel.Store.Order_Items" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Order_Status_Codes" EntityType="MyStoreModel.Store.Order_Status_Codes" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Orders" EntityType="MyStoreModel.Store.Orders" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Products" EntityType="MyStoreModel.Store.Products" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Ref_Order_Item_Status_Codes" EntityType="MyStoreModel.Store.Ref_Order_Item_Status_Codes" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Ref_Product_Type" EntityType="MyStoreModel.Store.Ref_Product_Type" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Shipping_Bills" EntityType="MyStoreModel.Store.Shipping_Bills" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Unit_Of_Measure" EntityType="MyStoreModel.Store.Unit_Of_Measure" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="User_Advices" EntityType="MyStoreModel.Store.User_Advices" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Order_Items_Orders" Association="MyStoreModel.Store.FK_Order_Items_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Order_Items" EntitySet="Order_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Items_Ref_Order_Item_Status_Codes" Association="MyStoreModel.Store.FK_Order_Items_Ref_Order_Item_Status_Codes">
+            <End Role="Ref_Order_Item_Status_Codes" EntitySet="Ref_Order_Item_Status_Codes" />
+            <End Role="Order_Items" EntitySet="Order_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Order_Status_Codes" Association="MyStoreModel.Store.FK_Orders_Order_Status_Codes">
+            <End Role="Order_Status_Codes" EntitySet="Order_Status_Codes" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Shipping_Bills" Association="MyStoreModel.Store.FK_Orders_Shipping_Bills">
+            <End Role="Shipping_Bills" EntitySet="Shipping_Bills" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Ad_Sliders">
           <Key>
@@ -27,6 +45,19 @@
           <Property Name="slider_active" Type="bit" Nullable="false" />
           <Property Name="slider_main_img" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="slider_sub_img" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Blogs">
+          <Key>
+            <PropertyRef Name="blog_id" />
+          </Key>
+          <Property Name="blog_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="blog_title" Type="nvarchar" MaxLength="200" />
+          <Property Name="blog_img_title" Type="nchar" MaxLength="50" />
+          <Property Name="blog_content" Type="nvarchar(max)" />
+          <Property Name="blog_description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="blog_date_create" Type="datetime" />
+          <Property Name="blog_total_vote" Type="int" />
+          <Property Name="blog_total_score" Type="int" />
         </EntityType>
         <EntityType Name="Order_Items">
           <Key>
@@ -59,6 +90,7 @@
           <Property Name="phone_number" Type="nvarchar" MaxLength="20" />
           <Property Name="date_order_placed" Type="datetime" />
           <Property Name="order_description" Type="nvarchar(max)" />
+          <Property Name="shipping_id" Type="int" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -93,6 +125,14 @@
           <Property Name="product_type_description_vn" Type="nvarchar" MaxLength="1000" />
           <Property Name="product_type_description_en" Type="nvarchar" MaxLength="1000" />
         </EntityType>
+        <EntityType Name="Shipping_Bills">
+          <Key>
+            <PropertyRef Name="shipping_id" />
+          </Key>
+          <Property Name="shipping_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="shipping_code" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="shipping_date" Type="date" Nullable="false" />
+        </EntityType>
         <EntityType Name="Unit_Of_Measure">
           <Key>
             <PropertyRef Name="UOM_id" />
@@ -111,6 +151,54 @@
           <Property Name="advise_subject" Type="nvarchar" MaxLength="500" />
           <Property Name="advise_body" Type="nvarchar(max)" />
         </EntityType>
+        <Association Name="FK_Order_Items_Orders">
+          <End Role="Orders" Type="MyStoreModel.Store.Orders" Multiplicity="1" />
+          <End Role="Order_Items" Type="MyStoreModel.Store.Order_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="Order_Items">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Items_Ref_Order_Item_Status_Codes">
+          <End Role="Ref_Order_Item_Status_Codes" Type="MyStoreModel.Store.Ref_Order_Item_Status_Codes" Multiplicity="1" />
+          <End Role="Order_Items" Type="MyStoreModel.Store.Order_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ref_Order_Item_Status_Codes">
+              <PropertyRef Name="order_item_status_id" />
+            </Principal>
+            <Dependent Role="Order_Items">
+              <PropertyRef Name="order_item_status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Order_Status_Codes">
+          <End Role="Order_Status_Codes" Type="MyStoreModel.Store.Order_Status_Codes" Multiplicity="1" />
+          <End Role="Orders" Type="MyStoreModel.Store.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Status_Codes">
+              <PropertyRef Name="order_status_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="order_status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Shipping_Bills">
+          <End Role="Shipping_Bills" Type="MyStoreModel.Store.Shipping_Bills" Multiplicity="0..1" />
+          <End Role="Orders" Type="MyStoreModel.Store.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping_Bills">
+              <PropertyRef Name="shipping_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="shipping_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -153,6 +241,12 @@
           </AssociationSet>
           <EntitySet Name="User_Advices" EntityType="MyStoreModel.User_Advices" />
           <EntitySet Name="Ad_Sliders" EntityType="MyStoreModel.Ad_Sliders" />
+          <EntitySet Name="Shipping_Bills" EntityType="MyStoreModel.Shipping_Bills" />
+          <AssociationSet Name="FK_Orders_Shipping_Bills" Association="MyStoreModel.FK_Orders_Shipping_Bills">
+            <End Role="Shipping_Bills" EntitySet="Shipping_Bills" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <EntitySet Name="Blogs" EntityType="MyStoreModel.Blog" />
         </EntityContainer>
         <EntityType Name="Order_Items">
           <Key>
@@ -172,7 +266,7 @@
           <Key>
             <PropertyRef Name="order_status_id" />
           </Key>
-          <Property Name="order_status_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="order_status_id" Type="MyStoreModel.OrderStatus" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="order_status_description" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Orders" Relationship="MyStoreModel.fk_Order_OrderStatus" FromRole="Order_Status_Codes" ToRole="Orders" />
         </EntityType>
@@ -182,7 +276,7 @@
           </Key>
           <Property Name="order_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="user_id" Type="Int32" />
-          <Property Name="order_status_id" Type="Int32" Nullable="false" />
+          <Property Name="order_status_id" Type="MyStoreModel.OrderStatus" Nullable="false" />
           <Property Name="date_order_placed" Type="DateTime" Precision="3" />
           <Property Name="order_description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Order_Items" Relationship="MyStoreModel.fk_OrderItem_OrderId" FromRole="Orders" ToRole="Order_Items" />
@@ -191,6 +285,8 @@
           <Property Type="String" Name="order_address" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="phone_number" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="email_address" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="shipping_id" />
+          <NavigationProperty Name="Shipping_Bills" Relationship="MyStoreModel.FK_Orders_Shipping_Bills" FromRole="Order" ToRole="Shipping_Bills" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -347,6 +443,46 @@
           <Property Type="String" Name="slider_main_img" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="slider_sub_img" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EnumType Name="OrderStatus" UnderlyingType="Int16">
+          <Member Name="New" Value="1" />
+          <Member Name="Done" Value="2" />
+          <Member Name="Cancel" Value="3" />
+          <Member Name="Shipping" Value="4" />
+        </EnumType>
+        <EntityType Name="Shipping_Bills">
+          <Key>
+            <PropertyRef Name="shipping_id" />
+          </Key>
+          <Property Type="Int32" Name="shipping_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="shipping_code" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="shipping_date" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Orders" Relationship="MyStoreModel.FK_Orders_Shipping_Bills" FromRole="Shipping_Bills" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_Orders_Shipping_Bills">
+          <End Type="MyStoreModel.Shipping_Bills" Role="Shipping_Bills" Multiplicity="0..1" />
+          <End Type="MyStoreModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shipping_Bills">
+              <PropertyRef Name="shipping_id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="shipping_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="blog_id" />
+          </Key>
+          <Property Type="Int32" Name="blog_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="blog_title" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="blog_content" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="blog_description" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="blog_date_create" Precision="3" />
+          <Property Type="Int32" Name="blog_total_vote" />
+          <Property Type="Int32" Name="blog_total_score" />
+          <Property Type="String" Name="blog_img_title" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -376,7 +512,8 @@
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="IsTypeOf(MyStoreModel.Order)">
         <MappingFragment StoreEntitySet="Orders">
-          <ScalarProperty Name="email_address" ColumnName="email_address" />
+          <ScalarProperty Name="shipping_id" ColumnName="shipping_id" />
+                <ScalarProperty Name="email_address" ColumnName="email_address" />
                 <ScalarProperty Name="phone_number" ColumnName="phone_number" />
                 <ScalarProperty Name="order_address" ColumnName="order_address" />
                 <ScalarProperty Name="receipter_name" ColumnName="receipter_name" />
@@ -454,6 +591,29 @@
                 <ScalarProperty Name="slider_desc" ColumnName="slider_desc" />
                 <ScalarProperty Name="slider_title" ColumnName="slider_title" />
                 <ScalarProperty Name="slider_id" ColumnName="slider_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shipping_Bills">
+            <EntityTypeMapping TypeName="MyStoreModel.Shipping_Bills">
+              <MappingFragment StoreEntitySet="Shipping_Bills">
+                <ScalarProperty Name="shipping_date" ColumnName="shipping_date" />
+                <ScalarProperty Name="shipping_code" ColumnName="shipping_code" />
+                <ScalarProperty Name="shipping_id" ColumnName="shipping_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Blogs">
+            <EntityTypeMapping TypeName="MyStoreModel.Blog">
+              <MappingFragment StoreEntitySet="Blogs">
+                <ScalarProperty Name="blog_img_title" ColumnName="blog_img_title" />
+                <ScalarProperty Name="blog_total_score" ColumnName="blog_total_score" />
+                <ScalarProperty Name="blog_total_vote" ColumnName="blog_total_vote" />
+                <ScalarProperty Name="blog_date_create" ColumnName="blog_date_create" />
+                <ScalarProperty Name="blog_description" ColumnName="blog_description" />
+                <ScalarProperty Name="blog_content" ColumnName="blog_content" />
+                <ScalarProperty Name="blog_title" ColumnName="blog_title" />
+                <ScalarProperty Name="blog_id" ColumnName="blog_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

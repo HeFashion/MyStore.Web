@@ -74,7 +74,16 @@
                         </address>
                         <div class="social-networks">
                             <h2 class="title text-center">Mạng Xã Hội</h2>
-                            <%:Html.Action("ExternalLoginsList", "Account", new {returnUrl= ViewBag.ReturnUrl}) %>
+                            <ul>
+                                <li>
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                </li>
+
+                                <li>
+                                    <a href="#"><i class="fa fa-google-plus"></i></a>
+                                </li>
+
+                            </ul>
                         </div>
                     </div>
                 </div>

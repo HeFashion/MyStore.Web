@@ -19,7 +19,7 @@ namespace MyStore.App.Models.MyData
             this.Orders = new HashSet<Order>();
         }
     
-        public int order_status_id { get; set; }
+        public OrderStatus order_status_id { get; set; }
         public string order_status_description { get; set; }
     
         public virtual ICollection<Order> Orders { get; set; }

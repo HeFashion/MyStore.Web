@@ -89,9 +89,41 @@
       <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Google.Apis, Version=1.10.0.25332, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.10.0\lib\net40\Google.Apis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.10.0.25331, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.10.0\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.10.0.25332, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.10.0\lib\net40\Google.Apis.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CompilerServices.AsyncTargetingPack.1.0.0\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
@@ -106,6 +138,19 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -114,6 +159,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http.OData, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.4.0.30506\lib\net40\System.Web.Http.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.2\lib\net40\System.Web.Optimization.dll</HintPath>
       <Private>True</Private>
@@ -144,9 +193,6 @@
       <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
-    </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
@@ -196,10 +242,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.2.0.20710.0\lib\net40\WebMatrix.WebData.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http.OData, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.4.0.0\lib\net40\System.Web.Http.OData.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Data.Edm.5.2.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -212,6 +254,10 @@
       <Private>True</Private>
       <HintPath>..\packages\System.Spatial.5.2.0\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
+    <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -221,9 +267,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Controllers\CheckShoppingCartAttribute.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -240,6 +289,9 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Authentication\AccountModels.cs" />
     <Compile Include="Models\MyData\Ad_Sliders.cs">
+      <DependentUpon>MyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MyData\Blog.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyData\MyMenu.cs" />
@@ -261,6 +313,9 @@
     <Compile Include="Models\MyData\Order.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MyData\OrderStatus.cs">
+      <DependentUpon>MyStoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MyData\Order_Items.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
@@ -276,6 +331,9 @@
     <Compile Include="Models\MyData\Ref_Product_Type.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MyData\Shipping_Bills.cs">
+      <DependentUpon>MyStoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MyData\Unit_Of_Measure.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
@@ -288,6 +346,8 @@
     <Compile Include="Utilities\MailMananager.cs" />
     <Compile Include="Utilities\MessageBoxHelper.cs" />
     <Compile Include="ViewModels\CheckoutViewModel.cs" />
+    <Compile Include="ViewModels\OrderViewModel.cs" />
+    <Compile Include="ViewModels\ShippingInfoViewModel.cs" />
     <Compile Include="ViewModels\ShoppingCartViewModel.cs" />
     <Compile Include="ViewModels\ProductModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -378,6 +438,7 @@
     <Content Include="Content\themes\mystyle\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\themes\mystyle\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\themes\mystyle\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Images\searchicon.png" />
     <Content Include="Models\MyData\MyStoreModel.edmx.sql" />
     <Content Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -442,7 +503,9 @@
     <Content Include="Scripts\addtocart.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\check_out.js" />
     <Content Include="Scripts\contact.js" />
+    <Content Include="Scripts\edit.advertisement.js" />
     <Content Include="Scripts\facebook.js" />
     <Content Include="Scripts\gmaps.js" />
     <Content Include="Scripts\googleplus.js" />
@@ -470,7 +533,10 @@
     <Content Include="Scripts\price-range.js" />
     <Content Include="Views\Account\Login_backup.aspx" />
     <Content Include="Views\Account\_LoginFormPartial.ascx" />
-    <Content Include="Views\Admin\AdvertiseList.aspx" />
+    <Content Include="Views\Admin\CreateAdvertisement.aspx" />
+    <Content Include="Views\Admin\DeleteAdvertisement.aspx" />
+    <Content Include="Views\Admin\EditAdvertisement.aspx" />
+    <Content Include="Views\Admin\IndexAdvertisement.aspx" />
     <Content Include="Views\Admin\CreateProduct.aspx" />
     <Content Include="Views\Admin\CreateProductCatalog.aspx" />
     <Content Include="Views\Admin\DeleteCatalog.aspx" />
@@ -480,14 +546,26 @@
     <Content Include="Views\Admin\EditProduct.aspx" />
     <Content Include="Views\Admin\EditUOM.aspx" />
     <Content Include="Views\Admin\Index.aspx" />
+    <Content Include="Views\Admin\IndexOrders.aspx" />
     <Content Include="Views\Admin\IndexProductCatalog.aspx" />
     <Content Include="Views\Admin\IndexUOM.aspx" />
+    <Content Include="Views\Admin\_ListFilePartial.ascx" />
+    <Content Include="Views\Admin\_ShipProductPartial.ascx" />
+    <Content Include="Views\Blog\Create.aspx" />
+    <Content Include="Views\Blog\Delete.aspx" />
+    <Content Include="Views\Blog\Details.aspx" />
+    <Content Include="Views\Blog\Edit.aspx" />
+    <Content Include="Views\Blog\Index.aspx" />
     <Content Include="Views\Checkout\DeliveryAddress.aspx" />
     <Content Include="Views\Checkout\Index.aspx" />
     <Content Include="Views\Checkout\PaymentInformation.aspx" />
     <Content Include="Views\Checkout\_AuthenticationPartial.ascx" />
     <Content Include="Views\Checkout\_DeliveryInfoPartial.ascx" />
     <Content Include="Views\Checkout\_PaymentInfoPartial.ascx" />
+    <Content Include="Views\Home\_ItemSliderPartial.ascx" />
+    <Content Include="Views\Order\Details.aspx" />
+    <Content Include="Views\Order\Index.aspx" />
+    <Content Include="Views\Order\_OrderDetailPartial.ascx" />
     <Content Include="Views\Product\Details.aspx" />
     <Content Include="Views\Product\Index.aspx" />
     <Content Include="Views\Product\ShoppingCart.aspx" />
@@ -592,6 +670,13 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

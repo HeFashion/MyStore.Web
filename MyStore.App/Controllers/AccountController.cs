@@ -40,6 +40,7 @@ namespace MyStore.App.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
+            
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 if (Roles.IsUserInRole(model.UserName, "Admin"))
@@ -398,7 +399,7 @@ namespace MyStore.App.Controllers
             foreach (OAuthAccount account in accounts)
             {
                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);
-
+                
                 externalLogins.Add(new ExternalLogin
                 {
                     Provider = account.Provider,

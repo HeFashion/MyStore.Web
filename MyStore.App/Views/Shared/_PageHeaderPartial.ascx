@@ -16,7 +16,11 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="social-icons pull-right">
-                        <%:Html.Action("ExternalLoginsList", "Account", new {returnUrl= ViewBag.ReturnUrl}) %>
+                        <ul class="nav navbar-nav">
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        </ul>
+
                     </div>
                 </div>
             </div>
@@ -62,14 +66,25 @@
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
                             <li><%: Html.ActionLink("Trang Chủ","Index", "Home" ) %></li>
+                            <li><%: Html.ActionLink("Bài Viết","Index", "Blog") %></li>
                             <li><%: Html.ActionLink("Giới Thiệu","About", "Home" ) %></li>
                             <li><%: Html.ActionLink("Liên Lạc", "Contact", "Home") %></li>
+                            <%if (Request.IsAuthenticated)
+                              {%>
+                            <li><%: Html.ActionLink("Quản Lý Đơn Hàng", "Index", "Order" )%></li>
+                            <%} %>
                         </ul>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="search_box pull-right">
-                        <input type="text" placeholder="Search" />
+                        <%using (Html.BeginForm("Index", "Product", FormMethod.Get, new { @id = "frmSearch" }))
+                          { %>
+                        <%:Html.TextBox("searchString", string.Empty, new { @placeholder = "Tìm kiếm theo mã" })%>
+                        <a href="javascript:document.getElementById('frmSearch').submit()">
+                            <img src="<%:Url.Content("~/Images/searchicon.png") %>" />
+                        </a>
+                        <%} %>
                     </div>
                 </div>
             </div>

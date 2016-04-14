@@ -9,6 +9,7 @@ namespace MyStore.App
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
+            //BundleTable.EnableOptimizations = true;
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"
                         ));
@@ -65,6 +66,10 @@ namespace MyStore.App
                         "~/Content/themes/mystyle/animate.css",
                         "~/Content/themes/mystyle/main.css",
                         "~/Content/themes/mystyle/responsive.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/bootstapadmin").Include(
+                "~/Content/themes/mystyle/bootstrap.css",
+                "~/Content/themes/mystyle/responsive.css"));
 
         }
     }

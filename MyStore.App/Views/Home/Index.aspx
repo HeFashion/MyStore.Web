@@ -11,6 +11,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+
                         <ol class="carousel-indicators">
                             <% var sliderData = ViewData["slider"] as IList<MyStore.App.Models.MyData.Ad_Sliders>; %>
                             <%for (int i = 0; i < sliderData.Count; i++)
@@ -28,23 +29,9 @@
 
                         <div class="carousel-inner">
                             <%foreach (var item in sliderData)
-                              { %>
-                            <div class="<%:sliderData.IndexOf(item)==0?"item active":"item" %>">
-                                <div class="col-sm-6">
-                                    <h1><span>Hè</span>-FASHION</h1>
-                                    <h2><%:item.slider_title %></h2>
-                                    <p><%: item.slider_desc %></p>
-
-                                    <a class="btn btn-default get" href="<%:item.slider_link %>">Xem ngay</a>
-                                </div>
-                                <div class="col-sm-6">
-                                    <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/home", item.slider_main_img)) %>" class="girl img-responsive" alt="" />
-                                    <%if (!string.IsNullOrEmpty(item.slider_sub_img))
-                                      { %>
-                                    <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/home", item.slider_sub_img)) %>" class="pricing" alt="" />
-                                    <%} %>
-                                </div>
-                            </div>
+                              {%>
+                            <%: ViewBag.ActiveItem = sliderData.IndexOf(item)==0 %>
+                            <%: Html.Partial("_ItemSliderPartial", item)%>
                             <%} %>
                         </div>
 

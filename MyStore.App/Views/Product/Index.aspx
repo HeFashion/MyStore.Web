@@ -3,13 +3,13 @@
 <%@ Import Namespace="PagedList.Mvc" %>
 
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Home Page - My ASP.NET MVC Application
+    Sản phẩm - Danh sách
 </asp:Content>
 
 <asp:Content ID="indexFeatured" ContentPlaceHolderID="FeaturedContent" runat="server">
     <section id="advertisement">
         <div class="container">
-            <img src="<%: Url.Content("~/Images/shop/advertisement.jpg") %>" alt="" />
+            <img src="<%: Url.Content("~/Images/shop/delivery-process.jpg") %>" alt="" />
         </div>
     </section>
 
@@ -21,7 +21,8 @@
     <%:Html.PagedListPager(Model, 
                            page=>Url.Action("Index",
                                             new {prodType = Convert.ToInt32(ViewData["prodType"]),
-                                                 page})) %>
+                                                 page,
+                                                 searchString=ViewBag.SearchString})) %>
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog" data-url="<%:Url.Action("RecommendProductPartial","Product") %>">
         <div id="modalContent" class="modal-dialog">

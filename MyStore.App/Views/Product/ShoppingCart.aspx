@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/SubSite.Master" Inherits="System.Web.Mvc.ViewPage<System.Collections.Generic.IList<MyStore.App.ViewModels.ShoppingCartViewModel>>" %>
 
 <asp:Content ID="titleContent" ContentPlaceHolderID="TitleContent" runat="server">
-    Giỏ hàng của bạn
+    Sản phẩm - Giỏ hàng
 </asp:Content>
 
 <asp:Content ID="mainContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -11,7 +11,7 @@
             <div class="breadcrumbs">
                 <ol class="breadcrumb">
                     <li>
-                        <a href="<%:Url.Action("Index", "Product") %>">Home</a>
+                        <a href="<%:Url.Action("Index", "Home") %>">Trang Chủ</a>
                     </li>
                     <li class="active">Giỏ hàng
                     </li>
@@ -96,7 +96,10 @@
                             <li>Chi phí vận chuyển <span>Free</span></li>
                             <li>Tổng cộng <span><%:Model.Sum(p=>p.TotalAmount).ToString("#,###.#") %> VND</span></li>
                         </ul>--%>
-                        <a class="btn btn-default check_out" href="<%:Url.Action("Index", "Checkout") %>">Thanh toán</a>
+                        <a class="btn btn-default check_out" href="<%:Url.Action("Index", "Checkout") %>">
+                            <i class="fa fa-money"></i> 
+                            Thanh toán
+                        </a>
                     </div>
                 </div>
             </div>

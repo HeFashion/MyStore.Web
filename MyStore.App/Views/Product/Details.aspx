@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.master" Inherits="System.Web.Mvc.ViewPage<MyStore.App.ViewModels.ProductModel>" %>
 
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Chi Tiết - Sản Phẩm
+    Sản phẩm - Chi tiết
 </asp:Content>
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -38,11 +38,17 @@
                     </button>
                 </span>
 
-                <span class="socials-share">
-                    <a class="fb-like" data-href="<%:Request.Url.AbsoluteUri %>" data-layout="button_count" data-action="like" data-show-faces="true"></a>
-                    <!-- Google + one -->
-                    <a class="g-plusone" data-annotation="inline" data-width="300" data-href="<%:Request.Url.AbsoluteUri %>"></a>
-                </span>
+                <table class="socials-share">
+                    <tr>
+                        <td>
+                            <a class="fb-like" data-href="<%:Request.Url.AbsoluteUri %>" data-layout="button_count" data-action="like" data-show-faces="true"></a>
+                        </td>
+                        <td class="google-plus">
+                            <!-- Google + one -->
+                            <a class="g-plusone" data-href="<%:Request.Url.AbsoluteUri %>"></a>
+                        </td>
+                    </tr>
+                </table>
 
             </div>
             <!--/product-information-->

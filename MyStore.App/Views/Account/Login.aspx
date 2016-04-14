@@ -14,24 +14,12 @@
 
                 <div class="col-sm-1">
                     <h2 class="or">HOẶC</h2>
-
                 </div>
                 <div class="col-sm-4">
-                    <h5>Sử dụng các mạng xã hội bên dưới để Đăng Nhập</h5>
 
-                    <div class="social-icons pull-left">
-                        <%--<%:Html.Action("ExternalLoginsList", "Account", new {returnUrl= ViewBag.ReturnUrl}) %>--%>
-                        <a class="btn btn-block btn-social btn-twitter">
-                            <span class="fa fa-twitter"></span>Sign in with Twitter
-                        </a>
-
-                        <a class="btn btn-block btn-social btn-facebook">
-                            <span class="fa fa-facebook"></span>Sign in with Facebook
-                        </a>
-
-                        <a class="btn btn-block btn-social btn-google">
-                            <span class="fa fa-google"></span>Sign in with Google
-                        </a>
+                    <div class="external-login-form social-icons pull-left">
+                        <h2>Đăng nhập với:</h2>
+                        <%:Html.Action("ExternalLoginsList", "Account", new {returnUrl= ViewBag.ReturnUrl}) %>
                     </div>
                 </div>
             </div>
