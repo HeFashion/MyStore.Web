@@ -551,10 +551,7 @@
     <Content Include="Views\Admin\IndexUOM.aspx" />
     <Content Include="Views\Admin\_ListFilePartial.ascx" />
     <Content Include="Views\Admin\_ShipProductPartial.ascx" />
-    <Content Include="Views\Blog\Create.aspx" />
-    <Content Include="Views\Blog\Delete.aspx" />
     <Content Include="Views\Blog\Details.aspx" />
-    <Content Include="Views\Blog\Edit.aspx" />
     <Content Include="Views\Blog\Index.aspx" />
     <Content Include="Views\Checkout\DeliveryAddress.aspx" />
     <Content Include="Views\Checkout\Index.aspx" />

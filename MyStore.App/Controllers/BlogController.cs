@@ -5,7 +5,10 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 using MyStore.App.Models.MyData;
+
+using PagedList;
 
 namespace MyStore.App.Controllers
 {
@@ -16,9 +19,13 @@ namespace MyStore.App.Controllers
         //
         // GET: /Blog/
 
-        public ActionResult Index()
+        public ActionResult Index(int? pageNo)
         {
-            return View(db.Blogs.ToList());
+            int pageSize = 3;
+            int pageNum = pageNo ?? 1;
+            var blogs = db.Blogs.OrderByDescending(p => p.blog_id);
+
+            return View(blogs.ToPagedList(pageNum, pageSize));
         }
 
         //

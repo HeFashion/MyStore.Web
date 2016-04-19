@@ -1,4 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<MyStore.App.Models.MyData.Blog>>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.master" Inherits="System.Web.Mvc.ViewPage<PagedList.IPagedList<MyStore.App.Models.MyData.Blog>>" %>
+
+<%@ Import Namespace="PagedList.Mvc" %>
 
 <asp:Content ID="titleContent" ContentPlaceHolderID="TitleContent" runat="server">
     Index
@@ -49,16 +51,11 @@
             <a class="btn btn-default get" href="<%:Url.Action("Details", new { id=item.blog_id})%>">Read More</a>
         </div>
         <%} %>
-
-        <div class="pagination-area">
-            <ul class="pagination">
-                <li><a href="" class="active">1</a></li>
-                <li><a href="">2</a></li>
-                <li><a href="">3</a></li>
-                <li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
-            </ul>
-        </div>
+        <%:Html.PagedListPager(Model, 
+                               page=>Url.Action("Index",
+                                                new {page})) %>
     </div>
+
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="FeaturedContent" runat="server">

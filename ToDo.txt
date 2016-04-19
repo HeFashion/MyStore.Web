@@ -30,10 +30,13 @@ Order Manager
  + Emails interface when send to user.
 
 Blog
- + Blog database(80%)
- + Blog list
+ + Blog database(done)
+ + Blog list(done)
+ + Blog paging(done).
  + Blog detail
  + Blog comment
+
+ + Blog demo page
 
 About Us
  + Index
