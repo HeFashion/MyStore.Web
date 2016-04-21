@@ -34,7 +34,11 @@ Blog
  + Blog list(done)
  + Blog paging(done).
  + Blog detail
- + Blog comment
+	1.content(done)
+	2.rate blog
+	3.comment blog
+	4.social button
+	5.real blog page
 
  + Blog demo page
 

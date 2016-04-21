@@ -14,7 +14,21 @@ namespace MyStore.App.Controllers
 {
     public class BlogController : Controller
     {
-        private MyStoreEntities db = new MyStoreEntities();
+        private MyStoreEntities db = null;
+        private int _minId = 1;
+        private int _maxId = 1;
+
+        public BlogController()
+        {
+            db = new MyStoreEntities();
+            _maxId = db.Blogs.Max(p => p.blog_id);
+            _minId = db.Blogs.Min(p => p.blog_id);
+        }
+        protected override void Dispose(bool disposing)
+        {
+            db.Dispose();
+            base.Dispose(disposing);
+        }
 
         //
         // GET: /Blog/
@@ -38,12 +52,36 @@ namespace MyStore.App.Controllers
             {
                 return HttpNotFound();
             }
-            return View(blog);
+
+            ViewBag.MaxId = _maxId;
+            ViewBag.MinId = _minId;
+            return View("Details", blog);
         }
 
+        public ActionResult NextBlog(int currentId = 0)
+        {
+            int id = currentId + 1;
+            return Details(id);
+        }
+
+        public ActionResult PrevBlog(int currentId = 1)
+        {
+            int id = currentId - 1;
+            return Details(id);
+        }
+
+        public ActionResult VoteFor(int id = 0, int score = 1)
+        {
+            Blog blog = db.Blogs.Find(id);
+            if (blog == null)
+                return HttpNotFound();
+            blog.blog_total_score += score;
+            blog.blog_total_vote += 1;
+            return PartialView("_BlogVotePartial");
+        }
+        /*
         //
         // GET: /Blog/Create
-
         public ActionResult Create()
         {
             return View();
@@ -120,11 +158,6 @@ namespace MyStore.App.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
-        }
+        */
     }
 }

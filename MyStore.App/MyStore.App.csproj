@@ -345,6 +345,7 @@
     <Compile Include="Utilities\GeneralContanstClass.cs" />
     <Compile Include="Utilities\MailMananager.cs" />
     <Compile Include="Utilities\MessageBoxHelper.cs" />
+    <Compile Include="ViewModels\BlogVoteViewModel.cs" />
     <Compile Include="ViewModels\CheckoutViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ShippingInfoViewModel.cs" />
@@ -372,6 +373,8 @@
     <Content Include="Content\themes\mystyle\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\themes\mystyle\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\themes\mystyle\images\searchicon.png" />
+    <Content Include="Content\themes\mystyle\jquery.rateyo.css" />
+    <Content Include="Content\themes\mystyle\jquery.rateyo.min.css" />
     <Content Include="Content\themes\mystyle\main.css" />
     <Content Include="Content\themes\mystyle\prettyPhoto.css" />
     <Content Include="Content\themes\mystyle\price-range.css" />
@@ -518,6 +521,8 @@
     <Content Include="Scripts\jquery.elevateZoom.js" />
     <Content Include="Scripts\jquery.elevateZoom.min.js" />
     <Content Include="Scripts\jquery.prettyPhoto.js" />
+    <Content Include="Scripts\jquery.rateyo.js" />
+    <Content Include="Scripts\jquery.rateyo.min.js" />
     <Content Include="Scripts\jquery.scrollUp.js" />
     <Content Include="Scripts\jquery.scrollUp.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -553,6 +558,7 @@
     <Content Include="Views\Admin\_ShipProductPartial.ascx" />
     <Content Include="Views\Blog\Details.aspx" />
     <Content Include="Views\Blog\Index.aspx" />
+    <Content Include="Views\Blog\_BlogVotePartial.ascx" />
     <Content Include="Views\Checkout\DeliveryAddress.aspx" />
     <Content Include="Views\Checkout\Index.aspx" />
     <Content Include="Views\Checkout\PaymentInformation.aspx" />
