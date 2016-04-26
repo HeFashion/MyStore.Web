@@ -92,3 +92,8 @@
     </div>
     <!--header-bottom-->
 </header>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog" data-url="<%:Url.Action("RecommendProductPartial","Product") %>">
+    <div id="modalContent" class="modal-dialog">
+    </div>
+</div>

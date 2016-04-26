@@ -15,36 +15,18 @@
                     <li><i class="fa fa-clock-o"></i><%:string.Format("{0:hh:mm tt}", Model.blog_date_create) %></li>
                     <li><i class="fa fa-calendar"></i><%:string.Format("{0:dd, MM, yyyy}", Model.blog_date_create) %></li>
                 </ul>
-                <span>
-                    <%float totalStar = ((float)(Model.blog_total_score ?? 0) / (float)(Model.blog_total_vote ?? 1)); %>
-                    <%for (int i = 0; i < 5; i++)
-                      {%>
-                    <%if (totalStar > 0.5)
-                      { %>
-                    <i class="fa fa-star"></i>
-                    <%} %>
-                    <%else if (totalStar == 0.5)
-                      { %>
-                    <i class="fa fa-star-half-o"></i>
-                    <%} %>
-                    <%else
-                      { %>
-                    <i class="fa fa-star-o"></i>
-                    <%} %>
-                    <%totalStar -= 1; %>
-                    <%} %> 
-                </span>
+                <%:Html.Partial("_BlogVotePartial", new MyStore.App.ViewModels.BlogVoteViewModel(){TotalScore=Model.blog_total_score, TotalVote=Model.blog_total_vote}) %>
             </div>
             <%: Html.Raw(Model.blog_content) %>
             <div class="pager-area">
                 <ul class="pager pull-right">
                     <%if (Model.blog_id > ViewBag.MinId)
                       {%>
-                    <li><%:Html.ActionLink("Lùi","PrevBlog", new{currentId = Model.blog_id}) %></li>
+                    <li><%:Html.ActionLink("<< Lùi","PrevBlog", new{currentId = Model.blog_id}) %></li>
                     <%} %>
                     <%if (Model.blog_id < ViewBag.MaxId)
                       {%>
-                    <li><%:Html.ActionLink("Tới","NextBlog", new{currentId = Model.blog_id}) %></li>
+                    <li><%:Html.ActionLink("Tới >>","NextBlog", new{currentId = Model.blog_id}) %></li>
                     <%} %>
                 </ul>
             </div>
@@ -72,10 +54,14 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
-    <%:Styles.Render("~/Content/themes/mystyle/jquery.rateyo.css") %>
-    <%:Scripts.Render("~/Scripts/jquery.rateyo.js") %>
+    <%: Styles.Render("~/Content/themes/mystyle/jquery.rateyo.css") %>
+    <%: Scripts.Render("~/Scripts/jquery.rateyo.js") %>
 
     <script type="text/javascript">
+        function OpenDialog(content) {
+            var modal = $("#modalContent").html(content);
+            $("#myModal").modal('show');
+        }
         $(document).ready(function () {
 
             var rateControl = $("#rateit").rateYo({
@@ -85,7 +71,25 @@
             })
 
             rateControl.on("rateyo.set", function (e, data) {
-                alert("The rating is set to " + data.rating + "!");
+                var voted = data.rating;
+                $.ajax({
+                    type: "POST",
+                    content: "application/json; charset=utf-8",
+                    url: "<%:Url.Action("VoteTo")%>",
+                    data: { 'id': "<%:Model.blog_id%>", 'score': voted },
+                    success: function (data) {
+                        if (data.isSuccess == false) {
+                            OpenDialog(data.message);
+                        }
+                        else {
+                            //$("#voteArea").html(data);
+                            $.post(data.votedUrl, function (partial) {
+                                $("#voteArea").html(partial);
+                            });
+                            OpenDialog(data.message);
+                        }
+                    }
+                });
             });
         });
     </script>

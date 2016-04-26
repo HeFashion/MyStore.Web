@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using MyStore.App.Models.MyData;
+using MyStore.App.ViewModels;
 
 using PagedList;
 
@@ -70,15 +71,52 @@ namespace MyStore.App.Controllers
             return Details(id);
         }
 
-        public ActionResult VoteFor(int id = 0, int score = 1)
+        [HttpPost]
+        public JsonResult VoteTo(int id = 0, int score = 1)
         {
             Blog blog = db.Blogs.Find(id);
             if (blog == null)
-                return HttpNotFound();
-            blog.blog_total_score += score;
-            blog.blog_total_vote += 1;
-            return PartialView("_BlogVotePartial");
+                return Json(new
+                {
+                    isSuccess = false,
+                    message = Utilities.MessageBoxHelper.GetFailMessage()
+                });
+            int totalScore = blog.blog_total_score ?? 0;
+            int totalVote = blog.blog_total_vote ?? 0;
+            totalScore += score;
+            totalVote += 1;
+            blog.blog_total_score = totalScore;
+            blog.blog_total_vote = totalVote;
+
+            db.SaveChanges();
+
+            return Json(new
+            {
+                isSuccess = true,
+                message = Utilities.MessageBoxHelper.GetThanksMessage(),
+
+                votedUrl = Url.Action("BlogVotePartial",
+                                    new
+                                    {
+                                        totalScore = totalScore,
+                                        totalVoted = totalVote
+                                    })
+            });
+
         }
+
+        [HttpPost]
+        public PartialViewResult BlogVotePartial(int totalScore = 0, int totalVoted = 1)
+        {
+
+            var model = new BlogVoteViewModel()
+            {
+                TotalScore = totalScore,
+                TotalVote = totalVoted
+            };
+            return PartialView("_BlogVotePartial", model);
+        }
+
         /*
         //
         // GET: /Blog/Create

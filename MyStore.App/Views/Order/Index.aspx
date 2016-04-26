@@ -93,11 +93,7 @@
             </div>
         </div>
     </section>
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div id="modalContent" class="modal-dialog">
-        </div>
-    </div>
+  
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">

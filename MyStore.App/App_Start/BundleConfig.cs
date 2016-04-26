@@ -40,6 +40,9 @@ namespace MyStore.App
             bundles.Add(new StyleBundle("~/Content/AdminCss").Include(
                 "~/Content/site.css",
                 "~/Content/PagedList.css"));
+            bundles.Add(new StyleBundle("~/Content/themes/base/jquery.dialog").Include(
+                "~/Content/themes/base/jquery.ui.core.css",
+                "~/Content/themes/base/jquery.ui.dialog.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

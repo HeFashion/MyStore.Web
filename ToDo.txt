@@ -40,8 +40,6 @@ Blog
 	4.social button
 	5.real blog page
 
- + Blog demo page
-
 About Us
  + Index
 
@@ -50,3 +48,5 @@ Add link to social-network icon
 
 Custom HTTP Not Found page
 Create compare product page
+Improve addtocart.js(no need for data-url)
+Vote for product

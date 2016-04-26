@@ -527,7 +527,7 @@ namespace MyStore.App.Controllers
         public ActionResult ListOfOrder()
         {
             var lstOrders = db.Orders
-                              .Include("Order_Status_Codes ")
+                              .Include("Order_Status_Codes")
                               .Include("Shipping_Bills")
                               .Select(o => new OrderViewModel()
                               {

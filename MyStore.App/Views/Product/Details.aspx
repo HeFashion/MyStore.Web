@@ -83,11 +83,7 @@
     <!--/category-tab-->
     <%IList<MyStore.App.ViewModels.ProductModel> recommendItems = ViewData["RecommendProduct"] as IList<MyStore.App.ViewModels.ProductModel>; %>
     <%:Html.Partial("_RecommendItemsPartial",  recommendItems)%>
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog" data-url="<%:Url.Action("RecommendProductPartial","Product") %>">
-        <div id="modalContent" class="modal-dialog">
-        </div>
-    </div>
+  
 </asp:Content>
 
 <asp:Content ID="scriptContent" ContentPlaceHolderID="ScriptsSection" runat="server">

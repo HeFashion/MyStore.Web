@@ -114,11 +114,7 @@
 
     </div>
     <!--/category-tab-->
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog" data-url="<%:Url.Action("RecommendProductPartial","Product") %>">
-        <div id="modalContent" class="modal-dialog">
-        </div>
-    </div>
+ 
 </asp:Content>
 <asp:Content ID="scriptSection" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%:Scripts.Render("~/bundles/jqueryui") %>

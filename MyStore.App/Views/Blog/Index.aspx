@@ -19,25 +19,7 @@
                     <li><i class="fa fa-clock-o"></i><%:string.Format("{0:hh:mm tt}", item.blog_date_create) %></li>
                     <li><i class="fa fa-calendar"></i><%:string.Format("{0:dd, MM, yyyy}", item.blog_date_create) %></li>
                 </ul>
-                <span>
-                    <%float totalStar = ((float)(item.blog_total_score ?? 0) / (float)(item.blog_total_vote ?? 1)); %>
-                    <%for (int i = 0; i < 5; i++)
-                      {%>
-                    <%if (totalStar > 0.5)
-                      { %>
-                    <i class="fa fa-star"></i>
-                    <%} %>
-                    <%else if (totalStar == 0.5)
-                      { %>
-                    <i class="fa fa-star-half-o"></i>
-                    <%} %>
-                    <%else
-                      { %>
-                    <i class="fa fa-star-o"></i>
-                    <%} %>
-                    <%totalStar -= 1; %>
-                    <%} %> 
-                </span>
+                <%:Html.Partial("_BlogVotePartial", new MyStore.App.ViewModels.BlogVoteViewModel(){TotalScore=item.blog_total_score, TotalVote=item.blog_total_vote}) %>
             </div>
             <a href="<%: Url.Action("Details", new { id=item.blog_id })%>">
                 <img src="<%:Url.Content(System.IO.Path.Combine("~", 
