@@ -30,7 +30,7 @@
                     alt="<%:item.blog_img_title %>">
             </a>
             <p><%:item.blog_description %></p>
-            <a class="btn btn-default get" href="<%:Url.Action("Details", new { id=item.blog_id})%>">Read More</a>
+            <a class="btn btn-default get" href="<%:Url.Action("Details", new { id=item.blog_id})%>">Xem Ngay</a>
         </div>
         <%} %>
         <%:Html.PagedListPager(Model, 

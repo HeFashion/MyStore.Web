@@ -10,6 +10,7 @@ using MyStore.App.Models.MyData;
 using MyStore.App.ViewModels;
 
 using PagedList;
+using WebMatrix.WebData;
 
 namespace MyStore.App.Controllers
 {
@@ -56,6 +57,11 @@ namespace MyStore.App.Controllers
 
             ViewBag.MaxId = _maxId;
             ViewBag.MinId = _minId;
+
+            if (blog.blog_total_vote == null || blog.blog_total_vote.Value == 0)
+                ViewBag.BlogRate = 0;
+            else
+                ViewBag.BlogRate = ((float)(blog.blog_total_score ?? 0) / (float)(blog.blog_total_vote ?? 1));
             return View("Details", blog);
         }
 
@@ -71,44 +77,8 @@ namespace MyStore.App.Controllers
             return Details(id);
         }
 
-        [HttpPost]
-        public JsonResult VoteTo(int id = 0, int score = 1)
-        {
-            Blog blog = db.Blogs.Find(id);
-            if (blog == null)
-                return Json(new
-                {
-                    isSuccess = false,
-                    message = Utilities.MessageBoxHelper.GetFailMessage()
-                });
-            int totalScore = blog.blog_total_score ?? 0;
-            int totalVote = blog.blog_total_vote ?? 0;
-            totalScore += score;
-            totalVote += 1;
-            blog.blog_total_score = totalScore;
-            blog.blog_total_vote = totalVote;
-
-            db.SaveChanges();
-
-            return Json(new
-            {
-                isSuccess = true,
-                message = Utilities.MessageBoxHelper.GetThanksMessage(),
-
-                votedUrl = Url.Action("BlogVotePartial",
-                                    new
-                                    {
-                                        totalScore = totalScore,
-                                        totalVoted = totalVote
-                                    })
-            });
-
-        }
-
-        [HttpPost]
         public PartialViewResult BlogVotePartial(int totalScore = 0, int totalVoted = 1)
         {
-
             var model = new BlogVoteViewModel()
             {
                 TotalScore = totalScore,

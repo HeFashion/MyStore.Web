@@ -274,6 +274,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\VoteController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -338,6 +339,12 @@
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyData\User_Advices.cs">
+      <DependentUpon>MyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MyData\Vote.cs">
+      <DependentUpon>MyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MyData\VoteType.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Utilities\CartHelper.cs" />
@@ -535,7 +542,10 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\numericInput.js" />
+    <Content Include="Scripts\numericInput.min.js" />
     <Content Include="Scripts\price-range.js" />
+    <Content Include="Scripts\rateObject.js" />
     <Content Include="Views\Account\Login_backup.aspx" />
     <Content Include="Views\Account\_LoginFormPartial.ascx" />
     <Content Include="Views\Admin\CreateAdvertisement.aspx" />
@@ -581,6 +591,7 @@
     <Content Include="Views\Shared\_LoginAdminPartial.aspx" />
     <Content Include="Views\Shared\_PageFooterPartial.ascx" />
     <Content Include="Views\Shared\_PageHeaderPartial.ascx" />
+    <Content Include="Views\Shared\_RateObjectPartial.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

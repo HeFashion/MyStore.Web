@@ -16,6 +16,7 @@
         <div class="col-sm-7">
             <div class="product-information">
                 <!--/product-information-->
+                <%:Html.Action("BlogVotePartial", "Blog", new {totalScore=Model.Total_Score, totalVoted=Model.Total_Voted})%>
                 <%int dateDiff = Convert.ToInt32((DateTime.Now - Model.DateCreated).TotalDays); %>
                 <%if (dateDiff < ViewBag.DateCompare)%>
                 <%{%>
@@ -25,11 +26,11 @@
 
                 <p>Mã hàng: <%:Model.Name %></p>
 
-                <%--<img src="<%:Url.Content("~/Images/shop/rating.png") %>" alt="" />--%>
                 <span>
-                    <span><%:MyStore.App.Utilities.DecimalHelper.ToString(Model.Price, "#,###.#") %> VND / 1 <%:Model.UOM %></span>
-                </span>
-                <span>
+                    <span>
+                        <%:MyStore.App.Utilities.DecimalHelper.ToString(Model.Price, "#,###.#") %> VND / 1 <%:Model.UOM %>
+                    </span>
+                    <br />
                     <label>Thêm:</label>
                     <input type="text" value="1" id="txtQuantity" />
                     <button type="button" class="btn btn-default cart">
@@ -60,8 +61,15 @@
     <div class="category-tab shop-details-tab ">
         <div class="col-sm-12">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#details" data-toggle="tab">Giới Thiệu</a></li>
-                <li><a href="#reviews" data-toggle="tab" id="comments">Nhận Xét</a></li>
+                <li class="active">
+                    <a href="#details" data-toggle="tab">Giới Thiệu</a>
+                </li>
+                <li>
+                    <a href="#reviews" data-toggle="tab" id="comments">Nhận Xét(
+                        <span class="fb-comments-count" data-href="<%:Request.Url.AbsoluteUri %>"></span>
+                        )
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="tab-content">
@@ -69,13 +77,15 @@
             <div class="tab-pane fade  active in" id="details">
                 <div class="col-sm-12">
                     <p><%:Model.OtherDetails %></p>
-
                 </div>
             </div>
             <div class="tab-pane fade" id="reviews">
                 <div class="col-sm-12">
-                    <div class="fb-comments" data-href="<%:Request.Url.AbsoluteUri %>" data-numposts="5"></div>
+                    <%ViewBag.RateTitle = "Đánh Giá Sản Phẩm:";
+                      ViewBag.RatedCount = Model.Total_Voted;%>
+                    <%:Html.Partial("_RateObjectPartial") %>
 
+                    <div class="fb-comments" data-href="<%:Request.Url.AbsoluteUri %>" data-numposts="5"></div>
                 </div>
             </div>
         </div>
@@ -83,15 +93,18 @@
     <!--/category-tab-->
     <%IList<MyStore.App.ViewModels.ProductModel> recommendItems = ViewData["RecommendProduct"] as IList<MyStore.App.ViewModels.ProductModel>; %>
     <%:Html.Partial("_RecommendItemsPartial",  recommendItems)%>
-  
 </asp:Content>
 
 <asp:Content ID="scriptContent" ContentPlaceHolderID="ScriptsSection" runat="server">
-    <%:Scripts.Render( "~/Scripts/jquery.elevateZoom.js") %>
-    <%:Scripts.Render("http://transtatic.com/js/numericInput.min.js") %>
-    <%:Scripts.Render("~/Scripts/addtocart.js") %>
-    <%:Scripts.Render("~/Scripts/facebook.js") %>
-    <%:Scripts.Render("~/Scripts/googleplus.js") %>
+    <%: Styles.Render("~/Content/themes/mystyle/jquery.rateyo.css") %>
+    <%: Scripts.Render("~/Scripts/jquery.rateyo.js") %>
+    <%: Scripts.Render( "~/Scripts/jquery.elevateZoom.js") %>
+    <%: Scripts.Render("~/Scripts/numericInput.js") %>
+    <%: Scripts.Render("~/Scripts/addtocart.js") %>
+    <%: Scripts.Render("~/Scripts/facebook.js") %>
+    <%: Scripts.Render("~/Scripts/googleplus.js") %>
+    <%: Scripts.Render("~/Scripts/rateObject.js") %>
+
     <script>
         $(document).ready(function () {
             $("<%:"#"+ Model.Name %>").elevateZoom();
@@ -106,6 +119,11 @@
                 };
                 AddToCart("<%: Url.Action("AddToCart", "Cart")%>", sendInfo);
             });
+
+            Rating_Initialize("<%:ViewBag.BlogRate%>",
+                              "<%:Model.Id%>",
+                              "<%:(short)MyStore.App.Models.MyData.VoteType.Product %>",
+                              "<%:Url.Action("VoteTo", "Vote")%>");
         });
     </script>
 </asp:Content>

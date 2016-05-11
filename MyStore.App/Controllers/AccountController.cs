@@ -12,6 +12,7 @@ using MyStore.App.Filters;
 
 using MyStore.App.Models.Authentication;
 using DotNetOpenAuth.GoogleOAuth2;
+using MyStore.App.Utilities;
 
 namespace MyStore.App.Controllers
 {
@@ -19,9 +20,6 @@ namespace MyStore.App.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
-        private const string FACEBOOK_SESSION_KEY = "facebooktoken";
-        private const string GOOGLE_SESSION_KEY = "googleplustoken";
-
         //
         // GET: /Account/Login
 
@@ -40,7 +38,7 @@ namespace MyStore.App.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            
+
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 if (Roles.IsUserInRole(model.UserName, "Admin"))
@@ -293,11 +291,11 @@ namespace MyStore.App.Controllers
                 string providerName = result.Provider.ToLower();
                 if (providerName == "facebook")
                 {
-                    Session[FACEBOOK_SESSION_KEY] = result.ExtraData["accesstoken"];
+                    Session[GeneralContanstClass.FACEBOOK_SESSION_KEY] = result.ExtraData["accesstoken"];
                 }
                 else if (providerName == "google")
                 {
-                    Session[GOOGLE_SESSION_KEY] = result.ExtraData["accesstoken"];
+                    Session[GeneralContanstClass.GOOGLE_SESSION_KEY] = result.ExtraData["accesstoken"];
                 }
             }
         }
@@ -332,7 +330,7 @@ namespace MyStore.App.Controllers
 
                         bool facebookVerified;
 
-                        var client = new Facebook.FacebookClient(Session[FACEBOOK_SESSION_KEY].ToString());
+                        var client = new Facebook.FacebookClient(Session[GeneralContanstClass.FACEBOOK_SESSION_KEY].ToString());
                         dynamic response = client.Get("me", new { fields = "verified" });
                         if (response.ContainsKey("verified"))
                         {
@@ -364,7 +362,7 @@ namespace MyStore.App.Controllers
                     else
                     {
                         ModelState.AddModelError(string.Empty, "Tên hiển thị đã được sử dụng. Quý khách vui lòng chọn tên khác.");
-                        
+
                     }
                 }
             }
@@ -399,7 +397,7 @@ namespace MyStore.App.Controllers
             foreach (OAuthAccount account in accounts)
             {
                 AuthenticationClientData clientData = OAuthWebSecurity.GetOAuthClientData(account.Provider);
-                
+
                 externalLogins.Add(new ExternalLogin
                 {
                     Provider = account.Provider,

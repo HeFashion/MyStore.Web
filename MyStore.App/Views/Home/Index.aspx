@@ -30,7 +30,7 @@
                         <div class="carousel-inner">
                             <%foreach (var item in sliderData)
                               {%>
-                            <%: ViewBag.ActiveItem = sliderData.IndexOf(item)==0 %>
+                            <% ViewBag.ActiveItem = sliderData.IndexOf(item) == 0 ? true : false; %>
                             <%: Html.Partial("_ItemSliderPartial", item)%>
                             <%} %>
                         </div>
@@ -114,7 +114,7 @@
 
     </div>
     <!--/category-tab-->
- 
+
 </asp:Content>
 <asp:Content ID="scriptSection" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%:Scripts.Render("~/bundles/jqueryui") %>

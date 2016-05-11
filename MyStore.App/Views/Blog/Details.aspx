@@ -32,22 +32,28 @@
             </div>
         </div>
 
-        <div class="rating-area">
-            <ul class="ratings">
-                <li class="rate-this">Điểm của bạn:</li>
-                <li>
-                    <div id="rateit" />
-                </li>
-                <li class="color"><%:string.Format("({0} votes)", Model.blog_total_vote) %></li>
-            </ul>
-            <%-- <ul class="tag">
-                <li>TAG:</li>
-                <li><a class="color" href="">Pink <span>/</span></a></li>
-                <li><a class="color" href="">T-Shirt <span>/</span></a></li>
-                <li><a class="color" href="">Girls</a></li>
-            </ul>--%>
+        <%ViewBag.RateTitle = "Đánh Giá Bài Viết:";
+          ViewBag.RatedCount = Model.blog_total_vote ?? 0;%>
+        <%:Html.Partial("_RateObjectPartial") %>
+
+        <table class="socials-share">
+            <tr>
+                <td class="facebook-like">
+                    <a class="fb-like" data-href="<%:Request.Url.AbsoluteUri %>" data-layout="button_count" data-action="like" data-show-faces="true"></a>
+                </td>
+                <td class="google-plus">
+                    <!-- Google + one -->
+                    <a class="g-plusone" data-href="<%:Request.Url.AbsoluteUri %>"></a>
+                </td>
+            </tr>
+        </table>
+        <!--/socials-share-->
+
+        <div class="media commnets">
+            <div class="fb-comments" data-href="<%:Request.Url.AbsoluteUri %>" data-numposts="5"></div>
         </div>
     </div>
+
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="FeaturedContent" runat="server">
@@ -56,41 +62,16 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%: Styles.Render("~/Content/themes/mystyle/jquery.rateyo.css") %>
     <%: Scripts.Render("~/Scripts/jquery.rateyo.js") %>
+    <%: Scripts.Render("~/Scripts/facebook.js") %>
+    <%: Scripts.Render("~/Scripts/googleplus.js") %>
+    <%: Scripts.Render("~/Scripts/rateObject.js") %>
 
     <script type="text/javascript">
-        function OpenDialog(content) {
-            var modal = $("#modalContent").html(content);
-            $("#myModal").modal('show');
-        }
         $(document).ready(function () {
-
-            var rateControl = $("#rateit").rateYo({
-                fullStar: true,
-                starWidth: "15px",
-                rating: "<%:((float)(Model.blog_total_score ?? 0) / (float)(Model.blog_total_vote ?? 1))%>"
-            })
-
-            rateControl.on("rateyo.set", function (e, data) {
-                var voted = data.rating;
-                $.ajax({
-                    type: "POST",
-                    content: "application/json; charset=utf-8",
-                    url: "<%:Url.Action("VoteTo")%>",
-                    data: { 'id': "<%:Model.blog_id%>", 'score': voted },
-                    success: function (data) {
-                        if (data.isSuccess == false) {
-                            OpenDialog(data.message);
-                        }
-                        else {
-                            //$("#voteArea").html(data);
-                            $.post(data.votedUrl, function (partial) {
-                                $("#voteArea").html(partial);
-                            });
-                            OpenDialog(data.message);
-                        }
-                    }
-                });
-            });
+            Rating_Initialize("<%:ViewBag.BlogRate%>",
+                              "<%:Model.blog_id%>",
+                              "<%:(short)MyStore.App.Models.MyData.VoteType.Blog %>",
+                              "<%:Url.Action("VoteTo", "Vote")%>");
         });
     </script>
 </asp:Content>

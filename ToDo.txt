@@ -1,4 +1,4 @@
-Advitisement Manager
+﻿Advitisement Manager
  + Edit: upload + select img from sever before saving.(done)
  + New(done)
  + Delete(done)
@@ -35,18 +35,22 @@ Blog
  + Blog paging(done).
  + Blog detail
 	1.content(done)
-	2.rate blog
-	3.comment blog
-	4.social button
-	5.real blog page
+	2.rate blog(done)
+	3.comment blog(done)
+	4.social button(done)
+	5.real blog page(done)
+
+Vote for Product(done)
+
+Improve span in Detail of product.(done)
+
+Add number of comment on tab "Nhận Xét".(need check)
 
 About Us
  + Index
 
-Fix problem on Home/Index(slider display some ugly text)
-Add link to social-network icon
+Create compare product page
 
 Custom HTTP Not Found page
-Create compare product page
 Improve addtocart.js(no need for data-url)
-Vote for product
+	

@@ -12,5 +12,8 @@ namespace MyStore.App.Utilities
         public const string PageSize_Session_Key = "pageSize";
         public const string PAGE_EMAIL = "pageEmail";
         public const string RECEIVE_ORDER_EMAIL = "receiveOrderEmail";
+        public const string FACEBOOK_SESSION_KEY = "facebooktoken";
+        public const string GOOGLE_SESSION_KEY = "googleplustoken";
+
     }
 }

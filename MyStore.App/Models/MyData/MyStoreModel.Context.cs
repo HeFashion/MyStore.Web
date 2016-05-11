@@ -36,5 +36,6 @@ namespace MyStore.App.Models.MyData
         public DbSet<Ad_Sliders> Ad_Sliders { get; set; }
         public DbSet<Shipping_Bills> Shipping_Bills { get; set; }
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Vote> Votes { get; set; }
     }
 }

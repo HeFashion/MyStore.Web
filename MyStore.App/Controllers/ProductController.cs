@@ -127,16 +127,22 @@ namespace MyStore.App.Controllers
                             Price = pro.product_price,
                             Image = pro.product_image,
                             DateCreated = pro.product_created_date ?? DateTime.Now,
-                            OtherDetails = pro.other_detail
+                            OtherDetails = pro.other_detail,
+                            Total_Score = pro.total_vote_score ?? 0,
+                            Total_Voted = pro.total_vote_count ?? 0
                         };
             ProductModel product = query.SingleOrDefault();
             if (product == null)
             {
                 return HttpNotFound();
-
             }
             else
             {
+                if (product.Total_Voted == 0)
+                    ViewBag.BlogRate = 0;
+                else
+                    ViewBag.BlogRate = ((float)(product.Total_Score) / (float)(product.Total_Voted));
+
                 ViewData.Add("RecommendProduct", GetRecommendProduct(id));
             }
             return View(product);
@@ -151,7 +157,7 @@ namespace MyStore.App.Controllers
         [HttpGet]
         public PartialViewResult ShoppingCartList(IEnumerable<ShoppingCartViewModel> dataModel)
         {
-            
+
             if (dataModel != null)
                 return PartialView("_CartTablePartial", dataModel);
             else

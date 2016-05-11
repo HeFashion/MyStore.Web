@@ -17,6 +17,7 @@
           <EntitySet Name="Shipping_Bills" EntityType="MyStoreModel.Store.Shipping_Bills" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Unit_Of_Measure" EntityType="MyStoreModel.Store.Unit_Of_Measure" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="User_Advices" EntityType="MyStoreModel.Store.User_Advices" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Votes" EntityType="MyStoreModel.Store.Votes" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Order_Items_Orders" Association="MyStoreModel.Store.FK_Order_Items_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Order_Items" EntitySet="Order_Items" />
@@ -108,6 +109,8 @@
           <Property Name="product_created_date" Type="date" />
           <Property Name="product_quantity" Type="float" />
           <Property Name="other_detail" Type="nvarchar(max)" />
+          <Property Name="total_vote_score" Type="int" />
+          <Property Name="total_vote_count" Type="int" />
         </EntityType>
         <EntityType Name="Ref_Order_Item_Status_Codes">
           <Key>
@@ -150,6 +153,16 @@
           <Property Name="user_mail" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="advise_subject" Type="nvarchar" MaxLength="500" />
           <Property Name="advise_body" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Votes">
+          <Key>
+            <PropertyRef Name="vote_id" />
+          </Key>
+          <Property Name="vote_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="vote_type" Type="smallint" Nullable="false" />
+          <Property Name="ip_address" Type="nvarchar" MaxLength="20" />
+          <Property Name="vote_score" Type="int" />
+          <Property Name="vote_object_id" Type="int" />
         </EntityType>
         <Association Name="FK_Order_Items_Orders">
           <End Role="Orders" Type="MyStoreModel.Store.Orders" Multiplicity="1" />
@@ -247,6 +260,7 @@
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           <EntitySet Name="Blogs" EntityType="MyStoreModel.Blog" />
+          <EntitySet Name="Votes" EntityType="MyStoreModel.Vote" />
         </EntityContainer>
         <EntityType Name="Order_Items">
           <Key>
@@ -307,6 +321,8 @@
           <Property Type="DateTime" Name="product_created_date" Precision="0" />
           <Property Type="Double" Name="product_quantity" />
           <Property Type="String" Name="other_detail" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="total_vote_score" />
+          <Property Type="Int32" Name="total_vote_count" />
         </EntityType>
         <EntityType Name="Ref_Order_Item_Status_Codes">
           <Key>
@@ -483,6 +499,20 @@
           <Property Type="Int32" Name="blog_total_score" />
           <Property Type="String" Name="blog_img_title" MaxLength="50" FixedLength="true" Unicode="true" />
         </EntityType>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="vote_id" />
+          </Key>
+          <Property Type="Int32" Name="vote_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="MyStoreModel.VoteType" Name="vote_type" Nullable="false" />
+          <Property Type="String" Name="ip_address" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="vote_score" />
+          <Property Type="Int32" Name="vote_object_id" />
+        </EntityType>
+        <EnumType Name="VoteType" UnderlyingType="Int16">
+          <Member Name="Product" Value="1" />
+          <Member Name="Blog" Value="2" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -528,7 +558,9 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="IsTypeOf(MyStoreModel.Product)">
         <MappingFragment StoreEntitySet="Products">
-          <ScalarProperty Name="other_detail" ColumnName="other_detail" />
+          <ScalarProperty Name="total_vote_count" ColumnName="total_vote_count" />
+                <ScalarProperty Name="total_vote_score" ColumnName="total_vote_score" />
+                <ScalarProperty Name="other_detail" ColumnName="other_detail" />
                 <ScalarProperty Name="product_quantity" ColumnName="product_quantity" />
                 <ScalarProperty Name="product_created_date" ColumnName="product_created_date" />
                 <ScalarProperty Name="product_image" ColumnName="product_image" />
@@ -614,6 +646,17 @@
                 <ScalarProperty Name="blog_content" ColumnName="blog_content" />
                 <ScalarProperty Name="blog_title" ColumnName="blog_title" />
                 <ScalarProperty Name="blog_id" ColumnName="blog_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Votes">
+            <EntityTypeMapping TypeName="MyStoreModel.Vote">
+              <MappingFragment StoreEntitySet="Votes">
+                <ScalarProperty Name="vote_object_id" ColumnName="vote_object_id" />
+                <ScalarProperty Name="vote_score" ColumnName="vote_score" />
+                <ScalarProperty Name="ip_address" ColumnName="ip_address" />
+                <ScalarProperty Name="vote_type" ColumnName="vote_type" />
+                <ScalarProperty Name="vote_id" ColumnName="vote_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

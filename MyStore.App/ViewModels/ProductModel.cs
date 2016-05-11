@@ -16,5 +16,7 @@ namespace MyStore.App.ViewModels
         public string Image { get; set; }
         public DateTime DateCreated { get; set; }
         public string OtherDetails { get; set; }
+        public int Total_Voted { get; set; }
+        public int Total_Score { get; set; }
     }
 }
