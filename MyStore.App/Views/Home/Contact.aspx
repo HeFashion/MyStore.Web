@@ -2,7 +2,7 @@
 
 <%@ Import Namespace="BotDetect.Web.UI.Mvc" %>
 <asp:Content ID="contactTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Liên lạc | Hè-Shopper
+    Liên lạc | Hè-Vải Sợi
 </asp:Content>
 
 <asp:Content ID="contactContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -10,7 +10,7 @@
         <div class="bg">
             <div class="row">
                 <div class="col-sm-12">
-                    <h2 class="title text-center">Địa Chỉ <strong>Của Chúng Tôi</strong></h2>
+                    <h2 class="title text-center">Địa Điểm Của Chúng Tôi</h2>
                     <div id="gmap" class="contact-map">
                     </div>
                 </div>

@@ -1,14 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.master" Inherits="System.Web.Mvc.ViewPage<MyStore.App.Models.MyData.Blog>" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
+<asp:Content ID="detailTitle" ContentPlaceHolderID="TitleContent" runat="server">
     <%:Model.blog_title %>
 </asp:Content>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="detailContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="blog-post-area">
         <h2 class="title text-center"><%:Model.blog_title %></h2>
         <div class="single-blog-post">
-            <%--<h3><%:Model.blog_title %></h3>--%>
+            
             <div class="post-meta">
                 <ul>
                     <li><i class="fa fa-user"></i>Cao Hoành</li>
