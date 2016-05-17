@@ -1,26 +1,28 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<MyStore.App.Models.Authentication.LocalPasswordModel>" %>
 
 <p>
-    You do not have a local password for this site. Add a local
-    password so you can log in without an external login.
+    Quý khách vẫn chưa có mật khẩu nội bộ của website. 
+    Vui lòng thiết lập mật khẩu để có thể đăng nhập mà không cần xử dụng mạng xã hội.
 </p>
 
-<% using (Html.BeginForm("Manage", "Account")) { %>
+<h2 class="title text-left">Thiết lập mật khẩu</h2>
+
+<div class="manage-form">
+    <% using (Html.BeginForm("Manage", "Account"))
+       { %>
     <%: Html.AntiForgeryToken() %>
     <%: Html.ValidationSummary() %>
 
-    <fieldset>
-        <legend>Set Password Form</legend>
-        <ol>
-            <li>
-                <%: Html.LabelFor(m => m.NewPassword) %>
-                <%: Html.PasswordFor(m => m.NewPassword) %>
-            </li>
-            <li>
-                <%: Html.LabelFor(m => m.ConfirmPassword) %>
-                <%: Html.PasswordFor(m => m.ConfirmPassword) %>
-            </li>
-        </ol>
-        <input type="submit" value="Set password" />
-    </fieldset>
-<% } %>
+    <ol>
+        <li>
+            <%: Html.Label("1. Mật khẩu mới") %>
+            <%: Html.PasswordFor(m => m.NewPassword) %>
+        </li>
+        <li>
+            <%: Html.Label("2. Nhập lại mật khẩu mới") %>
+            <%: Html.PasswordFor(m => m.ConfirmPassword) %>
+        </li>
+    </ol>
+    <button type="submit" class="btn btn-default">Thiết Lập</button>
+    <% } %>
+</div>

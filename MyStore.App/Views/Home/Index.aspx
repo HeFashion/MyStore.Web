@@ -81,12 +81,12 @@
                         <div class="single-products">
                             <div class="productinfo text-center">
                                 <img src="<%: Url.Content(System.IO.Path.Combine("~/Images/shop/product", item.Image)) %>" alt="" />
-                                <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#")  %></h2>
+                                <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#")  %> <sup>đ</sup></h2>
                                 <p><%: item.Description %></p>
                             </div>
                             <div class="product-overlay">
                                 <div class="overlay-content">
-                                    <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#") %></h2>
+                                    <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#") %> <sup>đ</sup></h2>
                                     <p><%: item.Description %></p>
                                     <a href="<%:Url.Action("Details", "Product", new {id = item.Id })%>" class="btn btn-default view-details">
                                         <i class="fa fa-external-link"></i>

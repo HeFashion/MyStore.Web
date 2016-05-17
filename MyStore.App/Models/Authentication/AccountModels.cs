@@ -13,7 +13,7 @@ namespace MyStore.App.Models.Authentication
         public UsersContext()
             : base("name=UserEntities")
         {
-            
+
         }
 
         public DbSet<UserProfile> UserProfiles { get; set; }
@@ -39,13 +39,16 @@ namespace MyStore.App.Models.Authentication
         [Display(Name = "Tên Hiển Thị Trên Website")]
         public string UserName { get; set; }
 
-        public string ExternalLoginData { get; set; }
 
         [Display(Name = "Họ & Tên")]
         public string FullName { get; set; }
 
-        [Display(Name = "Đường link trang cá nhân")]
-        public string Link { get; set; }
+        [Display(Name = "Địa chỉ email")]
+        public string Email { get; set; }
+
+        public bool Verified { get; set; }
+        public string ExternalLoginData { get; set; }
+
     }
 
     [Table("ExtraUserInformation")]

@@ -62,7 +62,7 @@
         <!--/price-range-->--%>
 
         <!--shipping-->
-        <div class="shipping text-center">
+        <div id="shippingImg" class="shipping text-center">
             <img src="<%: Url.Content("~/Images/home/shipping.jpg") %>" alt="" />
         </div>
         <!--/shipping-->

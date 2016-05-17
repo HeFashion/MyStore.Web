@@ -8,7 +8,7 @@
     <div class="blog-post-area">
         <h2 class="title text-center"><%:Model.blog_title %></h2>
         <div class="single-blog-post">
-            
+
             <div class="post-meta">
                 <ul>
                     <li><i class="fa fa-user"></i>Cao Hoành</li>
@@ -22,11 +22,11 @@
                 <ul class="pager pull-right">
                     <%if (Model.blog_id > ViewBag.MinId)
                       {%>
-                    <li><%:Html.ActionLink("<< Lùi","PrevBlog", new{currentId = Model.blog_id}) %></li>
+                    <li><%:Html.ActionLink("<< Bài cũ","PrevBlog", new{currentId = Model.blog_id}) %></li>
                     <%} %>
                     <%if (Model.blog_id < ViewBag.MaxId)
                       {%>
-                    <li><%:Html.ActionLink("Tới >>","NextBlog", new{currentId = Model.blog_id}) %></li>
+                    <li><%:Html.ActionLink("Bài mới >>","NextBlog", new{currentId = Model.blog_id}) %></li>
                     <%} %>
                 </ul>
             </div>
@@ -72,6 +72,7 @@
                               "<%:Model.blog_id%>",
                               "<%:(short)MyStore.App.Models.MyData.VoteType.Blog %>",
                               "<%:Url.Action("VoteTo", "Vote")%>");
+            $("a[rel^='prettyPhoto']").prettyPhoto();
         });
     </script>
 </asp:Content>

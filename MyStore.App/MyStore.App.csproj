@@ -546,8 +546,8 @@
     <Content Include="Scripts\numericInput.min.js" />
     <Content Include="Scripts\price-range.js" />
     <Content Include="Scripts\rateObject.js" />
-    <Content Include="Views\Account\Login_backup.aspx" />
     <Content Include="Views\Account\_LoginFormPartial.ascx" />
+    <Content Include="Views\Account\_ManageAccountPartial.ascx" />
     <Content Include="Views\Admin\CreateAdvertisement.aspx" />
     <Content Include="Views\Admin\DeleteAdvertisement.aspx" />
     <Content Include="Views\Admin\EditAdvertisement.aspx" />

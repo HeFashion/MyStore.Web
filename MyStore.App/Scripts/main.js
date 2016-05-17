@@ -1,4 +1,10 @@
 /*price range*/
+function ShowModal() {
+    var frmModal = $("#myModal");
+    if (frmModal != null) {
+        frmModal.modal("show");
+    }
+}
 
 $('#sl2').slider();
 

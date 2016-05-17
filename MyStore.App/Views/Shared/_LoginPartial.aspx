@@ -14,7 +14,16 @@
 			<span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
-            <li><%: Html.ActionLink("Quản lý tài khoản", "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" }) %></li>
+            <li>
+                <%: Ajax.ActionLink("Quản lý tài khoản", 
+                                    "Manage",
+                                    "Account", 
+                                    new AjaxOptions{
+                                        HttpMethod="Get", 
+                                        InsertionMode=InsertionMode.Replace, 
+                                        UpdateTargetId="modalContent", 
+                                        OnComplete="ShowModal()"}) %>
+            </li>
             <li>
                 <% using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                    { %>

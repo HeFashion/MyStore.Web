@@ -140,13 +140,16 @@ namespace MyStore.App.Controllers
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
-                : "";
+            message == ManageMessageId.ChangePasswordSuccess ? "Mật khẩu của quý khách đã được thay đổi."
+            : message == ManageMessageId.SetPasswordSuccess ? "Mật khẩu đã được thiết lập."
+            : message == ManageMessageId.RemoveLoginSuccess ? "Tài khoản xã hội đã được xoá."
+            : "";
+
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
-            return View();
+            ViewBag.UserName = User.Identity.Name;
+            return PartialView("_ManageAccountPartial");
+            //return View();
         }
 
         //
@@ -254,35 +257,22 @@ namespace MyStore.App.Controllers
                 // User is new, ask for their desired membership name
                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
-
                 ViewBag.ReturnUrl = returnUrl;
+                string strEmail = string.Empty;
+                bool isVerified = false;
+                GetExtraData(result, out strEmail, out isVerified);
+
                 return View("ExternalLoginConfirmation", new RegisterExternalLoginModel
                 {
                     UserName = result.UserName,
                     ExternalLoginData = loginData,
-                    FullName = result.ExtraData.ContainsKey("name") ? result.ExtraData["name"] : "Trống",
-                    Link = result.ExtraData.ContainsKey("link") ? result.ExtraData["link"] : "Trống",
+                    FullName = result.ExtraData.ContainsKey("name") ? result.ExtraData["name"] : "Không có",
+                    Email = !string.IsNullOrEmpty(strEmail) ? strEmail : "Không có",
+                    Verified = isVerified
                 });
             }
         }
-        /*
-        private IDictionary<string, string> GetExtraData(AuthenticationResult result)
-        {
-            if (result == null || result.ExtraData == null) return null;
-            IDictionary<string, string> result = new Dictionary<string, string>();
-            if (Session[FACEBOOK_SESSION_KEY] != null)
-            {
-                string accesstoken = Session[FACEBOOK_SESSION_KEY].ToString();
 
-                var fb = new Facebook.FacebookClient(accesstoken);
-                dynamic response = fb.Get("me", new { name = "name", link = "link" });
-                if (response.ContainsKey("name"))
-                {
-                    Add("name", response["name"]);
-                }
-            }
-        }
-        */
         private void SaveAccessToken(AuthenticationResult result)
         {
             if (result == null) return;
@@ -297,6 +287,30 @@ namespace MyStore.App.Controllers
                 {
                     Session[GeneralContanstClass.GOOGLE_SESSION_KEY] = result.ExtraData["accesstoken"];
                 }
+            }
+        }
+        private void GetExtraData(AuthenticationResult result, out string email, out bool isVerified)
+        {
+            email = string.Empty;
+            isVerified = false;
+
+            if (result == null)
+            {
+                return;
+            }
+            string providerName = result.Provider.ToLower();
+
+            if (providerName == "facebook")
+            {
+                Facebook.FacebookClient fbClient = new Facebook.FacebookClient(Convert.ToString(Session[GeneralContanstClass.FACEBOOK_SESSION_KEY]));
+                dynamic me = fbClient.Get("me", new { fields = "email,location,verified" });
+                email = me.email;
+                isVerified = Convert.ToBoolean(me.verified);
+            }
+            else if (providerName == "google")
+            {
+                email = result.ExtraData.ContainsKey("email") ? result.ExtraData["email"] : string.Empty;
+                isVerified = result.ExtraData.ContainsKey("email_verified") ? Convert.ToBoolean(result.ExtraData["email_virified"]) : false;
             }
         }
         //
@@ -325,28 +339,20 @@ namespace MyStore.App.Controllers
                     if (user == null)
                     {
                         // Insert name into the profile table
-                        user = db.UserProfiles.Add(new UserProfile { UserName = model.UserName, EmailAddress = model.UserName });
+                        user = db.UserProfiles.Add(new UserProfile
+                        {
+                            UserName = model.UserName,
+                            EmailAddress = model.Email,
+                            FullName = model.FullName
+                        });
                         db.SaveChanges();
-
-                        bool facebookVerified;
-
-                        var client = new Facebook.FacebookClient(Session[GeneralContanstClass.FACEBOOK_SESSION_KEY].ToString());
-                        dynamic response = client.Get("me", new { fields = "verified" });
-                        if (response.ContainsKey("verified"))
-                        {
-                            facebookVerified = response["verified"];
-                        }
-                        else
-                        {
-                            facebookVerified = false;
-                        }
 
                         ExternalUserInformation extUserInfo = new ExternalUserInformation
                         {
                             UserId = user.UserId,
-                            FullName = model.FullName == "Trống" ? string.Empty : model.FullName,
-                            Link = model.Link == "Trống" ? string.Empty : model.FullName,
-                            Verified = facebookVerified
+                            FullName = model.FullName == "Không có" ? string.Empty : model.FullName,
+                            Link = string.Empty,
+                            Verified = model.Verified
                         };
                         db.ExternalUsers.Add(extUserInfo);
                         db.SaveChanges();

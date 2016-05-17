@@ -41,6 +41,7 @@
     <%:Html.Partial("_PageFooterPartial") %>
 
     <%: Scripts.Render("~/bundles/jquery") %>
+    <%: Scripts.Render("~/bundles/jqueryval") %>
     <%: Scripts.Render("~/bundles/jqueryextend") %>
     <asp:ContentPlaceHolder ID="ScriptsSection" runat="server" />
 

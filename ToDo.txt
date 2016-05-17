@@ -48,12 +48,21 @@ Add number of comment on tab "Nhận Xét".(need check)
 
 About Us
  + Index(done)
- + Add href for each image
-Fix User Confirm after external login
+ + Add href for each image(done)
+ + research prettyPhoto(understand)
+
+Improve Manage Account page.(done 50%)
+ + Change Password page(done)
+ + Set password page(done)
+ + Register using external confirm page.
+   1. Facebook(done)
+   2. Google(done)
+ + Login fail using external way.
+
 
 Create compare product page
 
 Custom HTTP Not Found page
 Improve addtocart.js(no need for data-url)
-Reorder 
-	
+Move supply chain image to Cart page.
+Move shipping image when scroll(don't suitable with mobi. Append)	

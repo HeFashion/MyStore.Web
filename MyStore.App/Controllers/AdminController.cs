@@ -28,11 +28,11 @@ namespace MyStore.App.Controllers
             if (updatePhotoId != null &&
                 !updatePhotoId.HasValue)
             {
-                maxProductId = updatePhotoId != null && updatePhotoId.HasValue ? updatePhotoId.Value : db.Products.Max(p => p.product_id);
+                maxProductId = updatePhotoId.Value;
                 maxProductId += 1;
             }
             else
-                maxProductId = updatePhotoId.Value;
+                maxProductId = updatePhotoId ?? 1;
 
             string fileName = string.Format("product{0}{1}", maxProductId, System.IO.Path.GetExtension(photo.FileName));
             //Save original image
@@ -140,6 +140,8 @@ namespace MyStore.App.Controllers
                     HttpPostedFileBase photo = Request.Files["productImg"];
                     product.product_image = SaveProductPhoto(photo);
                     product.product_created_date = DateTime.Now;
+                    product.total_vote_count = 0;
+                    product.total_vote_score = 0;
 
                     db.Products.Add(product);
                     db.SaveChanges();
@@ -194,10 +196,11 @@ namespace MyStore.App.Controllers
             if (ModelState.IsValid)
             {
                 HttpPostedFileBase photo = Request.Files["productImg"];
-                string strImage = SaveProductPhoto(photo, product.product_id);
-                if (!string.IsNullOrEmpty(strImage))
+                if (photo != null && photo.ContentLength != 0)
+                {
+                    string strImage = SaveProductPhoto(photo, product.product_id);
                     product.product_image = strImage;
-
+                }
                 db.Products.Attach(product);
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();

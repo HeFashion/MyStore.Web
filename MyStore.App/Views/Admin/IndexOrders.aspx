@@ -125,7 +125,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%: Styles.Render("~/Content/themes/base/css") %>
     <%: Scripts.Render("~/bundles/jqueryui") %>
-    <%: Scripts.Render("~/bundles/jqueryval") %>
+    
 
     <script type="text/javascript">
         function OpenDialog() {

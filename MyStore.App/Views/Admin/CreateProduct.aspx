@@ -98,5 +98,5 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
-    <%: Scripts.Render("~/bundles/jqueryval") %>
+    
 </asp:Content>

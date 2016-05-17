@@ -28,15 +28,17 @@
 
                 <span>
                     <span>
-                        <%:MyStore.App.Utilities.DecimalHelper.ToString(Model.Price, "#,###.#") %> VND / 1 <%:Model.UOM %>
+                        <%:MyStore.App.Utilities.DecimalHelper.ToString(Model.Price, "#,###.#") %> <sup>đ</sup> / <%:Model.UOM %>
                     </span>
                     <br />
-                    <label>Thêm:</label>
-                    <input type="text" value="1" id="txtQuantity" />
-                    <button type="button" class="btn btn-default cart">
-                        <i class="fa fa-shopping-cart"></i>
-                        vào giỏ hàng
-                    </button>
+                    <span>
+                        <label>Thêm:</label>
+                        <input type="text" value="1" id="txtQuantity" />
+                        <button type="button" class="btn btn-default cart">
+                            <i class="fa fa-shopping-cart"></i>
+                            vào giỏ hàng
+                        </button>
+                    </span>
                 </span>
 
                 <table class="socials-share">

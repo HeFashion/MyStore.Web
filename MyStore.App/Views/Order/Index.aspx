@@ -79,12 +79,12 @@
                             <td>
                                 <%--<%: Html.ActionLink("Chi Tiết", "Details", new { id=item.OrderNumber }) %>--%>
                                 <%: Ajax.ActionLink("Chi Tiết", 
-                                            "Details",
-                                            new { id=item.OrderNumber }, 
-                                            new AjaxOptions{HttpMethod="Get", 
-                                                InsertionMode=InsertionMode.Replace, 
-                                                UpdateTargetId="modalContent", 
-                                                OnComplete="ShowModal()"}) %>
+                                                    "Details",
+                                                    new { id=item.OrderNumber }, 
+                                                    new AjaxOptions{HttpMethod="Get", 
+                                                        InsertionMode=InsertionMode.Replace, 
+                                                        UpdateTargetId="modalContent", 
+                                                        OnComplete="ShowModal()"}) %>
                             </td>
                         </tr>
                         <% } %>
@@ -98,13 +98,4 @@
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%: Scripts.Render("~/bundles/jqueryui") %>
-    <%: Scripts.Render("~/bundles/jqueryval") %>
-    <script type="text/javascript">
-        function ShowModal() {
-            var frmModal = $("#myModal");
-            if (frmModal != null) {
-                frmModal.modal("show");
-            }
-        }
-    </script>
 </asp:Content>

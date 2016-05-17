@@ -17,7 +17,7 @@
         <legend>Product</legend>
 
         <%: Html.HiddenFor(model => model.product_id) %>
-
+        <%: Html.HiddenFor(model => model.product_image) %>
         <div class="editor-label">
             <%: Html.LabelFor(model => model.product_type_id, "Ref_Product_Type") %>
         </div>
@@ -121,7 +121,7 @@
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%: Scripts.Render("~/bundles/jqueryui") %>
-    <%: Scripts.Render("~/bundles/jqueryval") %>
+
     <%: Styles.Render("~/Content/themes/base/css") %>
     <script type="text/javascript">
         $(document).ready(function () {
