@@ -12,7 +12,13 @@
             <td class="manage-form">
                 <% if (ViewBag.ShowRemoveButton)
                    {
-                       using (Html.BeginForm("Disassociate", "Account"))
+                       using (Ajax.BeginForm("Disassociate", "Account", new AjaxOptions
+                       {
+                           HttpMethod = "POST",
+                           InsertionMode = InsertionMode.Replace,
+                           UpdateTargetId = "modalContent",
+                           OnComplete = "ShowModal()"
+                       }))
                        { %>
                 <%: Html.AntiForgeryToken() %>
                 <div>

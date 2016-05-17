@@ -9,6 +9,7 @@
     <meta name="author" content="">
     <title>Login Failed</title>
     <%: Styles.Render("~/Content/themes/mystyle/css") %>
+    <%: Styles.Render("~/bundles/bootstapadmin") %>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -28,7 +29,7 @@
                 <img src="<%:Url.Content("~/images/home/logo.png") %>" alt="" /></a>
         </div>
         <div class="content-404">
-            <img src="images/404/404.png" class="img-responsive" alt="" />
+            <img src="<%:Url.Content("~/images/404/404.png") %>" class="img-responsive" alt="" />
             <h1><b>OPPS!</b> Không thể Đăng Nhập</h1>
             <p>Có lỗi trong qua trình đăng nhập. Vui lòng thử lại sau.</p>
             <h2><%:Html.ActionLink("Quay lại trang chủ","Index", "Home") %></h2>

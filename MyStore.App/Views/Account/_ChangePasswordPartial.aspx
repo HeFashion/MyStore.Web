@@ -5,8 +5,14 @@
 
 
 <div class="manage-form">
-    
-    <% using (Html.BeginForm("Manage", "Account"))
+
+    <% using (Ajax.BeginForm("Manage", "Account", new AjaxOptions
+       {
+           HttpMethod = "POST",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "modalContent",
+           OnComplete = "ShowModal()"
+       }))
        { %>
     <%: Html.AntiForgeryToken() %>
     <%: Html.ValidationSummary() %>

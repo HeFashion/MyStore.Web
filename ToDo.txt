@@ -57,7 +57,9 @@ Improve Manage Account page.(done 50%)
  + Register using external confirm page.
    1. Facebook(done)
    2. Google(done)
- + Login fail using external way.
+ + Login fail using external way.(done)
+
+Change all English to Vietnamese in AccountController
 
 
 Create compare product page
@@ -66,3 +68,4 @@ Custom HTTP Not Found page
 Improve addtocart.js(no need for data-url)
 Move supply chain image to Cart page.
 Move shipping image when scroll(don't suitable with mobi. Append)	
+Fix margin-left for Account Manage li

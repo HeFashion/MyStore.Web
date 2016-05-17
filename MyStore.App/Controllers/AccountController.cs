@@ -52,7 +52,7 @@ namespace MyStore.App.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không đúng.");
             return View(model);
         }
 
@@ -183,7 +183,7 @@ namespace MyStore.App.Controllers
                     }
                     else
                     {
-                        ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                        ModelState.AddModelError("", "Nhập mật khẩu cũ sai hoặc mật khẩu mới không khớp.");
                     }
                 }
             }
@@ -206,13 +206,15 @@ namespace MyStore.App.Controllers
                     }
                     catch (Exception)
                     {
-                        ModelState.AddModelError("", String.Format("Unable to create local account. An account with the name \"{0}\" may already exist.", User.Identity.Name));
+                        ModelState.AddModelError("", String.Format("Tên \"{0}\" đã có người sử dụng. Vui lòng chọn tên khác.", User.Identity.Name));
                     }
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            //return View(model);
+            ViewBag.UserName = User.Identity.Name;
+            return PartialView("_ManageAccountPartial", model);
         }
 
         //
@@ -460,16 +462,16 @@ namespace MyStore.App.Controllers
             switch (createStatus)
             {
                 case MembershipCreateStatus.DuplicateUserName:
-                    return "User name already exists. Please enter a different user name.";
+                    return "Tên đã được sử dụng. Vui lòng, sử dụng tên khác.";
 
                 case MembershipCreateStatus.DuplicateEmail:
-                    return "A user name for that e-mail address already exists. Please enter a different e-mail address.";
+                    return "Địa chỉ email đã được sử dụng. Vui lòng sử dụng địa chỉ email khác.";
 
                 case MembershipCreateStatus.InvalidPassword:
-                    return "The password provided is invalid. Please enter a valid password value.";
+                    return "Mật khẩu không đúng cách. Vui lòng nhập lại cho đúng.";
 
                 case MembershipCreateStatus.InvalidEmail:
-                    return "The e-mail address provided is invalid. Please check the value and try again.";
+                    return "Email không đúng cách. Vui lòng kiểm tra và nhập lại cho đúng.";
 
                 case MembershipCreateStatus.InvalidAnswer:
                     return "The password retrieval answer provided is invalid. Please check the value and try again.";

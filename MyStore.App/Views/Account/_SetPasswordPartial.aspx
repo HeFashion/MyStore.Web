@@ -8,7 +8,13 @@
 <h2 class="title text-left">Thiết lập mật khẩu</h2>
 
 <div class="manage-form">
-    <% using (Html.BeginForm("Manage", "Account"))
+    <% using (Ajax.BeginForm("Manage", "Account", new AjaxOptions
+       {
+           HttpMethod = "POST",
+           InsertionMode = InsertionMode.Replace,
+           UpdateTargetId = "modalContent",
+           OnComplete = "ShowModal()"
+       }))
        { %>
     <%: Html.AntiForgeryToken() %>
     <%: Html.ValidationSummary() %>
