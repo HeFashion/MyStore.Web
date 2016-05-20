@@ -21,7 +21,10 @@ namespace MyStore.App.Controllers
                                        .OrderBy(p => p.slider_id)
                                        .ToList();
 
-                int dateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
+                int dateCompare = this.Session[GeneralContanstClass.Date_Compare_Session_Key] != null ?
+                                  Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]) :
+                                  10;
+
                 var newProduct = from pro in db.Products
                                  join puom in db.Unit_Of_Measure on pro.product_uom_id equals puom.UOM_id
                                  where System.Data.Objects.EntityFunctions.DiffDays(DateTime.Now, pro.product_created_date) >= dateCompare
@@ -38,7 +41,7 @@ namespace MyStore.App.Controllers
                                      DateCreated = pro.product_created_date ?? DateTime.Now
                                  };
 
-                ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
+                ViewBag.DateCompare = dateCompare;
                 ViewData["new_product"] = newProduct.ToList();
 
             }

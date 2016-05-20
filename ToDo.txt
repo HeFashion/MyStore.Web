@@ -59,7 +59,7 @@ Improve Manage Account page.(done 50%)
    2. Google(done)
  + Login fail using external way.(done)
 
-Change all English to Vietnamese in AccountController
+Change all English to Vietnamese in AccountController(done)
 
 
 Create compare product page
@@ -69,3 +69,4 @@ Improve addtocart.js(no need for data-url)
 Move supply chain image to Cart page.
 Move shipping image when scroll(don't suitable with mobi. Append)	
 Fix margin-left for Account Manage li
+improve Index of 

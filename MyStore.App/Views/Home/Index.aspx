@@ -61,10 +61,13 @@
             <%var productType = newProduct.Select(p => p.Type).Distinct(); %>
             <ul class="nav nav-tabs">
                 <%var firstTypeString = productType.FirstOrDefault(); %>
+                <%if (firstTypeString != null)
+                  { %>
                 <li class="active"><a href="<%:string.Concat("#",firstTypeString.Replace(" ", "_")) %>" data-toggle="tab"><%:firstTypeString %></a></li>
                 <%foreach (var item in productType.Skip(1))
                   { %>
                 <li><a href="<%:string.Concat("#", item) %>" data-toggle="tab"><%:item %></a></li>
+                <%} %>
                 <%} %>
             </ul>
         </div>
