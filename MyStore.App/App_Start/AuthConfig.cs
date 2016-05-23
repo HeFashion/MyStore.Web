@@ -23,18 +23,7 @@ namespace MyStore.App
             //    consumerKey: "",
             //    consumerSecret: "");
 
-            OAuthWebSecurity.RegisterFacebookClient(
-                appId: "1670009249904633",
-                appSecret: "c0acabf2bf4d4e8f184c5beae668fbde");
-
-            var client = new GoogleOAuth2Client(
-                clientId: "1076248056848-kc8ph7l3gpk86b2hsspkn3jkpm7ftrj2.apps.googleusercontent.com",
-                clientSecret: "x5oUuyHPzY5Q5em7zVynxUxw"
-                );
-            var extraData = new Dictionary<string, object>();
-            extraData.Add("name", null);
-            extraData.Add("link", null);
-            OAuthWebSecurity.RegisterClient(client, "Google+", extraData);
+           
         }
     }
 }
