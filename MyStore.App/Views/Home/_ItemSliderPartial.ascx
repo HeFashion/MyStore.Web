@@ -2,9 +2,9 @@
 
 <div class="<%: ViewBag.ActiveItem ? "item active" : "item" %>">
     <div class="col-sm-6">
-        <h1><span>Hè</span>-FASHION</h1>
+        <h1><span>Hè</span>-Vải Sợi</h1>
         <h2><%:Model.slider_title %></h2>
-        <p><%: Model.slider_desc %></p>
+        <p><%: Html.Raw(Model.slider_desc) %></p>
 
         <a class="btn btn-default get" href="<%:Model.slider_link %>">Xem ngay</a>
     </div>

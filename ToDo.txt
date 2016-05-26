@@ -61,6 +61,13 @@ Improve Manage Account page.(done 50%)
 
 Change all English to Vietnamese in AccountController(done)
 
+Improve index of Home controller
+ + Add 2 list
+	1. New product list(done)
+	2. Shop recommend list(done)
+ + Change slider
+ 
+
 
 Create compare product page
 
@@ -69,4 +76,5 @@ Improve addtocart.js(no need for data-url)
 Move supply chain image to Cart page.
 Move shipping image when scroll(don't suitable with mobi. Append)	
 Fix margin-left for Account Manage li
-improve Index of 
+Take alook _ChangePasswordPartial- change viewpage to viewcontrol
+Manage account form miss when display

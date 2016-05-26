@@ -67,7 +67,7 @@
                             <li><%: Html.ActionLink("Trang Chủ","Index", "Home" ) %></li>
                             <li><%: Html.ActionLink("Bài Viết","Index", "Blog") %></li>
                             <li><%: Html.ActionLink("Giới Thiệu","About", "Home" ) %></li>
-                            <li><%: Html.ActionLink("Liên Lạc", "Contact", "Home") %></li>
+                            <li><%: Html.ActionLink("Địa Điểm", "Contact", "Home") %></li>
                             <%if (Request.IsAuthenticated)
                               {%>
                             <li><%: Html.ActionLink("Quản Lý Đơn Hàng", "Index", "Order" )%></li>
@@ -92,7 +92,7 @@
     <!--header-bottom-->
 </header>
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog" data-url="<%:Url.Action("RecommendProductPartial","Product") %>">
+<div id="myModal" class="modal fade" role="dialog" data-url="<%:Url.Action("ShowCompletedAddToCart","Product") %>">
     <div id="modalContent" class="modal-dialog">
     </div>
 </div>

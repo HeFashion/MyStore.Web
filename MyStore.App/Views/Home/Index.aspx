@@ -1,7 +1,9 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<PagedList.IPagedList<MyStore.App.ViewModels.ProductModel>>" %>
+
+<%@ Import Namespace="PagedList.Mvc" %>
 
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Home Page - My ASP.NET MVC Application
+    Trang Chủ | Hè-Vải Sợi
 </asp:Content>
 
 <asp:Content ID="indexFeatured" ContentPlaceHolderID="FeaturedContent" runat="server">
@@ -51,77 +53,52 @@
 </asp:Content>
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
-    <% var newProduct = ViewData["new_product"] as IList<MyStore.App.ViewModels.ProductModel>;%>
-    <h2 class="title text-center"><%:"Hàng Mới Về" %></h2>
-
-    <div class="category-tab">
-
-        <!--category-tab-->
-        <div class="col-sm-12">
-            <%var productType = newProduct.Select(p => p.Type).Distinct(); %>
-            <ul class="nav nav-tabs">
-                <%var firstTypeString = productType.FirstOrDefault(); %>
-                <%if (firstTypeString != null)
-                  { %>
-                <li class="active"><a href="<%:string.Concat("#",firstTypeString.Replace(" ", "_")) %>" data-toggle="tab"><%:firstTypeString %></a></li>
-                <%foreach (var item in productType.Skip(1))
-                  { %>
-                <li><a href="<%:string.Concat("#", item) %>" data-toggle="tab"><%:item %></a></li>
-                <%} %>
-                <%} %>
-            </ul>
-        </div>
-        <div class="tab-content">
-            <%bool activeFlag = true; %>
-            <%foreach (var category in newProduct.GroupBy(p => p.Type))
-              {
-                  var firstType = category.First();%>
-            <div class="<%: activeFlag?"tab-pane fade active in": "tab-pane fade" %>" id="<%:firstType.Type.Replace(" ","_") %>">
-                <%foreach (var item in category)
-                  {%>
-                <div class="col-sm-3">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="<%: Url.Content(System.IO.Path.Combine("~/Images/shop/product", item.Image)) %>" alt="" />
-                                <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#")  %> <sup>đ</sup></h2>
-                                <p><%: item.Description %></p>
-                            </div>
-                            <div class="product-overlay">
-                                <div class="overlay-content">
-                                    <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#") %> <sup>đ</sup></h2>
-                                    <p><%: item.Description %></p>
-                                    <a href="<%:Url.Action("Details", "Product", new {id = item.Id })%>" class="btn btn-default view-details">
-                                        <i class="fa fa-external-link"></i>
-                                        Chi tiết
-                                    </a>
-                                    <a id="<%: item.Id %>" href="#" class="btn btn-default add-to-cart">
-                                        <i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng
-                                    </a>
-                                </div>
-                            </div>
-                            <%int dateDiff = Convert.ToInt32((DateTime.Now - item.DateCreated).TotalDays); %>
-                            <%if (dateDiff <= ViewBag.DateCompare)%>
-                            <%{%>
-                            <img src="<%:Url.Content("~/Images/home/new.png") %>" class="new" alt="" />
-                            <%} %>
-                        </div>
-
+    <div class="home_items">
+        <h2 class="title text-center"><%:ViewBag.ListTitle %></h2>
+        <% foreach (var item in Model)%>
+        <%{%>
+        <div class="col-sm-4">
+            <div class="product-image-wrapper">
+                <div class="single-products">
+                    <div class="productinfo text-center">
+                        <img src="<%: Url.Content(System.IO.Path.Combine("~/Images/shop/product", item.Image)) %>" alt="" />
+                        <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#")  %> <sup>đ</sup></h2>
+                        <p><%: item.Description %></p>
                     </div>
+                    <div class="product-overlay">
+                        <div class="overlay-content">
+                            <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#") %> <sup>đ</sup></h2>
+                            <p><%: item.Description %></p>
+                            <a href="<%:Url.Action("Details", "Product", new {id = item.Id })%>" class="btn view-details">
+                                <i class="fa fa-external-link"></i>
+                                Chi tiết
+                            </a>
+                            <a id="<%: item.Id %>" href="#" class="btn add-to-cart">
+                                <i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng
+                            </a>
+                        </div>
+                    </div>
+                    <%int dateDiff = Convert.ToInt32((DateTime.Now - item.DateCreated).TotalDays); %>
+                    <%if (dateDiff <= ViewBag.DateCompare)%>
+                    <%{%>
+                    <img src="<%:Url.Content("~/Images/home/new.png") %>" class="new" alt="" />
+                    <%} %>
                 </div>
-                <%} %>
             </div>
-            <%activeFlag = false; %>
-            <%} %>
         </div>
+        <%} %>
 
+        <%:Html.PagedListPager(Model, 
+                           page=>Url.Action("Index",
+                                            new {page})) %>
     </div>
-    <!--/category-tab-->
-
+    <!--features_items-->
+    <%var recommendList = ViewData["RecommendList"] as IList<MyStore.App.ViewModels.ProductModel>;%>
+    <%: Html.Action("RecommendProductPartial", "Product", new{model=recommendList})%>
 </asp:Content>
 <asp:Content ID="scriptSection" ContentPlaceHolderID="ScriptsSection" runat="server">
-    <%:Scripts.Render("~/bundles/jqueryui") %>
-    <%:Scripts.Render("~/Scripts/addtocart.js") %>
+    <%:Scripts.Render("~/bundles/jqueryui")%>
+    <%:Scripts.Render("~/Scripts/addtocart.js")%>
     <script type="text/javascript">
         $(document).ready(function () {
             var obj = $(".add-to-cart");

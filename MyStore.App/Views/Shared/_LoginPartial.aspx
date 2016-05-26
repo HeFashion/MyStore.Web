@@ -10,8 +10,18 @@
     <%{ %>
     <li class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle user-account" data-toggle="dropdown">
-            Xin chào, <%:User.Identity.Name %> !
-			<span class="caret"></span>
+            Xin chào, 
+            <%if (User.Identity.Name.Contains('@'))
+              { %>
+            <%:User.Identity.Name.Substring(0,  User.Identity.Name.LastIndexOf('@'))%>
+            <%} %>
+            <%else
+              {%>
+            <%:User.Identity.Name %>
+
+            <%}%>
+
+            <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
             <li>
@@ -44,7 +54,7 @@
     </li>
     <li>
         <a href="<%:Url.Action("Register","Account") %>" id="registerLink">
-            <i class="fa fa-registered"></i>Đăng ký
+            <i class="fa fa-key"></i>Đăng ký
         </a>
     </li>
 

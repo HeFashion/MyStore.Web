@@ -6,7 +6,7 @@
 
 <asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="blog-post-area">
-        <h2 class="title text-left">Xin Giới Thiệu</h2>
+        <h2 class="title text-left"><%:ViewBag.Message %></h2>
         <div class="single-blog-post">
             <div class="post-meta">
                 <ul>

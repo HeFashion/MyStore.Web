@@ -32,7 +32,7 @@ namespace MyStore.App.Utilities
 
         public static string GetLoginMessage()
         {
-            return string.Format(MessBox_Template, "Quý khách vui lòng đăng nhập để xử dụng chức năng này.");
+            return string.Format(MessBox_Template, "Quý khách vui lòng đăng nhập để sử dụng chức năng này.");
         }
 
         public static string GetVotedMessage()

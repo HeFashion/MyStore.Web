@@ -33,6 +33,7 @@ namespace MyStore.App.Models.MyData
         public string other_detail { get; set; }
         public Nullable<int> total_vote_score { get; set; }
         public Nullable<int> total_vote_count { get; set; }
+        public Nullable<bool> product_recommend { get; set; }
     
         public virtual ICollection<Order_Items> Order_Items { get; set; }
         public virtual Ref_Product_Type Ref_Product_Type { get; set; }

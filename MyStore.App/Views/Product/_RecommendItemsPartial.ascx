@@ -2,10 +2,11 @@
 
 <!--recommended_items-->
 <div class="recommended_items">
-    <h2 class="title text-center">Các sản phẩm liên quan</h2>
+    <h2 class="title text-center"><%:ViewBag.RecommendTitle %></h2>
 
     <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-
+        <%if (Model != null)
+          { %>
         <div class="carousel-inner">
             <div class="item active">
                 <%foreach (MyStore.App.ViewModels.ProductModel recommendItem in Model.Take(3))%>
@@ -50,6 +51,7 @@
             </div>
             <%} %>
         </div>
+        <%} %>
         <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
             <i class="fa fa-angle-left"></i>
         </a>

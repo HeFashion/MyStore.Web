@@ -149,9 +149,17 @@ namespace MyStore.App.Controllers
         }
 
         [HttpGet]
-        public ActionResult RecommendProductPartial(int selectedId)
+        public PartialViewResult ShowCompletedAddToCart(int selectedId)
         {
+            ViewBag.RecommendTitle = "Các Sản Phẩm Liên Quan";
             return PartialView("_CompletedAddToCart", GetRecommendProduct(selectedId));
+        }
+
+        [HttpGet]
+        public PartialViewResult RecommendProductPartial(IList<ProductModel> model)
+        {
+            ViewBag.RecommendTitle = "Shop Giới Thiệu";
+            return PartialView("_RecommendItemsPartial", model);
         }
 
         [HttpGet]

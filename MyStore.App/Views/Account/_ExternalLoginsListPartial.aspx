@@ -18,7 +18,14 @@
 <% { %>
 
 <button type="submit" name="provider" value="<%:p.AuthenticationClient.ProviderName %>" class="btn btn-block btn-social btn-<%:p.AuthenticationClient.ProviderName %>" title="<%:p.DisplayName %>">
+    <%if (p.AuthenticationClient.ProviderName == "google")
+      {%>
+    <span class="fa fa-google-plus"></span>
+    <%}
+      else
+      {%>
     <span class="fa fa-<%:p.AuthenticationClient.ProviderName %>"></span>
+    <%}%>
     Đăng nhập với <%:p.DisplayName %>
 </button>
 

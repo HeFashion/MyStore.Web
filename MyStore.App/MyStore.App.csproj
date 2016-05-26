@@ -373,14 +373,14 @@
       <DependentUpon>MyStore.mdf</DependentUpon>
     </Content>
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\themes\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\themes\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\themes\mystyle\animate.css" />
     <Content Include="Content\themes\mystyle\bootstrap-social.css" />
     <Content Include="Content\themes\mystyle\bootstrap.css" />
     <Content Include="Content\themes\mystyle\bootstrap.min.css" />
     <Content Include="Content\themes\mystyle\font-awesome.css" />
     <Content Include="Content\themes\mystyle\font-awesome.min.css" />
-    <Content Include="Content\themes\mystyle\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\themes\mystyle\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\themes\mystyle\images\searchicon.png" />
     <Content Include="Content\themes\mystyle\jquery.rateyo.css" />
     <Content Include="Content\themes\mystyle\jquery.rateyo.min.css" />
@@ -444,14 +444,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\themes\mystyle\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\themes\mystyle\fonts\FontAwesome.otf" />
-    <Content Include="Content\themes\mystyle\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\themes\mystyle\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\themes\mystyle\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\themes\mystyle\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Images\searchicon.png" />
-    <Content Include="Models\MyData\MyStoreModel.edmx.sql" />
     <Content Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -476,44 +468,16 @@
     <Content Include="App_Data\HefashionGoogleApp.json">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\themes\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\themes\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\themes\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\themes\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\themes\fonts\FontAwesome.otf" />
+    <Content Include="Content\themes\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Properties\PublishProfiles\File_MyStore.pubxml" />
     <None Include="Properties\PublishProfiles\FTP_MyStore.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\404\404.png" />
-    <Content Include="Images\blog\blog-one.jpg" />
-    <Content Include="Images\blog\blog-three.jpg" />
-    <Content Include="Images\blog\blog-two.jpg" />
-    <Content Include="Images\blog\man-four.jpg" />
-    <Content Include="Images\blog\man-one.jpg" />
-    <Content Include="Images\blog\man-three.jpg" />
-    <Content Include="Images\blog\man-two.jpg" />
-    <Content Include="Images\blog\socials.png" />
-    <Content Include="Images\cart\one.png" />
-    <Content Include="Images\cart\three.png" />
-    <Content Include="Images\cart\two.png" />
-    <Content Include="Images\home\bg_border.png" />
-    <Content Include="Images\home\gallery1.jpg" />
-    <Content Include="Images\home\gallery2.jpg" />
-    <Content Include="Images\home\gallery3.jpg" />
-    <Content Include="Images\home\gallery4.jpg" />
-    <Content Include="Images\home\girl1.jpg" />
-    <Content Include="Images\home\girl2.jpg" />
-    <Content Include="Images\home\girl3.jpg" />
-    <Content Include="Images\home\iframe1.png" />
-    <Content Include="Images\home\iframe2.png" />
-    <Content Include="Images\home\iframe3.png" />
-    <Content Include="Images\home\iframe4.png" />
-    <Content Include="Images\home\logo.png" />
-    <Content Include="Images\home\map.png" />
-    <Content Include="Images\home\new.png" />
-    <Content Include="Images\home\partner1.png" />
-    <Content Include="Images\home\partner2.png" />
-    <Content Include="Images\home\partner3.png" />
-    <Content Include="Images\home\partner4.png" />
-    <Content Include="Images\home\pricing.png" />
-    <Content Include="Images\home\sale.png" />
-    <Content Include="Images\home\searchicon.png" />
-    <Content Include="Images\home\shipping.jpg" />
     <Content Include="Scripts\addtocart.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -607,19 +571,6 @@
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Images\accent.png" />
-    <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
-    <Content Include="Images\orderedList0.png" />
-    <Content Include="Images\orderedList1.png" />
-    <Content Include="Images\orderedList2.png" />
-    <Content Include="Images\orderedList3.png" />
-    <Content Include="Images\orderedList4.png" />
-    <Content Include="Images\orderedList5.png" />
-    <Content Include="Images\orderedList6.png" />
-    <Content Include="Images\orderedList7.png" />
-    <Content Include="Images\orderedList8.png" />
-    <Content Include="Images\orderedList9.png" />
     <Content Include="Views\Account\_ChangePasswordPartial.aspx" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.aspx" />
     <Content Include="Views\Account\_RemoveExternalLoginsPartial.aspx" />
@@ -649,6 +600,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Images\blog\" />
+    <Folder Include="Images\cart\" />
+    <Folder Include="Images\home\" />
     <Folder Include="Images\product-details\" />
     <Folder Include="Images\shop\" />
   </ItemGroup>

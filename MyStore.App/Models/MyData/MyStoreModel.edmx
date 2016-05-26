@@ -111,6 +111,7 @@
           <Property Name="other_detail" Type="nvarchar(max)" />
           <Property Name="total_vote_score" Type="int" />
           <Property Name="total_vote_count" Type="int" />
+          <Property Name="product_recommend" Type="bit" />
         </EntityType>
         <EntityType Name="Ref_Order_Item_Status_Codes">
           <Key>
@@ -323,6 +324,7 @@
           <Property Type="String" Name="other_detail" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="total_vote_score" />
           <Property Type="Int32" Name="total_vote_count" />
+          <Property Type="Boolean" Name="product_recommend" />
         </EntityType>
         <EntityType Name="Ref_Order_Item_Status_Codes">
           <Key>
@@ -558,7 +560,8 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="IsTypeOf(MyStoreModel.Product)">
         <MappingFragment StoreEntitySet="Products">
-          <ScalarProperty Name="total_vote_count" ColumnName="total_vote_count" />
+          <ScalarProperty Name="product_recommend" ColumnName="product_recommend" />
+                <ScalarProperty Name="total_vote_count" ColumnName="total_vote_count" />
                 <ScalarProperty Name="total_vote_score" ColumnName="total_vote_score" />
                 <ScalarProperty Name="other_detail" ColumnName="other_detail" />
                 <ScalarProperty Name="product_quantity" ColumnName="product_quantity" />

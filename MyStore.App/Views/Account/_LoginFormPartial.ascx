@@ -17,7 +17,10 @@
         <%: Html.CheckBoxFor(m => m.RememberMe,new { @class = "checkbox" }) %>
         <%: Html.LabelFor(m => m.RememberMe) %>
     </span>
-    <button type="submit" class="btn btn-default">Đăng nhập</button>
+    <button type="submit" class="btn btn-default">
+        <i class="fa fa-sign-in"></i>
+        Đăng nhập
+    </button>
     <% } %>
 </div>
 <!--/login form-->

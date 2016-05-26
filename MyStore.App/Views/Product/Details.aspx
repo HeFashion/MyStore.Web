@@ -94,6 +94,7 @@
     </div>
     <!--/category-tab-->
     <%IList<MyStore.App.ViewModels.ProductModel> recommendItems = ViewData["RecommendProduct"] as IList<MyStore.App.ViewModels.ProductModel>; %>
+    <%ViewBag.RecommendTitle = "Các Sản Phẩm Liên Quan"; %>
     <%:Html.Partial("_RecommendItemsPartial",  recommendItems)%>
 </asp:Content>
 
