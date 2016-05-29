@@ -13,6 +13,14 @@
     <p>
         <%: Html.ActionLink("Create New", "Create") %>
     </p>
+    <p>
+        <%: Ajax.ActionLink("Import Product", 
+                            "ImportProduct",
+                            new AjaxOptions{HttpMethod="Get", 
+                            InsertionMode=InsertionMode.Replace, 
+                            UpdateTargetId="modalContent", 
+                            OnComplete="OpenDialog()"}) %>
+    </p>
     <%using (Html.BeginForm("Index", "Admin", FormMethod.Get))
       { %>
     <p>
@@ -25,6 +33,7 @@
     <table>
         <tr>
             <th></th>
+            <th>ID</th>
             <th>
                 <%:Html.ActionLink("Type","Index", new { sortOrder= "Type", searchString=ViewBag.SearchString })%>
 
@@ -54,7 +63,10 @@
            { %>
         <tr>
             <td>
-                <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop/product-recommend",item.product_image)) %>" alt="<%:item.product_name %>" />
+                <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",item.product_image,"recommend.jpg")) %>" alt="<%:item.product_name %>" />
+            </td>
+            <td>
+                <%: Html.DisplayFor(modelItem => item.product_id) %>
             </td>
             <td>
                 <%: Html.DisplayFor(modelItem => item.Ref_Product_Type.product_type_description_vn) %>
@@ -92,10 +104,26 @@
                                             new {sortOrder = ViewBag.SortOrder,
                                                  searchString = ViewBag.SearchString,
                                                  page})) %>
+    <%-- Modal popup for details --%>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div id="modalContent" class="modal-dialog">
+        </div>
+    </div>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="FeaturedContent" runat="server">
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
+    <%: Styles.Render("~/Content/themes/base/css") %>
+    <%: Scripts.Render("~/bundles/jqueryui") %>
+    <%: Scripts.Render("~/bundles/jqueryval") %>
+    <script>
+        function OpenDialog() {
+            $("#myModal").dialog({
+                height: 200,
+                width: 300,
+            });
+        }
+    </script>
 </asp:Content>
