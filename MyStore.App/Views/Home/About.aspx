@@ -14,13 +14,7 @@
                     <li><i class="fa fa-clock-o"></i>1:33 pm</li>
                     <li><i class="fa fa-calendar"></i>DEC 5, 2016</li>
                 </ul>
-                <span>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </span>
+
             </div>
             <p>Với hơn <b>50 năm</b> kinh nghiệm trong nghề may áo dài, nhà may Hè chuyên May Đo, Bán các loại áo dài.</p>
             <a href="<%: Url.Content("~/images/home/ao_dai.jpg") %>" rel="prettyPhoto[myShop]" title="Áo dài">

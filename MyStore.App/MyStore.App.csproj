@@ -508,6 +508,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\main.admin.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\numericInput.js" />
@@ -532,7 +533,9 @@
     <Content Include="Views\Admin\IndexOrders.aspx" />
     <Content Include="Views\Admin\IndexProductCatalog.aspx" />
     <Content Include="Views\Admin\IndexUOM.aspx" />
+    <Content Include="Views\Admin\_ImportProductPartial.ascx" />
     <Content Include="Views\Admin\_ListFilePartial.ascx" />
+    <Content Include="Views\Admin\_MoveProductPartial.ascx" />
     <Content Include="Views\Admin\_ShipProductPartial.ascx" />
     <Content Include="Views\Blog\Details.aspx" />
     <Content Include="Views\Blog\Index.aspx" />
@@ -560,15 +563,15 @@
     <Content Include="Views\Shared\_PageFooterPartial.ascx" />
     <Content Include="Views\Shared\_PageHeaderPartial.ascx" />
     <Content Include="Views\Shared\_RateObjectPartial.ascx" />
-    <Content Include="Web.config">
+    <None Include="Web.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Debug.config">
+    </None>
+    <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
+    </None>
+    <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
-    </Content>
+    </None>
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Account\_ChangePasswordPartial.aspx" />
@@ -601,9 +604,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\blog\" />
-    <Folder Include="Images\cart\" />
     <Folder Include="Images\home\" />
-    <Folder Include="Images\product-details\" />
     <Folder Include="Images\shop\" />
   </ItemGroup>
   <ItemGroup>

@@ -9,10 +9,37 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Index</h2>
-
     <p>
-        <%: Html.ActionLink("Create New", "Create") %>
+        <%: Html.ActionLink("Create New", 
+                            "Create", 
+                            null, 
+                            new {@id="btnNew" })%>
+
+        <%: Ajax.ActionLink("Import Product",
+                            "ImportProduct",
+                            null,
+                            new AjaxOptions
+                            {
+                                HttpMethod = "Get",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "modalContent",
+                                OnComplete = "OpenDialog(200,300)"
+                            },
+                            new { @id="btnImport" })%>
+
+        <%: Ajax.ActionLink("Move Product",
+                            "GetMoveProductPartial",
+                            null,
+                            new AjaxOptions
+                            {
+                                HttpMethod = "Get",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "modalContent",
+                                OnComplete = "OpenDialog(150,320)"
+                            },
+                            new { @id="btnMove" })%>
     </p>
+
     <%using (Html.BeginForm("Index", "Admin", FormMethod.Get))
       { %>
     <p>
@@ -22,9 +49,26 @@
         <input type="submit" value="Search" />
     </p>
     <%} %>
+    <%:Html.PagedListPager(Model, 
+                           page=>Url.Action("Index",
+                                            new {sortOrder = ViewBag.SortOrder,
+                                                 searchString = ViewBag.SearchString,
+                                                 page})) %>
     <table>
         <tr>
+            <td colspan="10">
+                <label>
+                    <%: Html.CheckBox("IsSelectedAll")%>
+                    Check/Uncheck All
+                </label>
+            </td>
+        </tr>
+
+        <tr>
             <th></th>
+            <th></th>
+            <th>ID</th>
+
             <th>
                 <%:Html.ActionLink("Type","Index", new { sortOrder= "Type", searchString=ViewBag.SearchString })%>
 
@@ -54,8 +98,12 @@
            { %>
         <tr>
             <td>
-                <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop/product-recommend",item.product_image)) %>" alt="<%:item.product_name %>" />
+                <%: Html.CheckBox("IsSelected", new {@value=item.product_id}) %>
             </td>
+            <td>
+                <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",item.product_image,"recommend.jpg")) %>" alt="<%:item.product_name %>" />
+            </td>
+            <td><%: Html.DisplayFor(modelItem => item.product_id)%></td>
             <td>
                 <%: Html.DisplayFor(modelItem => item.Ref_Product_Type.product_type_description_vn) %>
             </td>
@@ -92,10 +140,31 @@
                                             new {sortOrder = ViewBag.SortOrder,
                                                  searchString = ViewBag.SearchString,
                                                  page})) %>
+    <%-- Modal popup for details --%>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div id="modalContent" class="modal-dialog">
+        </div>
+    </div>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="FeaturedContent" runat="server">
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
+    <%: Styles.Render("~/Content/themes/base/css") %>
+    <%: Styles.Render("~/Content/PagedList.css") %>
+
+    <%: Scripts.Render("~/bundles/jqueryui") %>
+    <%: Scripts.Render("~/bundles/jqueryval") %>
+    <%: Scripts.Render("~/Scripts/main.admin.js") %>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#btnNew").button();
+            $("#btnImport").button();
+            $("#btnMove").button();
+            $("#IsSelectedAll").change(function () {
+                $("input:checkbox").prop('checked', $(this).prop("checked"));
+            });
+        });
+    </script>
 </asp:Content>

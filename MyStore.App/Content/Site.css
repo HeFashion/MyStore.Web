@@ -58,6 +58,12 @@ mark {
     visibility: hidden;
 }
 
+#progressbar {
+    width: 250px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
 h1, h2, h3,
 h4, h5, h6 {
     color: #000;
@@ -357,7 +363,7 @@ aside {
 
 .table-wrapper .select {
     width: 20%;
-    padding-left:.5em;
+    padding-left: .5em;
 }
 
 .table-wrapper table thead th .text {

@@ -846,9 +846,6 @@ h2.title:before {
 .home_items {
     overflow: hidden;
 }
-    .home_items .pagination-container {
-        padding-left:40%
-    }
 
 h2.title {
     color: #FE980F;
@@ -2670,7 +2667,7 @@ input[type="checkbox"].input-validation-error {
 
     .pagination-container .pagination {
         display: inline-block;
-        padding-left: 15px;
+        padding-left: 20%;
         margin: 0;
     }
 

@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 using PagedList;
 
@@ -14,61 +15,66 @@ using MyStore.App.Utilities;
 
 namespace MyStore.App.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private MyStoreEntities db = new MyStoreEntities();
-
+        private static int _insertedCount = 0;
         #region **Private Functions**
 
-        private string SaveProductPhoto(HttpPostedFileBase photo, int? updatePhotoId = null)
+        private string SaveProductPhoto(Stream fStream, string fileName, int productId)
         {
-            if (photo == null || photo.ContentLength == 0) return string.Empty;
+            if (fStream == null || string.IsNullOrEmpty(fileName) || productId == 0)
+                return string.Empty;
 
-            int maxProductId = 0;
-            if (updatePhotoId != null &&
-                !updatePhotoId.HasValue)
+            string extensionName = System.IO.Path.GetExtension(fileName);
+            string rootPath = Path.Combine(Server.MapPath("~/Images/shop"), string.Format("product{0}", productId)); ;
+
+            Directory.CreateDirectory(rootPath);
+
+            using (System.Drawing.Image photoImage = System.Drawing.Bitmap.FromStream(fStream))
             {
-                maxProductId = updatePhotoId.Value;
-                maxProductId += 1;
-            }
-            else
-                maxProductId = updatePhotoId ?? 1;
+                //Save original image
+                photoImage.Save(System.IO.Path.Combine(rootPath, string.Format("original{0}", extensionName)));
 
-            string fileName = string.Format("product{0}{1}", maxProductId, System.IO.Path.GetExtension(photo.FileName));
-            //Save original image
-            string filePath = Server.MapPath("~/Images/shop/product_original");
-            photo.SaveAs(System.IO.Path.Combine(filePath, fileName));
-
-            using (System.Drawing.Image photoImage = System.Drawing.Bitmap.FromStream(photo.InputStream))
-            {
                 //Save index image
                 using (System.Drawing.Bitmap photoIndex = new System.Drawing.Bitmap(photoImage, 268, 249))
                 {
-                    filePath = Server.MapPath("~/Images/shop/product");
-                    photoIndex.Save(System.IO.Path.Combine(filePath, fileName));
+                    photoIndex.Save(System.IO.Path.Combine(rootPath,
+                                                           string.Format("index{0}",
+                                                           extensionName)));
                 }
                 //Save detail image
                 using (System.Drawing.Bitmap photoIndex = new System.Drawing.Bitmap(photoImage, 268, 249))
                 {
-                    filePath = Server.MapPath("~/Images/shop/product-details");
-                    photoIndex.Save(System.IO.Path.Combine(filePath, fileName));
+                    photoIndex.Save(System.IO.Path.Combine(rootPath, string.Format("detail{0}", extensionName)));
                 }
                 //Save recommend image
                 using (System.Drawing.Bitmap photoIndex = new System.Drawing.Bitmap(photoImage, 268, 249))
                 {
-                    filePath = Server.MapPath("~/Images/shop/product-recommend");
-                    photoIndex.Save(System.IO.Path.Combine(filePath, fileName));
+                    photoIndex.Save(System.IO.Path.Combine(rootPath, string.Format("recommend{0}", extensionName)));
                 }
 
                 //Save cart image
                 using (System.Drawing.Bitmap photoIndex = new System.Drawing.Bitmap(photoImage, 110, 110))
                 {
-                    filePath = Server.MapPath("~/Images/cart");
-                    photoIndex.Save(System.IO.Path.Combine(filePath, fileName));
+                    photoIndex.Save(System.IO.Path.Combine(rootPath, string.Format("cart{0}", extensionName)));
                 }
             }
+            return string.Format("product{0}", productId);
+        }
 
-            return fileName;
+        private string SaveProductPhoto(HttpPostedFileBase photo, int? updatePhotoId = null)
+        {
+            if (photo == null || photo.ContentLength == 0) return string.Empty;
+
+            int maxProductId = maxProductId = updatePhotoId ?? 0;
+            if (maxProductId == 0)
+            {
+                maxProductId = db.Products.Any() ? db.Products.Max(p => p.product_id) : 0;
+                maxProductId += 1;
+            }
+            return SaveProductPhoto(photo.InputStream, photo.FileName, maxProductId);
         }
 
         protected override void Dispose(bool disposing)
@@ -77,14 +83,41 @@ namespace MyStore.App.Controllers
             base.Dispose(disposing);
         }
 
+        private SelectList GetProductTypeCombo(int? selectedId)
+        {
+            var productType = db.Ref_Product_Type
+                                    .Select(p => new { p.product_type_id, p.product_type_description_vn });
+            int selectedValue = 0;
+            if (selectedId == null)
+            {
+                selectedValue = productType.Select(p => p.product_type_id).FirstOrDefault();
+            }
+            else
+                selectedValue = selectedId.Value;
+
+            return new SelectList(productType, "product_type_id", "product_type_description_vn", selectedValue);
+        }
+
         #endregion
+
+        public PartialViewResult GetFileListPartial(string folderName)
+        {
+            string virtualPath = System.IO.Path.Combine("~/Images", folderName);
+            string physicalPath = Server.MapPath(virtualPath);
+            IList<string> listFiles = new List<string>();
+            foreach (var item in System.IO.Directory.GetFiles(physicalPath))
+            {
+                string pathTemp = System.IO.Path.Combine(virtualPath, System.IO.Path.GetFileName(item)).Replace("\\", "/");
+                listFiles.Add(pathTemp);
+            }
+            return PartialView("_ListFilePartial", listFiles);
+        }
 
         #region Product Management
 
         //
         // GET: /Admin/
 
-        [Authorize(Roles = "Admin")]
         public ActionResult Index(string sortOrder, string searchString, int? page)
         {
             int pageSize = Convert.ToInt32(this.Session[GeneralContanstClass.PageSize_Session_Key]);
@@ -115,10 +148,12 @@ namespace MyStore.App.Controllers
         //
         // GET: /Admin/Create
 
-        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.product_type_id = new SelectList(db.Ref_Product_Type, "product_type_id", "product_type_description_vn");
+
+
+            ViewBag.product_type_id = GetProductTypeCombo(null);
+
             ViewBag.product_uom_id = new SelectList(db.Unit_Of_Measure, "UOM_id", "UOM_description");
             return View("CreateProduct");
         }
@@ -137,13 +172,16 @@ namespace MyStore.App.Controllers
             {
                 try
                 {
-                    HttpPostedFileBase photo = Request.Files["productImg"];
-                    product.product_image = SaveProductPhoto(photo);
                     product.product_created_date = DateTime.Now;
                     product.total_vote_count = 0;
                     product.total_vote_score = 0;
+                    product.product_recommend = false;
 
                     db.Products.Add(product);
+                    db.SaveChanges();
+
+                    HttpPostedFileBase photo = Request.Files["productImg"];
+                    product.product_image = SaveProductPhoto(photo, product.product_id);
                     db.SaveChanges();
                 }
                 catch (Exception ex)
@@ -167,7 +205,6 @@ namespace MyStore.App.Controllers
         //
         // GET: /Admin/Edit/5
 
-        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id = 0)
         {
             Product product = db.Products.Single(p => p.product_id == id);
@@ -175,10 +212,7 @@ namespace MyStore.App.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.product_type_id = new SelectList(db.Ref_Product_Type,
-                                                     "product_type_id",
-                                                     "product_type_description_vn",
-                                                     product.product_type_id);
+            ViewBag.product_type_id = GetProductTypeCombo(product.product_type_id);
             ViewBag.product_uom_id = new SelectList(db.Unit_Of_Measure.Where(p => p.Del_Flag == false),
                                                     "UOM_id",
                                                     "UOM_description",
@@ -214,7 +248,6 @@ namespace MyStore.App.Controllers
         //
         // GET: /Admin/Delete/5
 
-        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id = 0)
         {
             Product product = db.Products.Single(p => p.product_id == id);
@@ -238,10 +271,102 @@ namespace MyStore.App.Controllers
             return RedirectToAction("Index");
         }
 
+        public PartialViewResult ImportProduct()
+        {
+            string rootFolder = Server.MapPath("~/Images/Temp");
+            string[] allFiles = Directory.GetFiles(rootFolder, "*.jpg");
+            ViewBag.TotalImportFiles = allFiles.Length;
+
+            return PartialView("_ImportProductPartial");
+        }
+
+        [HttpPost]
+        public JsonResult ImportProductAction()
+        {
+            string rootFolder = Server.MapPath("~/Images/Temp");
+            string[] allFiles = Directory.GetFiles(rootFolder, "*.jpg");
+            if (allFiles == null || allFiles.Length == 0)
+                return Json(new { msg = "Nothing imported!" });
+
+            int fileCount = allFiles.Length;
+
+            int prodType = db.Ref_Product_Type
+                             .Where(p => p.product_type_description_en == "Temp")
+                             .Select(p => p.product_type_id)
+                             .SingleOrDefault();
+            int prodUOM = db.Unit_Of_Measure
+                            .Where(p => p.UOM_description == "Mét")
+                            .Select(p => p.UOM_id)
+                            .Single();
+
+            for (int i = 0; i < fileCount; i++)
+            {
+                if (!System.IO.File.Exists(allFiles[i]))
+                    continue;
+                if ((i % 10) == 0)
+                    _insertedCount = i;
+                Product newProduct = new Product()
+                {
+                    product_type_id = prodType,
+                    product_name = "temp",
+                    product_uom_id = prodUOM,
+                    product_description = "Vải chưa phân loại",
+                    product_price = 150000,
+                    product_created_date = DateTime.Now,
+                    other_detail = "Trên chất liệu mềm mại, cùng hoa văn sang trọng, Sắc Phương Nam 8 của Thái Tuấn tôn vinh vẻ đẹp phụ nữ Việt Nam theo một cách rất riêng. Bên cạnh áo dài, Thái Tuấn còn rất nhiều dòng sản phẩm khác, trong đó có ELLA là một trong những những sản phẩm đang được yêu chuộng. Chất liệu comple trơn và độ co giãn cao giúp bộ trang phục thêm phần sang trọng và thoải mái. Bạn gái sẽ duyên dáng hơn trong bộ đầm được thiết kế trên nền vải hoa văn lập thể vừa nhẹ nhàng vừa tinh tế. ELLA cũng có độ rủ, thích hợp với cho những chiếc đầm, váy công sở ngọt ngào, đằm thắm.",
+                    total_vote_count = 0,
+                    total_vote_score = 0,
+                    product_recommend = false
+                };
+                db.Products.Add(newProduct);
+                db.SaveChanges();
+
+                using (FileStream fStream = new FileStream(allFiles[i], FileMode.Open))
+                {
+                    newProduct.product_image = SaveProductPhoto(fStream, allFiles[i], newProduct.product_id);
+                }
+
+                System.IO.File.Delete(allFiles[i]);
+
+                db.SaveChanges();
+            }
+
+            return Json(new { msg = "All finished!" });
+        }
+
+        public PartialViewResult GetMoveProductPartial()
+        {
+            ViewBag.product_type_id = GetProductTypeCombo(null);
+            return PartialView("_MoveProductPartial");
+        }
+
+        [HttpPost]
+        public ActionResult MoveProductAction(int selectedType, IList<string> lstProduct)
+        {
+            if (lstProduct == null || lstProduct.Count == 0)
+                return Json(new { status = false, mess = "Move fail." });
+            int pro_id = 0;
+            foreach (var item in lstProduct)
+            {
+                if (!int.TryParse(item, out pro_id)) continue;
+
+                Product updateProd = db.Products.Find(pro_id);
+                if (updateProd == null) continue;
+
+                updateProd.product_type_id = selectedType;
+                db.SaveChanges();
+            }
+            string typeName = db.Ref_Product_Type
+                                .Where(p => p.product_type_id == selectedType)
+                                .Select(p => p.product_type_description_vn)
+                                .SingleOrDefault();
+            return Json(new { status = false, mess = string.Format("Completed moving {0} products to {1}", lstProduct.Count, typeName) });
+        }
+
         #endregion
 
         #region Product Catalog Management
-        [Authorize(Roles = "Admin")]
+
         public ActionResult ListOfCatalog()
         {
             var model = db.Ref_Product_Type
@@ -250,7 +375,6 @@ namespace MyStore.App.Controllers
             return View("IndexProductCatalog", model.ToList());
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult CreateCatalog()
         {
             var parentType = db.Ref_Product_Type.Where(p => p.parent_product_type_id == null);
@@ -285,7 +409,6 @@ namespace MyStore.App.Controllers
             return View(productType);
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult EditCatalog(int id = 0)
         {
             Ref_Product_Type productType = db.Ref_Product_Type
@@ -327,7 +450,6 @@ namespace MyStore.App.Controllers
             return View(productType);
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult DeleteCatalog(int id = 0)
         {
             Ref_Product_Type obj = db.Ref_Product_Type.Single(p => p.product_type_id == id);
@@ -362,14 +484,12 @@ namespace MyStore.App.Controllers
         #endregion
 
         #region Unit Of Measure
-        [Authorize(Roles = "Admin")]
         public ActionResult ListOfUOM()
         {
             var model = db.Unit_Of_Measure;
             return View("IndexUOM", model.ToList());
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult EditUOM(int id = 0)
         {
             Unit_Of_Measure obj = db.Unit_Of_Measure
@@ -401,7 +521,6 @@ namespace MyStore.App.Controllers
             return View(updateObj);
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult DeleteUOM(int id = 0)
         {
             Unit_Of_Measure obj = db.Unit_Of_Measure.Single(p => p.UOM_id == id);
@@ -435,7 +554,6 @@ namespace MyStore.App.Controllers
 
         #region Ad-Slider Management
 
-        [Authorize(Roles = "Admin")]
         public ActionResult ListOfSlider(bool isActive = true)
         {
             ViewData["IsActive"] = isActive;
@@ -444,7 +562,6 @@ namespace MyStore.App.Controllers
             return View("IndexAdvertisement", model.ToList());
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult CreateAd()
         {
             return View("CreateAdvertisement");
@@ -470,7 +587,7 @@ namespace MyStore.App.Controllers
 
             return View("CreateAdvertisement", obj);
         }
-        [Authorize(Roles = "Admin")]
+
         public ActionResult EditSlider(int id = 0)
         {
             var obj = db.Ad_Sliders
@@ -502,7 +619,6 @@ namespace MyStore.App.Controllers
             return View(updateObj);
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult DeleteAd(int id = 0)
         {
             Ad_Sliders obj = db.Ad_Sliders.Single(p => p.slider_id == id);
@@ -618,17 +734,6 @@ namespace MyStore.App.Controllers
             return ListOfOrder();
         }
         #endregion
-        public PartialViewResult GetFileListPartial(string folderName)
-        {
-            string virtualPath = System.IO.Path.Combine("~/Images", folderName);
-            string physicalPath = Server.MapPath(virtualPath);
-            IList<string> listFiles = new List<string>();
-            foreach (var item in System.IO.Directory.GetFiles(physicalPath))
-            {
-                string pathTemp = System.IO.Path.Combine(virtualPath, System.IO.Path.GetFileName(item)).Replace("\\", "/");
-                listFiles.Add(pathTemp);
-            }
-            return PartialView("_ListFilePartial", listFiles);
-        }
+
     }
 }

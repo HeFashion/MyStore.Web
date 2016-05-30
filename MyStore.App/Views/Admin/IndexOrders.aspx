@@ -97,7 +97,7 @@
                                             new AjaxOptions{HttpMethod="Get", 
                                                 InsertionMode=InsertionMode.Replace, 
                                                 UpdateTargetId="modalContent", 
-                                                OnComplete="OpenDialog()"}) %>
+                                                OnComplete="OpenDialog(400,800)"}) %>
                     </td>
                 </tr>
                 <% } %>
@@ -125,22 +125,11 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%: Styles.Render("~/Content/themes/base/css") %>
     <%: Scripts.Render("~/bundles/jqueryui") %>
-    
+    <%: Scripts.Render("~/bundles/jqueryval") %>
+    <%: Scripts.Render("~/Scripts/main.admin.js") %>
 
     <script type="text/javascript">
-        function OpenDialog() {
-            $("#myModal").dialog({
-                height: 400,
-                width: 800,
-            });
-        }
-        function GetCheckedList() {
-            var result = new Array();
-            $("input:checked").each(function () {
-                result.push($(this).val());
-            });
-            return result;
-        }
+       
         $(document).ready(function () {
             var btnShip = $("#btnShip").button();
             var btnDone = $("#btnDone").button();
@@ -181,7 +170,7 @@
                         content: "application/json; charset=utf-8",
                         success: function (data) {
                             $("#modalContent").html(data);
-                            OpenDialog();
+                            OpenDialog(400,800);
                         }
                     });
                 }

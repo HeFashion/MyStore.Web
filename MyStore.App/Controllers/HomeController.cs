@@ -58,6 +58,7 @@ namespace MyStore.App.Controllers
                                           DateCreated = pro.product_created_date ?? DateTime.Now
                                       });
                 ViewData["RecommendList"] = recommendList.ToList();
+                
                 return View("Index", model.ToPagedList(pageNum, pageSize));
             }
         }

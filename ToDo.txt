@@ -51,7 +51,7 @@ About Us
  + Add href for each image(done)
  + research prettyPhoto(understand)
 
-Improve Manage Account page.(done 50%)
+Improve Manage Account page.(done)
  + Change Password page(done)
  + Set password page(done)
  + Register using external confirm page.
@@ -65,16 +65,29 @@ Improve index of Home controller
  + Add 2 list
 	1. New product list(done)
 	2. Shop recommend list(done)
- + Change slider
- 
+ + Change slider(done)
 
+Change the way to store product image(done)
+Import multi product function(done)
+
+
+Make move product to product catalog function.(done)
+Add return URL foreach of Product's functions.
+Move supply chain image to Cart page.
+
+Add Current navigation to _PageHeaderParital.
+Add Number of products for each of Category
+ 
 
 Create compare product page
 
 Custom HTTP Not Found page
 Improve addtocart.js(no need for data-url)
-Move supply chain image to Cart page.
+
 Move shipping image when scroll(don't suitable with mobi. Append)	
 Fix margin-left for Account Manage li
 Take alook _ChangePasswordPartial- change viewpage to viewcontrol
 Manage account form miss when display
+Change padding for paging buttons
+Stop rollup button jump.
+Bring all Menu button on top and frozen them.

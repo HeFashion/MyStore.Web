@@ -9,7 +9,10 @@
     <div class="product-details">
         <div class="col-sm-5">
             <div class="view-product">
-                <img id="<%:Model.Name %>" src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop/product-details",Model.Image)) %>" alt="" data-zoom-image="<%:Url.Content(System.IO.Path.Combine("~/Images/shop/product_original", Model.Image)) %>" />
+                <img id="<%:Model.Name %>" 
+                    src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",Model.Image, "detail.jpg")) %>" 
+                    alt="<%:Model.Image %>" 
+                    data-zoom-image="<%:Url.Content(System.IO.Path.Combine("~/Images/shop", Model.Image,"original.jpg")) %>" />
                 <h3>Rê chuột để xem chi tiết</h3>
             </div>
         </div>

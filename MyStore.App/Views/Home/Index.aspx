@@ -53,15 +53,22 @@
 </asp:Content>
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
+    <%var recommendList = ViewData["RecommendList"] as IList<MyStore.App.ViewModels.ProductModel>;%>
+    <%: Html.Action("RecommendProductPartial", "Product", new{model=recommendList})%>
+
+    
     <div class="home_items">
         <h2 class="title text-center"><%:ViewBag.ListTitle %></h2>
+        <%:Html.PagedListPager(Model, 
+                           page=>Url.Action("Index",
+                                            new {page})) %>
         <% foreach (var item in Model)%>
         <%{%>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="product-image-wrapper">
                 <div class="single-products">
                     <div class="productinfo text-center">
-                        <img src="<%: Url.Content(System.IO.Path.Combine("~/Images/shop/product", item.Image)) %>" alt="" />
+                        <img src="<%: Url.Content(System.IO.Path.Combine("~/Images/shop", item.Image, "index.jpg")) %>" alt="" />
                         <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#")  %> <sup>đ</sup></h2>
                         <p><%: item.Description %></p>
                     </div>
@@ -74,7 +81,7 @@
                                 Chi tiết
                             </a>
                             <a id="<%: item.Id %>" href="#" class="btn add-to-cart">
-                                <i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng
+                                <i class="fa fa-shopping-cart"></i>+1 giỏ hàng
                             </a>
                         </div>
                     </div>
@@ -87,14 +94,11 @@
             </div>
         </div>
         <%} %>
-
-        <%:Html.PagedListPager(Model, 
+    </div>
+    <%:Html.PagedListPager(Model, 
                            page=>Url.Action("Index",
                                             new {page})) %>
-    </div>
     <!--features_items-->
-    <%var recommendList = ViewData["RecommendList"] as IList<MyStore.App.ViewModels.ProductModel>;%>
-    <%: Html.Action("RecommendProductPartial", "Product", new{model=recommendList})%>
 </asp:Content>
 <asp:Content ID="scriptSection" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%:Scripts.Render("~/bundles/jqueryui")%>

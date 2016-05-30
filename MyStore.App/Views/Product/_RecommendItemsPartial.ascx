@@ -16,7 +16,7 @@
                         <div class="single-products">
                             <div class="productinfo text-center">
                                 <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.Id })%>">
-                                    <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop/product-recommend",recommendItem.Image)) %>" alt="" />
+                                    <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",recommendItem.Image, "recommend.jpg")) %>" alt="" />
                                 </a>
                                 <h2><%:MyStore.App.Utilities.DecimalHelper.ToString(recommendItem.Price, "#,###.#") %></h2>
                                 <p><%:recommendItem.Description %></p>
@@ -38,7 +38,7 @@
                         <div class="single-products">
                             <div class="productinfo text-center">
                                 <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.Id })%>">
-                                    <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop/product-recommend",recommendItem.Image)) %>" alt="" />
+                                    <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",recommendItem.Image, "recommend.jpg")) %>" alt="" />
                                 </a>
                                 <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(recommendItem.Price, "#,###.#")%></h2>
                                 <p><%: recommendItem.Description %></p>

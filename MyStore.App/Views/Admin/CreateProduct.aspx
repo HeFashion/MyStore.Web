@@ -25,7 +25,7 @@
         </div>
 
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.product_name)%>
+            <%: Html.Label("Product Code(Maximum 10 characters)")%>
         </div>
         <div class="editor-field">
             <%: Html.EditorFor(model => model.product_name)%>
