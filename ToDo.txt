@@ -74,6 +74,7 @@ Import multi product function(done)
 Make move product to product catalog function.(done)
 Add return URL foreach of Product's functions.
 Move supply chain image to Cart page.
+Lazy load when scroll page
 
 Add Current navigation to _PageHeaderParital.
 Add Number of products for each of Category

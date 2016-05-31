@@ -56,7 +56,6 @@
     <%var recommendList = ViewData["RecommendList"] as IList<MyStore.App.ViewModels.ProductModel>;%>
     <%: Html.Action("RecommendProductPartial", "Product", new{model=recommendList})%>
 
-    
     <div class="home_items">
         <h2 class="title text-center"><%:ViewBag.ListTitle %></h2>
         <%:Html.PagedListPager(Model, 
@@ -95,6 +94,7 @@
         </div>
         <%} %>
     </div>
+
     <%:Html.PagedListPager(Model, 
                            page=>Url.Action("Index",
                                             new {page})) %>
