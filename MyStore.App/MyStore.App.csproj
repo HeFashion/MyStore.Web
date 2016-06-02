@@ -355,6 +355,7 @@
     <Compile Include="Utilities\MailMananager.cs" />
     <Compile Include="Utilities\MessageBoxHelper.cs" />
     <Compile Include="ViewModels\BlogVoteViewModel.cs" />
+    <Compile Include="ViewModels\BreadCrumbViewModel.cs" />
     <Compile Include="ViewModels\CheckoutViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ShippingInfoViewModel.cs" />
@@ -555,7 +556,8 @@
     <Content Include="Views\Product\ShoppingCart.aspx" />
     <Content Include="Views\Product\_CartTablePartial.ascx" />
     <Content Include="Views\Product\_CompletedAddToCart.ascx" />
-    <Content Include="Views\Product\_ListItemPartial.ascx" />
+    <Content Include="Views\Product\_FeatureItemPartial.ascx" />
+    <Content Include="Views\Product\_ListItemsPartial.ascx" />
     <Content Include="Views\Product\_ProductCommentPartial.ascx" />
     <Content Include="Views\Product\_RecommendItemsPartial.ascx" />
     <Content Include="Views\Shared\_LeftMenuPartial.ascx" />

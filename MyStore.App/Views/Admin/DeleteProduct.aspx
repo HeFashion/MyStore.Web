@@ -89,13 +89,13 @@
             <%: Html.DisplayFor(model => model.other_detail) %>
         </div>
     </fieldset>
-    <% using (Html.BeginForm())
+    <% using (Html.BeginForm("Delete", "Admin", new { returnUrl = ViewBag.ReturnUrl, id = Model.product_id }, FormMethod.Post))
        { %>
-    <%: Html.AntiForgeryToken() %>
+    <%: Html.AntiForgeryToken()%>
     <p>
         <input type="submit" value="Delete" />
         |
-        <%: Html.ActionLink("Back to List", "Index") %>
+        <%: Html.ActionLink("Back to List", "Index")%>
     </p>
     <% } %>
 </asp:Content>

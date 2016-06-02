@@ -4,7 +4,7 @@ function SendProductAction(component, url) {
         e.preventDefault();
 
         var sendInfo = {
-            productId: e.target.id,
+            productId: e.target.value,
             productQuantity: 1
         };
         AddToCart(url, sendInfo);

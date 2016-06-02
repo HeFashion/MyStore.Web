@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<PagedList.IPagedList<MyStore.App.ViewModels.ProductModel>>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<System.Collections.Generic.IList<MyStore.App.ViewModels.ProductModel>>" %>
 
 <%@ Import Namespace="PagedList.Mvc" %>
 
@@ -55,58 +55,53 @@
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     <%var recommendList = ViewData["RecommendList"] as IList<MyStore.App.ViewModels.ProductModel>;%>
     <%: Html.Action("RecommendProductPartial", "Product", new{model=recommendList})%>
-
-    <div class="home_items">
-        <h2 class="title text-center"><%:ViewBag.ListTitle %></h2>
-        <%:Html.PagedListPager(Model, 
-                           page=>Url.Action("Index",
-                                            new {page})) %>
-        <% foreach (var item in Model)%>
-        <%{%>
-        <div class="col-sm-3">
-            <div class="product-image-wrapper">
-                <div class="single-products">
-                    <div class="productinfo text-center">
-                        <img src="<%: Url.Content(System.IO.Path.Combine("~/Images/shop", item.Image, "index.jpg")) %>" alt="" />
-                        <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#")  %> <sup>đ</sup></h2>
-                        <p><%: item.Description %></p>
-                    </div>
-                    <div class="product-overlay">
-                        <div class="overlay-content">
-                            <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#") %> <sup>đ</sup></h2>
-                            <p><%: item.Description %></p>
-                            <a href="<%:Url.Action("Details", "Product", new {id = item.Id })%>" class="btn view-details">
-                                <i class="fa fa-external-link"></i>
-                                Chi tiết
-                            </a>
-                            <a id="<%: item.Id %>" href="#" class="btn add-to-cart">
-                                <i class="fa fa-shopping-cart"></i>+1 giỏ hàng
-                            </a>
-                        </div>
-                    </div>
-                    <%int dateDiff = Convert.ToInt32((DateTime.Now - item.DateCreated).TotalDays); %>
-                    <%if (dateDiff <= ViewBag.DateCompare)%>
-                    <%{%>
-                    <img src="<%:Url.Content("~/Images/home/new.png") %>" class="new" alt="" />
-                    <%} %>
-                </div>
-            </div>
-        </div>
-        <%} %>
+    <%: Html.Action("FeatureItemPartial", "Product", new {strListTitle = ViewBag.ListTitle,partialModel= Model}) %>
+    <div id="progress" style="display: none">
+        <img src="<%:Url.Content("~/Images/loading.gif") %>" alt="load" />
     </div>
 
-    <%:Html.PagedListPager(Model, 
-                           page=>Url.Action("Index",
-                                            new {page})) %>
-    <!--features_items-->
 </asp:Content>
 <asp:Content ID="scriptSection" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%:Scripts.Render("~/bundles/jqueryui")%>
     <%:Scripts.Render("~/Scripts/addtocart.js")%>
     <script type="text/javascript">
+        var nextIndex = 2;
+        var isEnded = false;
+        function GetData() {
+            $.ajax({
+                type: 'GET',
+                url: "<%:Url.Action("ListItemPartial","Product")%>",
+                data: { "page": nextIndex },
+                content: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data != null) {
+                        $("#featureItems").append(data);
+                        nextIndex++;
+                    }
+                },
+                beforeSend: function () {
+                    $("#progress").show();
+                },
+                complete: function () {
+                    $("#progress").hide();
+                },
+                error: function () {
+                    alert("Error while retrieving data!");
+                }
+            });
+        }
+
         $(document).ready(function () {
-            var obj = $(".add-to-cart");
+            var obj = $(":button.add-to-cart");
             SendProductAction(obj, "<%: Url.Action("AddToCart", "Cart")%>");
+
+            $(window).scroll(function () {
+                if (!isEnded) {
+                    if ($(this).scrollTop() + $(window).height() > $('#footer').offset().top + 50) {
+                        GetData();
+                    }
+                }
+            });
         });
 
     </script>

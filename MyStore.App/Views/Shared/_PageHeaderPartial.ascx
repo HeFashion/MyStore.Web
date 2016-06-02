@@ -39,6 +39,7 @@
                         </a>
                     </div>
                 </div>
+
                 <div class="col-sm-8" style="left: 0px; top: 0px">
                     <div class="shop-menu pull-right">
                         <%:Html.Partial("_LoginPartial") %>
@@ -87,6 +88,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
     <!--header-bottom-->

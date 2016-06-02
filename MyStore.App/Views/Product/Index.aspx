@@ -9,7 +9,7 @@
 <asp:Content ID="indexFeatured" ContentPlaceHolderID="FeaturedContent" runat="server">
     <section id="advertisement">
         <div class="container">
-            <img src="<%: Url.Content("~/Images/shop/delivery-process.jpg") %>" alt="" />
+            <img src="<%: Url.Content("~/Images/shop/panel.jpg") %>" alt="" />
         </div>
     </section>
 
@@ -17,7 +17,7 @@
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <%:Html.Action("ListItemPartial", new {strListTitle = string.Format("Các Sản Phẩm Thuộc {0}", ViewBag.ProductTypeName), partialModel = Model.ToList()}) %>
+    <%:Html.Action("FeatureItemPartial", new {strListTitle = string.Format("Các Sản Phẩm Thuộc {0}", ViewBag.ProductTypeName), partialModel = Model.ToList()}) %>
     <%:Html.PagedListPager(Model, 
                            page=>Url.Action("Index",
                                             new {prodType = Convert.ToInt32(ViewData["prodType"]),
@@ -29,7 +29,7 @@
     <%:Scripts.Render("~/Scripts/addtocart.js") %>
     <script type="text/javascript">
         $(document).ready(function () {
-            var obj = $(".add-to-cart");
+            var obj = $(":button.add-to-cart");
             SendProductAction(obj, "<%: Url.Action("AddToCart", "Cart")%>");
         });
     </script>

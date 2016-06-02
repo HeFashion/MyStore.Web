@@ -9,9 +9,9 @@
     <div class="product-details">
         <div class="col-sm-5">
             <div class="view-product">
-                <img id="<%:Model.Name %>" 
-                    src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",Model.Image, "detail.jpg")) %>" 
-                    alt="<%:Model.Image %>" 
+                <img id="<%:Model.Name %>"
+                    src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",Model.Image, "detail.jpg")) %>"
+                    alt="<%:Model.Image %>"
                     data-zoom-image="<%:Url.Content(System.IO.Path.Combine("~/Images/shop", Model.Image,"original.jpg")) %>" />
                 <h3>Rê chuột để xem chi tiết</h3>
             </div>
@@ -37,7 +37,7 @@
                     <span>
                         <label>Thêm:</label>
                         <input type="text" value="1" id="txtQuantity" />
-                        <button type="button" class="btn btn-default cart">
+                        <button type="button" value="<%:Model.Id %>" class="btn btn-default cart">
                             <i class="fa fa-shopping-cart"></i>
                             vào giỏ hàng
                         </button>
@@ -116,7 +116,15 @@
             $("<%:"#"+ Model.Name %>").elevateZoom();
             $("#txtQuantity").numericInput({ allowFloat: true });
 
-            $(".cart").click(function (e) {
+            Rating_Initialize("<%:ViewBag.BlogRate%>",
+                              "<%:Model.Id%>",
+                              "<%:(short)MyStore.App.Models.MyData.VoteType.Product %>",
+                              "<%:Url.Action("VoteTo", "Vote")%>");
+
+            var selectedObj = $(":button.add-to-cart");
+            SendProductAction(selectedObj, "<%: Url.Action("AddToCart", "Cart")%>");
+
+            $(":button.cart").click(function (e) {
                 e.preventDefault();
 
                 var sendInfo = {
@@ -125,11 +133,6 @@
                 };
                 AddToCart("<%: Url.Action("AddToCart", "Cart")%>", sendInfo);
             });
-
-            Rating_Initialize("<%:ViewBag.BlogRate%>",
-                              "<%:Model.Id%>",
-                              "<%:(short)MyStore.App.Models.MyData.VoteType.Product %>",
-                              "<%:Url.Action("VoteTo", "Vote")%>");
         });
     </script>
 </asp:Content>

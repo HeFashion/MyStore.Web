@@ -21,6 +21,17 @@ namespace MyStore.App.Controllers
         private MyStoreEntities db = new MyStoreEntities();
         private static int _insertedCount = 0;
         #region **Private Functions**
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
 
         private string SaveProductPhoto(Stream fStream, string fileName, int productId)
         {
@@ -205,8 +216,10 @@ namespace MyStore.App.Controllers
         //
         // GET: /Admin/Edit/5
 
-        public ActionResult Edit(int id = 0)
+        public ActionResult Edit(string returnUrl, int id = 0)
         {
+            ViewBag.ReturnUrl = returnUrl;
+
             Product product = db.Products.Single(p => p.product_id == id);
             if (product == null)
             {
@@ -225,7 +238,7 @@ namespace MyStore.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Product product)
+        public ActionResult Edit(string returnUrl, Product product)
         {
             if (ModelState.IsValid)
             {
@@ -238,8 +251,9 @@ namespace MyStore.App.Controllers
                 db.Products.Attach(product);
                 db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToLocal(returnUrl);
             }
+            ViewBag.ReturnUrl = returnUrl;
             ViewBag.product_type_id = new SelectList(db.Ref_Product_Type, "product_type_id", "product_type_description_vn", product.product_type_id);
             ViewBag.product_uom_id = new SelectList(db.Unit_Of_Measure, "UOM_id", "UOM_description", product.product_uom_id);
             return View(product);
@@ -248,8 +262,9 @@ namespace MyStore.App.Controllers
         //
         // GET: /Admin/Delete/5
 
-        public ActionResult Delete(int id = 0)
+        public ActionResult Delete(string returnUrl, int id = 0)
         {
+            ViewBag.ReturnUrl = returnUrl;
             Product product = db.Products.Single(p => p.product_id == id);
             if (product == null)
             {
@@ -263,12 +278,12 @@ namespace MyStore.App.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, string returnUrl)
         {
             Product product = db.Products.Single(p => p.product_id == id);
             db.Products.Remove(product);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToLocal(returnUrl);
         }
 
         public PartialViewResult ImportProduct()

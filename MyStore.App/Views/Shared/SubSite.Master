@@ -20,6 +20,7 @@
 </head>
 <body>
     <%:Html.Partial("_PageHeaderPartial")%>
+    <asp:ContentPlaceHolder ID="FeaturedContent" runat="server" />
 
     <asp:ContentPlaceHolder ID="MainContent" runat="server" />
 

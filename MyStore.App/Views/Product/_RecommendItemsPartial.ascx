@@ -9,9 +9,9 @@
           { %>
         <div class="carousel-inner">
             <div class="item active">
-                <%foreach (MyStore.App.ViewModels.ProductModel recommendItem in Model.Take(3))%>
+                <%foreach (MyStore.App.ViewModels.ProductModel recommendItem in Model.Take(4))%>
                 <%{ %>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="product-image-wrapper">
                         <div class="single-products">
                             <div class="productinfo text-center">
@@ -20,20 +20,22 @@
                                 </a>
                                 <h2><%:MyStore.App.Utilities.DecimalHelper.ToString(recommendItem.Price, "#,###.#") %></h2>
                                 <p><%:recommendItem.Description %></p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                <button class="btn add-to-cart" value="<%:recommendItem.Id %>">
+                                    <i class="fa fa-shopping-cart"></i>+1 giỏ hàng
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <%} %>
             </div>
-            <%for (int i = 3; i < Model.Count; i += 3)%>
+            <%for (int i = 3; i < Model.Count; i += 4)%>
             <%{ %>
             <div class="item">
-                <%var takeList = Model.Skip(i).Take(3); %>
+                <%var takeList = Model.Skip(i).Take(4); %>
                 <%foreach (MyStore.App.ViewModels.ProductModel recommendItem in takeList)%>
                 <%{%>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="product-image-wrapper">
                         <div class="single-products">
                             <div class="productinfo text-center">
@@ -42,7 +44,7 @@
                                 </a>
                                 <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(recommendItem.Price, "#,###.#")%></h2>
                                 <p><%: recommendItem.Description %></p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>+1 giỏ hàng</button>
                             </div>
                         </div>
                     </div>

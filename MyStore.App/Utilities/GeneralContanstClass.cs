@@ -14,6 +14,6 @@ namespace MyStore.App.Utilities
         public const string RECEIVE_ORDER_EMAIL = "receiveOrderEmail";
         public const string FACEBOOK_SESSION_KEY = "facebooktoken";
         public const string GOOGLE_SESSION_KEY = "googleplustoken";
-
+        public const string BREAD_CRUM_KEY = "breadcrumbs";
     }
 }

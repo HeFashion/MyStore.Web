@@ -60,8 +60,8 @@ a#scrollUp {
     padding: 5px 10px;
     background: #FE980F;
     color: #FFF;
-    -webkit-animation: bounce 2s ease infinite;
-    animation: bounce 2s ease infinite;
+    /*-webkit-animation: bounce 2s ease infinite;
+    animation: bounce 2s ease infinite;*/
 }
 
     a#scrollUp i {
@@ -193,7 +193,7 @@ a#scrollUp {
 
 
 .shop-menu ul li {
-    display: inherit;
+    display: inline-block;
     padding-right: 15px;
 }
 
@@ -1251,6 +1251,10 @@ h2.title {
     margin-right: 5px;
 }
 
+.product-information span button {
+    margin: 0;
+}
+
 .share {
     margin-top: 15px;
 }
@@ -1542,8 +1546,8 @@ h2.title {
                 border-style: solid;
                 border-color: transparent transparent transparent #FE980F;
                 position: absolute;
-                top: 11px;
-                left: 5.6em;
+                top: 10px;
+                left: 27px;
             }
 
         .breadcrumbs .breadcrumb > li + li:before {

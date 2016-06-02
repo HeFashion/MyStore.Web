@@ -64,11 +64,19 @@ namespace MyStore.App.Controllers
 
         public ActionResult ShowCart()
         {
+            IList<BreadCrumbViewModel> breadCrumbs = new List<BreadCrumbViewModel>();
+            breadCrumbs.Add(new BreadCrumbViewModel()
+            {
+                IsActive = true,
+                Name = "Giỏ Hàng",
+            });
+
+            ViewData[GeneralContanstClass.BREAD_CRUM_KEY] = breadCrumbs;
             return View("ShoppingCart", CartHelper.GetCartDetail(this.HttpContext));
         }
 
         //
-        // GET: /Product/
+        // GET: /Product/'
         public ActionResult Index(int? prodType, int? page, string searchString)
         {
             ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
@@ -172,13 +180,39 @@ namespace MyStore.App.Controllers
                 return PartialView("_CartTablePartial", CartHelper.GetCartDetail(this.HttpContext));
         }
 
-        public PartialViewResult ListItemPartial(string strListTitle, IList<ProductModel> partialModel)
+        public PartialViewResult ListItemPartial(int? page)
         {
+            int pageSize = Convert.ToInt32(this.Session[GeneralContanstClass.PageSize_Session_Key]);
+            int pageNum = page ?? 1;
+
+            var products = from pro in db.Products.Include("Unit_Of_Measure")
+                           select pro;
+
+            var result = products.OrderByDescending(p => p.product_created_date)
+                                 .Select(p => new ProductModel()
+                                 {
+                                     Id = p.product_id,
+                                     Name = p.product_name,
+                                     Description = p.product_description,
+                                     UOM = p.Unit_Of_Measure.UOM_description,
+                                     Price = p.product_price,
+                                     Image = p.product_image,
+                                     DateCreated = p.product_created_date ?? DateTime.Now
+                                 });
+            ViewData["IsEnded"] = db.Products.Count() <= (pageNum * pageSize);
+            return PartialView("_ListItemsPartial", result.Skip(pageNum * pageSize)
+                                                          .Take(pageSize)
+                                                          .ToList());
+        }
+
+        public PartialViewResult FeatureItemPartial(string strListTitle, IEnumerable<ProductModel> partialModel)
+        {
+
             if (partialModel == null) return null;
             ViewBag.ListTitle = strListTitle;
             ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
 
-            return PartialView("_ListItemPartial", partialModel);
+            return PartialView("_FeatureItemPartial", partialModel);
         }
 
         protected override void Dispose(bool disposing)

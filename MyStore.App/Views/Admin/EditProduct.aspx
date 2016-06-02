@@ -8,100 +8,100 @@
 
     <h2>Edit</h2>
 
-    <% using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    <% using (Html.BeginForm("Edit", "Admin", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
        { %>
-    <%: Html.AntiForgeryToken() %>
-    <%: Html.ValidationSummary(true) %>
+    <%: Html.AntiForgeryToken()%>
+    <%: Html.ValidationSummary(true)%>
 
     <fieldset>
         <legend>Product</legend>
 
-        <%: Html.HiddenFor(model => model.product_id) %>
-        <%: Html.HiddenFor(model => model.product_image) %>
+        <%: Html.HiddenFor(model => model.product_id)%>
+        <%: Html.HiddenFor(model => model.product_image)%>
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.product_type_id, "Ref_Product_Type") %>
+            <%: Html.LabelFor(model => model.product_type_id, "Ref_Product_Type")%>
         </div>
         <div class="editor-field">
-            <%: Html.DropDownList("product_type_id", String.Empty) %>
-            <%: Html.ValidationMessageFor(model => model.product_type_id) %>
+            <%: Html.DropDownList("product_type_id", String.Empty)%>
+            <%: Html.ValidationMessageFor(model => model.product_type_id)%>
         </div>
 
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.product_name) %>
+            <%: Html.LabelFor(model => model.product_name)%>
         </div>
         <div class="editor-field">
-            <%: Html.EditorFor(model => model.product_name, new { @readonly="true" })%>
+            <%: Html.EditorFor(model => model.product_name, new { @readonly = "true" })%>
         </div>
 
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.product_uom_id, "Unit_Of_Measure") %>
+            <%: Html.LabelFor(model => model.product_uom_id, "Unit_Of_Measure")%>
         </div>
         <div class="editor-field">
-            <%: Html.DropDownList("product_uom_id", String.Empty) %>
-            <%: Html.ValidationMessageFor(model => model.product_uom_id) %>
+            <%: Html.DropDownList("product_uom_id", String.Empty)%>
+            <%: Html.ValidationMessageFor(model => model.product_uom_id)%>
         </div>
 
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.product_description) %>
+            <%: Html.LabelFor(model => model.product_description)%>
         </div>
         <div class="editor-field">
-            <%: Html.EditorFor(model => model.product_description) %>
-            <%: Html.ValidationMessageFor(model => model.product_description) %>
+            <%: Html.EditorFor(model => model.product_description)%>
+            <%: Html.ValidationMessageFor(model => model.product_description)%>
         </div>
 
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.product_price) %>
+            <%: Html.LabelFor(model => model.product_price)%>
         </div>
         <div class="editor-field">
-            <%: Html.EditorFor(model => model.product_price) %>
-            <%: Html.ValidationMessageFor(model => model.product_price) %>
+            <%: Html.EditorFor(model => model.product_price)%>
+            <%: Html.ValidationMessageFor(model => model.product_price)%>
         </div>
 
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.product_color) %>
+            <%: Html.LabelFor(model => model.product_color)%>
         </div>
         <div class="editor-field">
-            <%: Html.EditorFor(model => model.product_color) %>
-            <%: Html.ValidationMessageFor(model => model.product_color) %>
+            <%: Html.EditorFor(model => model.product_color)%>
+            <%: Html.ValidationMessageFor(model => model.product_color)%>
         </div>
 
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.product_size) %>
+            <%: Html.LabelFor(model => model.product_size)%>
         </div>
         <div class="editor-field">
-            <%: Html.EditorFor(model => model.product_size) %>
-            <%: Html.ValidationMessageFor(model => model.product_size) %>
+            <%: Html.EditorFor(model => model.product_size)%>
+            <%: Html.ValidationMessageFor(model => model.product_size)%>
         </div>
 
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.product_image) %>
+            <%: Html.LabelFor(model => model.product_image)%>
         </div>
         <div class="editor-field">
             <input type="file" name="productImg" id="product_image" />
         </div>
 
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.product_created_date) %>
+            <%: Html.LabelFor(model => model.product_created_date)%>
         </div>
         <div class="editor-field">
-            <%: Html.EditorFor(model => model.product_created_date, new { @class = "datefield", type = "date"  })%>
-            <%: Html.ValidationMessageFor(model => model.product_created_date) %>
+            <%: Html.EditorFor(model => model.product_created_date, new { @class = "datefield", type = "date" })%>
+            <%: Html.ValidationMessageFor(model => model.product_created_date)%>
         </div>
 
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.product_quantity) %>
+            <%: Html.LabelFor(model => model.product_quantity)%>
         </div>
         <div class="editor-field">
-            <%: Html.EditorFor(model => model.product_quantity) %>
-            <%: Html.ValidationMessageFor(model => model.product_quantity) %>
+            <%: Html.EditorFor(model => model.product_quantity)%>
+            <%: Html.ValidationMessageFor(model => model.product_quantity)%>
         </div>
 
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.other_detail) %>
+            <%: Html.LabelFor(model => model.other_detail)%>
         </div>
         <div class="editor-field">
-            <%: Html.TextAreaFor(model => model.other_detail, new {@rows="16" })%>
-            <%: Html.ValidationMessageFor(model => model.other_detail) %>
+            <%: Html.TextAreaFor(model => model.other_detail, new { @rows = "16" })%>
+            <%: Html.ValidationMessageFor(model => model.other_detail)%>
         </div>
 
         <p>

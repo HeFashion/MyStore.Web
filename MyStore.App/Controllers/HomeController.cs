@@ -29,7 +29,6 @@ namespace MyStore.App.Controllers
                                       10;
 
                 int pageSize = Convert.ToInt32(this.Session[GeneralContanstClass.PageSize_Session_Key]);
-                int pageNum = page ?? 1;
 
                 var model = from pro in db.Products
                             join puom in db.Unit_Of_Measure on pro.product_uom_id equals puom.UOM_id
@@ -58,8 +57,8 @@ namespace MyStore.App.Controllers
                                           DateCreated = pro.product_created_date ?? DateTime.Now
                                       });
                 ViewData["RecommendList"] = recommendList.ToList();
-                
-                return View("Index", model.ToPagedList(pageNum, pageSize));
+
+                return View("Index", model.Take(pageSize).ToList());
             }
         }
 
