@@ -7,7 +7,7 @@
             <div class="productinfo text-center">
                 <img src="<%: Url.Content(System.IO.Path.Combine("~/Images/shop", item.Image,"index.jpg")) %>" alt="" />
                 <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#")  %> <sup>đ</sup></h2>
-                <p><%: item.Description %></p>
+                <%--<p><%: item.Description %></p>--%>
             </div>
             <div class="product-overlay">
                 <div class="overlay-content">

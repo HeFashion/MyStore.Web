@@ -3,7 +3,7 @@
 <%@ Import Namespace="PagedList.Mvc" %>
 
 <asp:Content ID="titleContent" ContentPlaceHolderID="TitleContent" runat="server">
-    Index
+    Hè-Vải Sợi|Bài Viết
 </asp:Content>
 
 <asp:Content ID="mainContent" ContentPlaceHolderID="MainContent" runat="server">

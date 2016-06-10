@@ -2,9 +2,6 @@
 /*************************
 *******Typography******
 **************************/
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,700,100);
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,300,600,700);
-@import url(http://fonts.googleapis.com/css?family=Abel);
 
 body {
     font-family: 'Roboto', sans-serif;
@@ -69,9 +66,9 @@ a#scrollUp {
     }
 
 
-/*************************
-*******Header CSS******
-**************************/
+/**************************
+ *******Header CSS*********
+ **************************/
 
 .header_top {
     background: none repeat scroll 0 0 #F0F0E9;
@@ -1572,7 +1569,6 @@ h2.title {
         height: 51px;
     }
 
-
     #cart_items .cart_info .table.table-condensed tr {
         border-bottom: 1px solid#F7F7F0;
     }
@@ -1916,7 +1912,6 @@ h2.title {
 .order-message textarea {
     font-size: 12px;
     height: 50%;
-    margin-bottom: 20px;
     padding: 15px 20px;
 }
 

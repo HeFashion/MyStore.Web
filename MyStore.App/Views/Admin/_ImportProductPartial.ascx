@@ -35,11 +35,5 @@
                 }
             });
         });
-        function updateProgress() {
-            var value = $("#progressbar").progressbar("option", "value");
-            if (value < 100) {
-                $("#progressbar").progressbar("value", value + 1);
-            }
-        }
     });
 </script>

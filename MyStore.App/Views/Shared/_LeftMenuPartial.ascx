@@ -17,13 +17,17 @@
                 <h4 class="panel-title">
                     <%if (menuItem.ChildMenu == null)%>
                     <%{%>
-                    <a href="<%: Url.Action("Index", "Product", new { prodType=menuItem.MenuId }) %>"><%: menuItem.MenuDesc %></a>
+                    <%:Html.ActionLink(string.Format("{0} ({1})", menuItem.MenuDesc, menuItem.TotalProduct),
+                                                    "Index", 
+                                                    "Product", 
+                                                    new { prodType=menuItem.MenuId },
+                                                    null) %>
                     <%} %>
                     <%else%>
                     <%{ %>
-                    <a data-toggle="collapse" data-parent="#accordian" href="<%:string.Format("menu{0}", menuItem.MenuId) %><%:string.Format("#menu{0}", menuItem.MenuId) %>">
+                    <a data-toggle="collapse" data-parent="#accordian" href="<%:string.Format("#menu{0}", menuItem.MenuId) %>">
                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                        <%:menuItem.MenuDesc %>
+                        <%:string.Format("{0} ({1})", menuItem.MenuDesc, menuItem.TotalProduct) %>
                     </a>
                     <%} %>
                     
@@ -39,7 +43,7 @@
                           {%>
                         <li>
                             <a href="<%: Url.Action("Index", "Product", new { prodType=subMenu.MenuId }) %>">
-                                <%:subMenu.MenuDesc %> 
+                                <%:string.Format("{0} ({1})", subMenu.MenuDesc, subMenu.TotalProduct) %>
                             </a>
                         </li>
                         <%} %>

@@ -15,36 +15,8 @@
     <%-- Begin Cart Items --%>
     <section id="cart_items">
         <div class="container">
-            <div class="breadcrumbs">
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="<%:Url.Action("Index", "Home") %>">
-                            <i class="fa fa-home"></i>
-                        </a>
-                    </li>
-                    <%IList<MyStore.App.ViewModels.BreadCrumbViewModel> breadCrumbs = ViewData[MyStore.App.Utilities.GeneralContanstClass.BREAD_CRUM_KEY] as List<MyStore.App.ViewModels.BreadCrumbViewModel>;  %>
-                    <%if (breadCrumbs != null && breadCrumbs.Count > 0)
-                      {
-                          foreach (var item in breadCrumbs)
-                          { %>
-                    <%if (item.IsActive)
-                      { %>
-                    <li class="active"><%:item.Name %></li>
+            <%:Html.Partial("_BreadCrumbPartial") %>
 
-                    <%}
-                      else
-                      {%>
-                    <li>
-                        <a href="<%:item.Url %>">
-                            <%:item.Name %>
-                        </a>
-                    </li>
-                    <%}%>
-
-                    <%}
-              } %>
-                </ol>
-            </div>
             <div class="table-responsive cart_info" id="cartResult">
                 <%:Html.Partial("_CartTablePartial", Model) %>
             </div>

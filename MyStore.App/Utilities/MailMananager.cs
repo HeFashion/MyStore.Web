@@ -24,9 +24,8 @@ namespace MyStore.App.Utilities
         {
             string sendEmail = ConfigurationManager.AppSettings[GeneralContanstClass.PAGE_EMAIL];
             if (string.IsNullOrEmpty(sendEmail)) return null;
-            SmtpClient result = new SmtpClient("smtp.gmail.com", 587);
-            result.Credentials = new NetworkCredential(sendEmail, "!Hcchcc\"");
-            result.EnableSsl = true;
+            SmtpClient result = new SmtpClient("mail.hevaisoi.com");
+            result.Credentials = new NetworkCredential(sendEmail, "!Hcchcc87");
             return result;
         }
 

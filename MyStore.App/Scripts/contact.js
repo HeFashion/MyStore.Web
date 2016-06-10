@@ -18,7 +18,7 @@ jQuery(function($) {'use strict',
 (function(){
 
 	var map;
-	var myLatLng = { lat: 10.781799, lng: 106.951289 };
+	var myLatLng = { lat: "10.781826", lng: "106.951234" };
 	map = new GMaps({
 		el: '#gmap',
 		lat: myLatLng.lat,
@@ -27,22 +27,22 @@ jQuery(function($) {'use strict',
 		zoom: 30,
 		zoomControl : false,
 		panControl : false,
-		streetViewControl : false,
+		streetViewControl : true,
 		mapTypeControl: false,
 		overviewMapControl: false,
 		clickable: false
 	});
 
-	var image = 'images/map-icon.png';
-	map.addMarker({
-		lat: myLatLng.lat,
-		lng: myLatLng.lng,
-		// icon: image,
-		animation: google.maps.Animation.DROP,
-		verticalAlign: 'bottom',
-		horizontalAlign: 'center',
-		backgroundColor: '#ffffff',
-	});
+	//var image = 'images/map-icon.png';
+	//map.addMarker({
+	//	lat: myLatLng.lat,
+	//	lng: myLatLng.lng,
+	//	// icon: image,
+	//	animation: google.maps.Animation.DROP,
+	//	verticalAlign: 'bottom',
+	//	horizontalAlign: 'center',
+	//	backgroundColor: '#ffffff',
+	//});
 
 	var styles = [ 
 

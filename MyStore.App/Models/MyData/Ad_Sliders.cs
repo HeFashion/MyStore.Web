@@ -11,13 +11,11 @@ namespace MyStore.App.Models.MyData
 {
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
     
     public partial class Ad_Sliders
     {
         public int slider_id { get; set; }
         public string slider_title { get; set; }
-        [AllowHtml]
         public string slider_desc { get; set; }
         public string slider_link { get; set; }
         public bool slider_active { get; set; }

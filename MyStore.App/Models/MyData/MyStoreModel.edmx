@@ -7,6 +7,7 @@
     <Schema Namespace="MyStoreModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="MyStoreModelStoreContainer">
           <EntitySet Name="Ad_Sliders" EntityType="MyStoreModel.Store.Ad_Sliders" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Blog_Actors" EntityType="MyStoreModel.Store.Blog_Actors" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Blogs" EntityType="MyStoreModel.Store.Blogs" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Order_Items" EntityType="MyStoreModel.Store.Order_Items" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Order_Status_Codes" EntityType="MyStoreModel.Store.Order_Status_Codes" store:Type="Tables" Schema="dbo" />
@@ -18,6 +19,17 @@
           <EntitySet Name="Unit_Of_Measure" EntityType="MyStoreModel.Store.Unit_Of_Measure" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="User_Advices" EntityType="MyStoreModel.Store.User_Advices" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Votes" EntityType="MyStoreModel.Store.Votes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Product_Recommend" EntityType="MyStoreModel.Store.Product_Recommend" store:Type="Tables" store:Schema="hevaisoi_2016" store:Name="Product_Recommend">
+            <DefiningQuery>SELECT 
+      [Product_Recommend].[recommend_id] AS [recommend_id], 
+      [Product_Recommend].[product_id] AS [product_id], 
+      [Product_Recommend].[recommend_order] AS [recommend_order]
+      FROM [hevaisoi_2016].[Product_Recommend] AS [Product_Recommend]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="Blog_Blog_Actor_FK" Association="MyStoreModel.Store.Blog_Blog_Actor_FK">
+            <End Role="Blog_Actors" EntitySet="Blog_Actors" />
+            <End Role="Blogs" EntitySet="Blogs" />
+          </AssociationSet>
           <AssociationSet Name="FK_Order_Items_Orders" Association="MyStoreModel.Store.FK_Order_Items_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Order_Items" EntitySet="Order_Items" />
@@ -47,6 +59,15 @@
           <Property Name="slider_main_img" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="slider_sub_img" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Blog_Actors">
+          <Key>
+            <PropertyRef Name="actor_id" />
+          </Key>
+          <Property Name="actor_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="actor_image" Type="nvarchar" MaxLength="200" />
+          <Property Name="actor_description" Type="nvarchar(max)" />
+          <Property Name="actor_name" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Blogs">
           <Key>
             <PropertyRef Name="blog_id" />
@@ -59,6 +80,7 @@
           <Property Name="blog_date_create" Type="datetime" />
           <Property Name="blog_total_vote" Type="int" />
           <Property Name="blog_total_score" Type="int" />
+          <Property Name="actor_id" Type="int" />
         </EntityType>
         <EntityType Name="Order_Items">
           <Key>
@@ -165,6 +187,30 @@
           <Property Name="vote_score" Type="int" />
           <Property Name="vote_object_id" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'MyStore.hevaisoi_2016.Product_Recommend' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="Product_Recommend">
+          <Key>
+            <PropertyRef Name="recommend_id" />
+            
+          </Key>
+          <Property Name="recommend_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="recommend_order" Type="smallint" />
+        </EntityType>
+        <Association Name="Blog_Blog_Actor_FK">
+          <End Role="Blog_Actors" Type="MyStoreModel.Store.Blog_Actors" Multiplicity="0..1" />
+          <End Role="Blogs" Type="MyStoreModel.Store.Blogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog_Actors">
+              <PropertyRef Name="actor_id" />
+            </Principal>
+            <Dependent Role="Blogs">
+              <PropertyRef Name="actor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Order_Items_Orders">
           <End Role="Orders" Type="MyStoreModel.Store.Orders" Multiplicity="1" />
           <End Role="Order_Items" Type="MyStoreModel.Store.Order_Items" Multiplicity="*" />
@@ -262,6 +308,16 @@
           </AssociationSet>
           <EntitySet Name="Blogs" EntityType="MyStoreModel.Blog" />
           <EntitySet Name="Votes" EntityType="MyStoreModel.Vote" />
+          <EntitySet Name="Product_Recommend" EntityType="MyStoreModel.Product_Recommend" />
+          <AssociationSet Name="prodduct_recommend_fk" Association="MyStoreModel.prodduct_recommend_fk">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Product_Recommend" EntitySet="Product_Recommend" />
+          </AssociationSet>
+          <EntitySet Name="Blog_Actors" EntityType="MyStoreModel.Blog_Actors" />
+          <AssociationSet Name="Blog_Blog_Actor_FK" Association="MyStoreModel.Blog_Blog_Actor_FK">
+            <End Role="Blog_Actors" EntitySet="Blog_Actors" />
+            <End Role="Blog" EntitySet="Blogs" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Order_Items">
           <Key>
@@ -324,7 +380,7 @@
           <Property Type="String" Name="other_detail" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="total_vote_score" />
           <Property Type="Int32" Name="total_vote_count" />
-          <Property Type="Boolean" Name="product_recommend" />
+          <NavigationProperty Name="Product_Recommend" Relationship="MyStoreModel.prodduct_recommend_fk" FromRole="Product" ToRole="Product_Recommend" />
         </EntityType>
         <EntityType Name="Ref_Order_Item_Status_Codes">
           <Key>
@@ -500,6 +556,8 @@
           <Property Type="Int32" Name="blog_total_vote" />
           <Property Type="Int32" Name="blog_total_score" />
           <Property Type="String" Name="blog_img_title" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Type="Int32" Name="actor_id" />
+          <NavigationProperty Name="Blog_Actors" Relationship="MyStoreModel.Blog_Blog_Actor_FK" FromRole="Blog" ToRole="Blog_Actors" />
         </EntityType>
         <EntityType Name="Vote">
           <Key>
@@ -515,6 +573,49 @@
           <Member Name="Product" Value="1" />
           <Member Name="Blog" Value="2" />
         </EnumType>
+        <EntityType Name="Product_Recommend">
+          <Key>
+            <PropertyRef Name="recommend_id" />
+          </Key>
+          <Property Type="Int32" Name="recommend_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="product_id" Nullable="false" />
+          <Property Type="Int16" Name="recommend_order" />
+          <NavigationProperty Name="Product" Relationship="MyStoreModel.prodduct_recommend_fk" FromRole="Product_Recommend" ToRole="Product" />
+        </EntityType>
+        <Association Name="prodduct_recommend_fk">
+          <End Type="MyStoreModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="MyStoreModel.Product_Recommend" Role="Product_Recommend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Product_Recommend">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Blog_Actors">
+          <Key>
+            <PropertyRef Name="actor_id" />
+          </Key>
+          <Property Type="Int32" Name="actor_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="actor_image" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="actor_description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="actor_name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Blogs" Relationship="MyStoreModel.Blog_Blog_Actor_FK" FromRole="Blog_Actors" ToRole="Blog" />
+        </EntityType>
+        <Association Name="Blog_Blog_Actor_FK">
+          <End Type="MyStoreModel.Blog_Actors" Role="Blog_Actors" Multiplicity="0..1" />
+          <End Type="MyStoreModel.Blog" Role="Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog_Actors">
+              <PropertyRef Name="actor_id" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="actor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -560,7 +661,6 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="IsTypeOf(MyStoreModel.Product)">
         <MappingFragment StoreEntitySet="Products">
-          <ScalarProperty Name="product_recommend" ColumnName="product_recommend" />
                 <ScalarProperty Name="total_vote_count" ColumnName="total_vote_count" />
                 <ScalarProperty Name="total_vote_score" ColumnName="total_vote_score" />
                 <ScalarProperty Name="other_detail" ColumnName="other_detail" />
@@ -641,6 +741,7 @@
           <EntitySetMapping Name="Blogs">
             <EntityTypeMapping TypeName="MyStoreModel.Blog">
               <MappingFragment StoreEntitySet="Blogs">
+                <ScalarProperty Name="actor_id" ColumnName="actor_id" />
                 <ScalarProperty Name="blog_img_title" ColumnName="blog_img_title" />
                 <ScalarProperty Name="blog_total_score" ColumnName="blog_total_score" />
                 <ScalarProperty Name="blog_total_vote" ColumnName="blog_total_vote" />
@@ -660,6 +761,25 @@
                 <ScalarProperty Name="ip_address" ColumnName="ip_address" />
                 <ScalarProperty Name="vote_type" ColumnName="vote_type" />
                 <ScalarProperty Name="vote_id" ColumnName="vote_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_Recommend">
+            <EntityTypeMapping TypeName="MyStoreModel.Product_Recommend">
+              <MappingFragment StoreEntitySet="Product_Recommend">
+                <ScalarProperty Name="recommend_order" ColumnName="recommend_order" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="recommend_id" ColumnName="recommend_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Blog_Actors">
+            <EntityTypeMapping TypeName="MyStoreModel.Blog_Actors">
+              <MappingFragment StoreEntitySet="Blog_Actors">
+                <ScalarProperty Name="actor_name" ColumnName="actor_name" />
+                <ScalarProperty Name="actor_description" ColumnName="actor_description" />
+                <ScalarProperty Name="actor_image" ColumnName="actor_image" />
+                <ScalarProperty Name="actor_id" ColumnName="actor_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

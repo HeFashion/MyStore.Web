@@ -44,7 +44,9 @@
                                 </a>
                                 <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(recommendItem.Price, "#,###.#")%></h2>
                                 <p><%: recommendItem.Description %></p>
-                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>+1 giỏ hàng</button>
+                                <button type="button" class="btn btn-default add-to-cart" value="<%:recommendItem.Id %>">
+                                    <i class="fa fa-shopping-cart"></i>+1 giỏ hàng
+                                </button>
                             </div>
                         </div>
                     </div>

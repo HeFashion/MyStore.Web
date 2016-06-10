@@ -79,16 +79,25 @@ Fix addtocart on product/details(done)
 
 
 Lazy load when scroll page(done)
-Change font for web
-change the way to show product overlay
-Add Number of products for each of Category
+Stop rollup button jump.(done)
 Import data to table(first step)
-Add Actor div in each of blog detail.
+Change font for web(no need)
+
+
+Add Number of products for each of Category(done)
+Add Actor div in each of blog detail.(done)
+Create second blog details.(done)
+
+Bug when user addtocart on Home(done)
+Quick way for managing Product page.(70%)
+Implete RichTextEditor for create new blog.
+Change next and previous url for blog Detail
+Add active field to Product entity
  
 
 Create compare product page
 
-Custom HTTP Not Found page
+Custom HTTP Not Found page(done)
 Improve addtocart.js(no need for data-url)
 
 Move shipping image when scroll(don't suitable with mobi. Append)	
@@ -97,5 +106,6 @@ Fix margin-left for Account Manage li
 Take alook _ChangePasswordPartial- change viewpage to viewcontrol
 Manage account form miss when display
 Change padding for paging buttons
-Stop rollup button jump.
+
 Bring all Menu button on top and frozen them.
+change the way to show product overlay

@@ -1,21 +1,21 @@
 ﻿
-function SendProductAction(component, url) {
-    component.click(function (e) {
+function SendProductAction(component) {
+    $(document).on('click', component, function (e) {
         e.preventDefault();
 
         var sendInfo = {
             productId: e.target.value,
             productQuantity: 1
         };
-        AddToCart(url, sendInfo);
+        AddToCart(sendInfo);
     });
 }
 
-function AddToCart(sendUrl, sendInfo) {
+function AddToCart(sendInfo) {
     $.ajax({
         type: "POST",
         content: "application/json; charset=utf-8",
-        url: sendUrl,
+        url: '/Cart/AddToCart',
         data: sendInfo,
         success: function (data) {
             if (data.status) {

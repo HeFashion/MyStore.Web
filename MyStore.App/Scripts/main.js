@@ -1,4 +1,3 @@
-/*price range*/
 function ShowModal() {
     var frmModal = $("#myModal");
     if (frmModal != null) {
@@ -6,6 +5,31 @@ function ShowModal() {
     }
 }
 
+function GetData(index) {
+    $.ajax({
+        type: 'GET',
+        url: "/Product/ListItemPartial",
+        data: { "page": index },
+        content: "application/json; charset=utf-8",
+        success: function (data) {
+            if (data != null) {
+                $("#featureItems").append(data);
+                nextIndex++;
+            }
+        },
+        beforeSend: function () {
+            $("#progress").show();
+            isLocked = true;
+        },
+        complete: function () {
+            $("#progress").hide();
+            isLocked = false;
+        },
+        error: function () {
+            alert("Error while retrieving data!");
+        }
+    });
+}
 $('#sl2').slider();
 
 var RGBChange = function () {

@@ -20,13 +20,13 @@
             <%: Html.Raw(Model.blog_content) %>
             <div class="pager-area">
                 <ul class="pager pull-right">
-                    <%if (Model.blog_id > ViewBag.MinId)
+                    <%if (ViewBag.PrevId != 0)
                       {%>
-                    <li><%:Html.ActionLink("<< Bài cũ","PrevBlog", new{currentId = Model.blog_id}) %></li>
+                    <li><%:Html.ActionLink("<< Bài cũ","Details", new{id = ViewBag.PrevId}) %></li>
                     <%} %>
-                    <%if (Model.blog_id < ViewBag.MaxId)
+                    <%if (ViewBag.NextId != 0)
                       {%>
-                    <li><%:Html.ActionLink("Bài mới >>","NextBlog", new{currentId = Model.blog_id}) %></li>
+                    <li><%:Html.ActionLink("Bài mới >>","Details", new{id = ViewBag.NextId}) %></li>
                     <%} %>
                 </ul>
             </div>
@@ -35,7 +35,7 @@
         <%ViewBag.RateTitle = "Đánh Giá Bài Viết:";
           ViewBag.RatedCount = Model.blog_total_vote ?? 0;%>
         <%:Html.Partial("_RateObjectPartial") %>
-
+        <!--/socials-share-->
         <table class="socials-share">
             <tr>
                 <td class="facebook-like">
@@ -48,8 +48,33 @@
             </tr>
         </table>
         <!--/socials-share-->
-
+        <%MyStore.App.Models.MyData.Blog_Actors actor = ViewData["BlogActor"] as MyStore.App.Models.MyData.Blog_Actors; %>
+        <%if (actor != null)
+          {%>
         <div class="media commnets">
+            <a class="pull-left" href="#">
+                <img class="media-object" src="<%:Url.Content(System.IO.Path.Combine("~/Images/blog/actor/", actor.actor_image)) %>" alt="<%:actor.actor_name %>">
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading"><%:actor.actor_name %></h4>
+                <p>
+                    <%:actor.actor_description %>
+                </p>
+                <%--<div class="blog-socials">
+                    <ul>
+                        <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                        <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                        <li><a href=""><i class="fa fa-dribbble"></i></a></li>
+                        <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+                    </ul>
+                    <a class="btn btn-primary" href="">Other Posts</a>
+                </div>--%>
+            </div>
+        </div>
+        <%} %>
+
+
+        <div class="response-area">
             <div class="fb-comments" data-href="<%:Request.Url.AbsoluteUri %>" data-numposts="5"></div>
         </div>
     </div>
@@ -70,8 +95,7 @@
         $(document).ready(function () {
             Rating_Initialize("<%:ViewBag.BlogRate%>",
                               "<%:Model.blog_id%>",
-                              "<%:(short)MyStore.App.Models.MyData.VoteType.Blog %>",
-                              "<%:Url.Action("VoteTo", "Vote")%>");
+                              "<%:(short)MyStore.App.Models.MyData.VoteType.Blog %>");
             $("a[rel^='prettyPhoto']").prettyPhoto();
         });
     </script>

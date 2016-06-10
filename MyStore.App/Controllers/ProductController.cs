@@ -64,14 +64,8 @@ namespace MyStore.App.Controllers
 
         public ActionResult ShowCart()
         {
-            IList<BreadCrumbViewModel> breadCrumbs = new List<BreadCrumbViewModel>();
-            breadCrumbs.Add(new BreadCrumbViewModel()
-            {
-                IsActive = true,
-                Name = "Giỏ Hàng",
-            });
+            ViewBag.BreadCrumbActive = "Giỏ Hàng";
 
-            ViewData[GeneralContanstClass.BREAD_CRUM_KEY] = breadCrumbs;
             return View("ShoppingCart", CartHelper.GetCartDetail(this.HttpContext));
         }
 

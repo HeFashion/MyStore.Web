@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -8,9 +9,9 @@
     <title>
         <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
     </title>
-    <link rel="shortcut icon" href="<%: Url.Content("~/favicon.ico") %>" type="image/x-icon">
-
-    <%: Styles.Render("~/Content/themes/mystyle/bootstrap") %>
+    <link href="<%: Url.Content("~/favicon.ico") %>" rel="shortcut icon" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,700,100|Open+Sans:400,800,300,600,700&subset=vietnamese' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
     <%: Styles.Render("~/Content/themes/mystyle/css") %>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -39,9 +40,7 @@
     </section>
     <%:Html.Partial("_PageFooterPartial") %>
 
-    <%: Scripts.Render("~/bundles/jquery") %>
-    <%: Scripts.Render("~/bundles/jqueryval") %>
-    <%: Scripts.Render("~/bundles/jqueryextend") %>
+    <%: Scripts.Render("~/bundles/main/jquery") %>
     <asp:ContentPlaceHolder ID="ScriptsSection" runat="server" />
 
 </body>

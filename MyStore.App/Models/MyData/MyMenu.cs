@@ -12,6 +12,7 @@ namespace MyStore.App.Models
         public int MenuId { get; set; }
         public string MenuDesc { get; set; }
         public List<Menu> ChildMenu { get; set; }
+        public int TotalProduct { get; set; }
     }
     public static class MyMenu
     {
@@ -50,7 +51,8 @@ namespace MyStore.App.Models
                             menuItem = new Menu()
                             {
                                 MenuId = menu.ParentId,
-                                MenuDesc = menu.ParentName
+                                MenuDesc = menu.ParentName,
+                                TotalProduct = dbContext.Products.Count(p => p.product_type_id == menu.ParentId)
                             };
                             result.Add(menuItem);
                         }
@@ -69,7 +71,8 @@ namespace MyStore.App.Models
                                 menuItem.ChildMenu.Add(new Menu()
                                 {
                                     MenuId = menu.ChildId ?? 0,
-                                    MenuDesc = menu.ChildName
+                                    MenuDesc = menu.ChildName,
+                                    TotalProduct = dbContext.Products.Count(p => p.product_type_id == menu.ChildId)
                                 });
                             }
                         }

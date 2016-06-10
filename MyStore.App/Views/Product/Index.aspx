@@ -29,8 +29,7 @@
     <%:Scripts.Render("~/Scripts/addtocart.js") %>
     <script type="text/javascript">
         $(document).ready(function () {
-            var obj = $(":button.add-to-cart");
-            SendProductAction(obj, "<%: Url.Action("AddToCart", "Cart")%>");
+            SendProductAction(":button.add-to-cart");
         });
     </script>
 </asp:Content>

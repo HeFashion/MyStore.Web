@@ -10,8 +10,9 @@
     <link href="<%: Url.Content("~/favicon.ico") %>" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     <%: Styles.Render("~/Content/AdminCss") %>
-    <%: Scripts.Render("~/bundles/modernizr") %>
-    <%: Scripts.Render("~/bundles/jquery") %>
+    <%: Styles.Render("~/Content/themes/base/css") %>
+    <%: Scripts.Render("~/bundles/admin/jquery") %>
+    <script src="<%:Url.Content("~/Scripts/tinymce/tinymce.min.js") %>"></script>
     <asp:ContentPlaceHolder ID="ScriptsSection" runat="server" />
 </head>
 <body>
@@ -26,9 +27,9 @@
                 </section>
                 <nav>
                     <ul id="menu">
-                        <li><%: Html.ActionLink("Orders", "ListOfOrder", "Admin") %></li>
                         <li><%: Html.ActionLink("Product", "Index", "Admin") %></li>
                         <li><%: Html.ActionLink("Product Catalog", "ListOfCatalog", "Admin") %></li>
+                        <li><%: Html.ActionLink("Orders", "ListOfOrder", "Admin") %></li>
                         <li><%: Html.ActionLink("Unit Manager", "ListOfUOM") %></li>
                         <li><%: Html.ActionLink("Ad-Slider Manager", "ListOfSlider") %></li>
                     </ul>

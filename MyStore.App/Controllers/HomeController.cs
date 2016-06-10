@@ -44,17 +44,19 @@ namespace MyStore.App.Controllers
                                 Image = pro.product_image,
                                 DateCreated = pro.product_created_date ?? DateTime.Now
                             };
-                var recommendList = db.Products
-                                      .Where(p => p.product_recommend == true)
+                var recommendList = db.Product_Recommend
+                                      .Include("Product")
+                                      .Include("Product.Unit_Of_Measure")
+                                      .OrderBy(p => p.recommend_order)
                                       .Select(pro => new ProductModel()
                                       {
                                           Id = pro.product_id,
-                                          Name = pro.product_name,
-                                          Description = pro.product_description,
-                                          UOM = pro.Unit_Of_Measure.UOM_description,
-                                          Price = pro.product_price,
-                                          Image = pro.product_image,
-                                          DateCreated = pro.product_created_date ?? DateTime.Now
+                                          Name = pro.Product.product_image,
+                                          Description = pro.Product.product_description,
+                                          UOM = pro.Product.Unit_Of_Measure.UOM_description,
+                                          Price = pro.Product.product_price,
+                                          Image = pro.Product.product_image,
+                                          DateCreated = pro.Product.product_created_date ?? DateTime.Now
                                       });
                 ViewData["RecommendList"] = recommendList.ToList();
 

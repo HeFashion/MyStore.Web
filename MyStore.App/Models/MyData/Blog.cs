@@ -22,5 +22,8 @@ namespace MyStore.App.Models.MyData
         public Nullable<int> blog_total_vote { get; set; }
         public Nullable<int> blog_total_score { get; set; }
         public string blog_img_title { get; set; }
+        public Nullable<int> actor_id { get; set; }
+    
+        public virtual Blog_Actors Blog_Actors { get; set; }
     }
 }

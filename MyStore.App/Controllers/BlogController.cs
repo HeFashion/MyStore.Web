@@ -17,14 +17,11 @@ namespace MyStore.App.Controllers
     public class BlogController : Controller
     {
         private MyStoreEntities db = null;
-        private int _minId = 1;
-        private int _maxId = 1;
 
         public BlogController()
         {
             db = new MyStoreEntities();
-            _maxId = db.Blogs.Max(p => p.blog_id);
-            _minId = db.Blogs.Min(p => p.blog_id);
+
         }
         protected override void Dispose(bool disposing)
         {
@@ -54,14 +51,17 @@ namespace MyStore.App.Controllers
             {
                 return HttpNotFound();
             }
+            int maxId = db.Blogs.Max(p => p.blog_id);
+            int minId = db.Blogs.Min(p => p.blog_id);
 
-            ViewBag.MaxId = _maxId;
-            ViewBag.MinId = _minId;
+            ViewBag.NextId = blog.blog_id >= maxId ? 0 : blog.blog_id + 1;
+            ViewBag.PrevId = blog.blog_id <= minId ? 0 : blog.blog_id - 1;
 
             if (blog.blog_total_vote == null || blog.blog_total_vote.Value == 0)
                 ViewBag.BlogRate = 0;
             else
                 ViewBag.BlogRate = ((float)(blog.blog_total_score ?? 0) / (float)(blog.blog_total_vote ?? 1));
+            ViewData["BlogActor"] = db.Blog_Actors.Find(blog.actor_id);
             return View("Details", blog);
         }
 

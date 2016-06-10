@@ -8,14 +8,13 @@
 
     <h2>Edit</h2>
 
-    <% using (Html.BeginForm("Edit", "Admin", new { returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    <% using (Html.BeginForm("EditConfirmed", "Admin", new { @returnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
        { %>
     <%: Html.AntiForgeryToken()%>
     <%: Html.ValidationSummary(true)%>
 
     <fieldset>
         <legend>Product</legend>
-
         <%: Html.HiddenFor(model => model.product_id)%>
         <%: Html.HiddenFor(model => model.product_image)%>
         <div class="editor-label">
@@ -120,12 +119,14 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
-    <%: Scripts.Render("~/bundles/jqueryui") %>
-
     <%: Styles.Render("~/Content/themes/base/css") %>
+    <%: Scripts.Render("~/bundles/jqueryui") %>
+    <%: Scripts.Render("~/Scripts/numericInput.js") %>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $("#product_created_date").datepicker();
+            $("#product_price").numericInput();
         });
     </script>
 </asp:Content>

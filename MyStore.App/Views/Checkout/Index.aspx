@@ -7,6 +7,7 @@
 <asp:Content ID="mainContent" ContentPlaceHolderID="MainContent" runat="server">
     <section id="cart_items">
         <div class="container">
+            <%:Html.Partial("_BreadCrumbPartial") %>
 
             <%if (Model.CurrentStep == MyStore.App.ViewModels.CheckoutStep.Authentication)%>
             <%{ %>
@@ -16,10 +17,10 @@
             <%{ %>
             <%:Html.Partial("_DeliveryInfoPartial", Model) %>
             <%} %>
-            <%else%>
+           <%-- <%else%>
             <%{ %>
             <%:Html.Partial("_PaymentInfoPartial", Model) %>
-            <%} %>
+            <%} %>--%>
         </div>
     </section>
 

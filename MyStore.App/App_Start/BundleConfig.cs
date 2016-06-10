@@ -10,6 +10,26 @@ namespace MyStore.App
         public static void RegisterBundles(BundleCollection bundles)
         {
             //BundleTable.EnableOptimizations = true;
+
+            bundles.Add(new ScriptBundle("~/bundles/main/jquery").Include(
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-ui-{version}.js",
+                        "~/Scripts/jquery.unobtrusive*",
+                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/price-range.js",
+                        "~/Scripts/jquery.scrollUp.js",
+                        "~/Scripts/jquery.prettyPhoto.js",
+                        "~/Scripts/main.js"
+                        ));
+            bundles.Add(new ScriptBundle("~/bundles/admin/jquery").Include(
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-ui-{version}.js",
+                        "~/Scripts/jquery.unobtrusive*",
+                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/modernizr-*",
+                        "~/Scripts/main.admin.js"
+                        ));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"
                         ));
@@ -63,6 +83,8 @@ namespace MyStore.App
                         "~/Content/themes/mystyle/bootstrap-social.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/mystyle/css").Include(
+                        "~/Content/themes/mystyle/bootstrap.css",
+                        "~/Content/themes/mystyle/bootstrap-social.css",
                         "~/Content/themes/mystyle/font-awesome.css",
                         "~/Content/themes/mystyle/prettyPhoto.css",
                         "~/Content/themes/mystyle/price-range.css",
@@ -74,6 +96,14 @@ namespace MyStore.App
                 "~/Content/themes/mystyle/bootstrap.css",
                 "~/Content/themes/mystyle/responsive.css"));
 
+            bundles.Add(new ScriptBundle("~/bundles/product/details").Include(
+               "~/Scripts/jquery.rateyo.js",
+               "~/Scripts/jquery.elevateZoom.js",
+               "~/Scripts/numericInput.js",
+               "~/Scripts/addtocart.js",
+               "~/Scripts/facebook.js",
+               "~/Scripts/googleplus.js",
+               "~/Scripts/rateObject.js"));
         }
     }
 }

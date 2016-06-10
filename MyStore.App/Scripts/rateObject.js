@@ -3,7 +3,7 @@
     $("#myModal").modal('show');
 }
 
-function Rating_Initialize(rated, objId, voteType, url) {
+function Rating_Initialize(rated, objId, voteType) {
     var rateControl = $("#rateit").rateYo({
         fullStar: true,
         starWidth: "15px",
@@ -15,8 +15,8 @@ function Rating_Initialize(rated, objId, voteType, url) {
         $.ajax({
             type: "POST",
             content: "application/json; charset=utf-8",
-            url: url,
-            data: {'voteType':voteType, 'id': objId, 'score': voted },
+            url: '/Vote/VoteTo',
+            data: { 'voteType': voteType, 'id': objId, 'score': voted },
             success: function (data) {
                 if (data.isSuccess == false) {
                     OpenDialog(data.message);

@@ -8,10 +8,13 @@ using System.Web.Mvc;
 using System.IO;
 
 using PagedList;
+using NPOI.XSSF.UserModel;
+using NPOI.SS.UserModel;
 
 using MyStore.App.Models.MyData;
 using MyStore.App.ViewModels;
 using MyStore.App.Utilities;
+using System.Data.Objects.SqlClient;
 
 namespace MyStore.App.Controllers
 {
@@ -20,6 +23,7 @@ namespace MyStore.App.Controllers
     {
         private MyStoreEntities db = new MyStoreEntities();
         private static int _insertedCount = 0;
+
         #region **Private Functions**
         private ActionResult RedirectToLocal(string returnUrl)
         {
@@ -88,6 +92,17 @@ namespace MyStore.App.Controllers
             return SaveProductPhoto(photo.InputStream, photo.FileName, maxProductId);
         }
 
+        private bool DeleteProductPhoto(int productId)
+        {
+            string rootPath = Path.Combine(Server.MapPath("~/Images/shop"), string.Format("product{0}", productId)); ;
+            if (Directory.Exists(rootPath))
+            {
+                Directory.Delete(rootPath, true);
+                return true;
+            }
+            return false;
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
@@ -138,7 +153,7 @@ namespace MyStore.App.Controllers
                            join t in db.Ref_Product_Type on q.product_type_id equals t.product_type_id
                            join u in db.Unit_Of_Measure on q.product_uom_id equals u.UOM_id
                            select q;
-            ViewBag.SortOrder = string.IsNullOrEmpty(sortOrder) ? "Type" : sortOrder;
+            ViewBag.SortOrder = string.IsNullOrEmpty(sortOrder) ? "Id" : sortOrder;
             ViewBag.SearchString = searchString;
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -146,13 +161,24 @@ namespace MyStore.App.Controllers
             }
             switch (sortOrder)
             {
+                case "Type":
+                    products = products.OrderByDescending(p => p.product_type_id);
+                    break;
                 case "Name":
                     products = products.OrderByDescending(p => p.product_name);
                     break;
                 default:
-                    products = products.OrderByDescending(p => p.product_type_id);
+                    products = products.OrderByDescending(p => p.product_id);
                     break;
             }
+            var uomQuery = from q in db.Unit_Of_Measure
+                           where q.Del_Flag == false
+                           select new
+                           {
+                               Id = q.UOM_id,
+                               Description = q.UOM_description
+                           };
+            ViewBag.UOMSelectList = uomQuery.ToList();
             return View(products.ToPagedList(pageNum, pageSize));
         }
 
@@ -186,7 +212,6 @@ namespace MyStore.App.Controllers
                     product.product_created_date = DateTime.Now;
                     product.total_vote_count = 0;
                     product.total_vote_score = 0;
-                    product.product_recommend = false;
 
                     db.Products.Add(product);
                     db.SaveChanges();
@@ -238,7 +263,7 @@ namespace MyStore.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string returnUrl, Product product)
+        public ActionResult EditConfirmed(Product product, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -256,7 +281,40 @@ namespace MyStore.App.Controllers
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.product_type_id = new SelectList(db.Ref_Product_Type, "product_type_id", "product_type_description_vn", product.product_type_id);
             ViewBag.product_uom_id = new SelectList(db.Unit_Of_Measure, "UOM_id", "UOM_description", product.product_uom_id);
-            return View(product);
+            return View("EditProduct", product);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)] 
+        public string QuickEditProduct()
+        {
+            int id = 0;
+            int.TryParse(Request.Form["item.product_id"], out id);
+
+            string errorMsg = string.Format("<label id='status{0}' class='error'>Fails...</label>", id);
+            string successMsg = string.Format("<label id='status{0}' class='success'>Success...</label>", id);
+            if (id == 0) return errorMsg;
+            try
+            {
+                Product updateObj = db.Products.Find(id);
+                if (updateObj == null) return errorMsg;
+
+                updateObj.product_uom_id = Convert.ToInt32(Request.Form["item.product_uom_id"]);
+                updateObj.product_price = Convert.ToDecimal(string.IsNullOrEmpty(Request.Form["item.product_price"]) ?
+                                                            "0" :
+                                                            Request.Form["item.product_price"].Replace(",", ""));
+                updateObj.product_description = Request.Form["item.product_description"];
+                updateObj.other_detail = Request.Form["item.other_detail"];
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return errorMsg;
+            }
+
+
+            return successMsg;
         }
 
         //
@@ -280,9 +338,13 @@ namespace MyStore.App.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id, string returnUrl)
         {
-            Product product = db.Products.Single(p => p.product_id == id);
-            db.Products.Remove(product);
-            db.SaveChanges();
+            if (DeleteProductPhoto(id))
+            {
+                Product product = db.Products.Single(p => p.product_id == id);
+                db.Products.Remove(product);
+                db.SaveChanges();
+            }
+
             return RedirectToLocal(returnUrl);
         }
 
@@ -331,7 +393,6 @@ namespace MyStore.App.Controllers
                     other_detail = "Trên chất liệu mềm mại, cùng hoa văn sang trọng, Sắc Phương Nam 8 của Thái Tuấn tôn vinh vẻ đẹp phụ nữ Việt Nam theo một cách rất riêng. Bên cạnh áo dài, Thái Tuấn còn rất nhiều dòng sản phẩm khác, trong đó có ELLA là một trong những những sản phẩm đang được yêu chuộng. Chất liệu comple trơn và độ co giãn cao giúp bộ trang phục thêm phần sang trọng và thoải mái. Bạn gái sẽ duyên dáng hơn trong bộ đầm được thiết kế trên nền vải hoa văn lập thể vừa nhẹ nhàng vừa tinh tế. ELLA cũng có độ rủ, thích hợp với cho những chiếc đầm, váy công sở ngọt ngào, đằm thắm.",
                     total_vote_count = 0,
                     total_vote_score = 0,
-                    product_recommend = false
                 };
                 db.Products.Add(newProduct);
                 db.SaveChanges();
@@ -378,6 +439,61 @@ namespace MyStore.App.Controllers
             return Json(new { status = false, mess = string.Format("Completed moving {0} products to {1}", lstProduct.Count, typeName) });
         }
 
+        public PartialViewResult GetImportProductExcel()
+        {
+            return PartialView("_ImportExcelParital");
+        }
+
+        [HttpPost]
+        public JsonResult ImportExcelAction()
+        {
+            var myFile = Request.Files[0];
+            if (myFile == null || myFile.ContentLength == 0)
+            {
+                return Json(new { status = false, msg = "Nothing to import" });
+            }
+            XSSFWorkbook workBook = new XSSFWorkbook(myFile.InputStream);
+            try
+            {
+                ISheet productSheet = workBook.GetSheetAt(0);
+                int totalImported = 0;
+                for (int i = 1; i < productSheet.LastRowNum; i++)
+                {
+                    var row = productSheet.GetRow(i);
+                    if (row == null) continue;
+
+                    int id = Convert.ToInt32(row.GetCell(0).NumericCellValue);
+                    Product updateOjb = db.Products.Find(id);
+                    if (updateOjb != null)
+                    {
+                        if (row.GetCell(1) != null)
+                            updateOjb.product_price = Convert.ToDecimal(row.GetCell(1).NumericCellValue);
+                        if (row.GetCell(2) != null)
+                            updateOjb.product_description = row.GetCell(2).StringCellValue;
+                        if (row.GetCell(3) != null)
+                            updateOjb.other_detail = row.GetCell(3).StringCellValue;
+                        if (row.GetCell(4) != null)
+                            updateOjb.product_size = row.GetCell(4).StringCellValue;
+
+                        db.SaveChanges();
+                        totalImported += 1;
+                    }
+                }
+
+                return Json(new { status = true, msg = string.Format("Total {0} products is updated.", totalImported) });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, msg = ex.Message });
+            }
+            finally
+            {
+                workBook.Clear();
+                workBook.Close();
+                workBook = null;
+            }
+        }
         #endregion
 
         #region Product Catalog Management
@@ -421,7 +537,7 @@ namespace MyStore.App.Controllers
 
                 return RedirectToAction("ListOfCatalog");
             }
-            return View(productType);
+            return View("CreateProductCatalog", productType);
         }
 
         public ActionResult EditCatalog(int id = 0)
@@ -454,7 +570,7 @@ namespace MyStore.App.Controllers
                 db.Ref_Product_Type.Attach(productType);
                 db.Entry(productType).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ListOfCatalog");
             }
             var parentType = db.Ref_Product_Type
                               .Where(p => p.parent_product_type_id == null);
@@ -462,7 +578,7 @@ namespace MyStore.App.Controllers
                                                             "product_type_id",
                                                             "product_type_description_vn");
 
-            return View(productType);
+            return View("EditCatalog", productType);
         }
 
         public ActionResult DeleteCatalog(int id = 0)

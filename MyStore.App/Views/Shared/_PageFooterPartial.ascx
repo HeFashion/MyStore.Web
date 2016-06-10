@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-sm-2">
                     <div class="companyinfo">
-                        <h2><span>e</span>-shopper</h2>
+                        <h2><span>Hè</span>-Vải Sợi</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                 <div class="col-sm-3">
                     <div class="address">
                         <img src="<%:Url.Content("~/images/home/map.png") %>" alt="" />
-                        <p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
+                        <p>Tổ 12, Khu Phước Hải, TT. Long Thành, T. Đồng Nai</p>
                     </div>
                 </div>
             </div>
@@ -138,7 +138,7 @@
     <div class="footer-bottom">
         <div class="container">
             <div class="row">
-                <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+                <p class="pull-left">Developed by <span><a target="_blank" href="https://www.facebook.com/hoanh.cao.9">Cao Văn Hoành</a></span> </p>
                 <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
             </div>
         </div>

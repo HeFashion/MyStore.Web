@@ -1,11 +1,4 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<MyStore.App.ViewModels.CheckoutViewModel>" %>
-<div class="breadcrumbs">
-    <ol class="breadcrumb">
-        <li><a href="<%:Url.Action("Index", "Product") %>">Trang Chủ</a></li>
-        <li class="active">Tính Tiền</li>
-    </ol>
-</div>
-<!--/breadcrums-->
 
 <div class="step-one">
     <h2 class="heading">Bước 1: Thông Tin Người Đặt Hàng</h2>

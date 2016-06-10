@@ -26,7 +26,7 @@
             <br />
             <%:Html.ValidationMessageFor(m=>m.PhoneNumber) %>
             <%:Html.TextBoxFor(m=>m.PhoneNumber,new { @placeholder="Số điện thoại" }) %>
-            <span>Nhà mày của chúng tôi sẽ liên hệ quý khách theo số điện thoại này để xác nhận hoặc thông báo giao hàng</span>
+            <span>Chúng tôi sẽ liên hệ quý khách theo số điện thoại này để xác nhận hoặc thông báo giao hàng</span>
         </div>
     </div>
 </div>
@@ -37,7 +37,7 @@
         <%:Html.TextAreaFor(m => m.OrderDescription, new { @placeholder="Nơi để các dặn dò khi giao hàng, ví dụ: Gói hàng để tặng quà sinh nhật...", @rows="10"})%>
     </div>
     <button type="submit" class="btn btn-primary">
-        Tiếp tục >>
+        Tạo Đơn Hàng & Kết Thúc >>
     </button>
 </div>
 <%} %>

@@ -15,7 +15,7 @@
                             null, 
                             new {@id="btnNew" })%>
 
-        <%: Ajax.ActionLink("Import Product",
+        <%: Ajax.ActionLink("Import Product Images",
                             "ImportProduct",
                             null,
                             new AjaxOptions
@@ -27,6 +27,18 @@
                             },
                             new { @id="btnImport" })%>
 
+        <%: Ajax.ActionLink("Import Product Excel",
+                            "GetImportProductExcel",
+                            null,
+                            new AjaxOptions
+                            {
+                                HttpMethod = "Get",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "modalContent",
+                                OnComplete = "OpenDialog(200,400)"
+                            },
+                            new { @id="btnImportExcel" })%>
+
         <%: Ajax.ActionLink("Move Product",
                             "GetMoveProductPartial",
                             null,
@@ -35,7 +47,7 @@
                                 HttpMethod = "Get",
                                 InsertionMode = InsertionMode.Replace,
                                 UpdateTargetId = "modalContent",
-                                OnComplete = "OpenDialog(150,320)"
+                                OnComplete = "OpenDialog(150,380)"
                             },
                             new { @id="btnMove" })%>
     </p>
@@ -54,7 +66,7 @@
                                             new {sortOrder = ViewBag.SortOrder,
                                                  searchString = ViewBag.SearchString,
                                                  page})) %>
-    <table>
+    <table class="product-table">
         <tr>
             <td colspan="10">
                 <label>
@@ -71,7 +83,6 @@
 
             <th>
                 <%:Html.ActionLink("Type","Index", new { sortOrder= "Type", searchString=ViewBag.SearchString })%>
-
             </th>
             <th>
                 <%:Html.ActionLink("Name","Index", new { sortOrder= "Name", searchString=ViewBag.SearchString })%>
@@ -80,17 +91,16 @@
                 <%: Html.DisplayName("UOM") %>
             </th>
             <th>
-                <%: Html.DisplayName("Description") %>
-            </th>
-            <th>
                 <%: Html.DisplayName("Price") %>
             </th>
+
             <th>
-                <%: Html.DisplayName("Create Date") %>
+                <%: Html.DisplayName("Desc") %>
             </th>
             <th>
-                <%: Html.DisplayName("Quantity") %>
+                <%: Html.DisplayName("Long Desc") %>
             </th>
+
             <th></th>
         </tr>
 
@@ -101,7 +111,9 @@
                 <%: Html.CheckBox("IsSelected", new {@value=item.product_id}) %>
             </td>
             <td>
-                <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",item.product_image,"recommend.jpg")) %>" alt="<%:item.product_name %>" />
+                <a href="<%: Url.Action("Edit", "Admin", new {returnUrl=HttpContext.Current.Request.RawUrl , id=item.product_id }) %>">
+                    <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",item.product_image,"cart.jpg")) %>" alt="<%:item.product_name %>" />
+                </a>
             </td>
             <td><%: Html.DisplayFor(modelItem => item.product_id)%></td>
             <td>
@@ -110,24 +122,35 @@
             <td>
                 <%: Html.DisplayFor(modelItem => item.product_name) %>
             </td>
+            <%using (Ajax.BeginForm("QuickEditProduct", "Admin", new AjaxOptions
+              {
+                  HttpMethod = "Post",
+                  InsertionMode = InsertionMode.Replace,
+                  UpdateTargetId = string.Format("status{0}", item.product_id)
+              }))
+              {  %>
+            <%: Html.AntiForgeryToken()%>
+            <%:Html.HiddenFor(model => item.product_id)%>
             <td>
-                <%: Html.DisplayFor(modelItem => item.Unit_Of_Measure.UOM_description) %>
-            </td>
-            <td>
-                <%: Html.DisplayFor(modelItem => item.product_description) %>
-            </td>
-            <td>
-                <%: MyStore.App.Utilities.DecimalHelper.ToString(item.product_price, "#,###.#")%>
+                <%: Html.DropDownListFor(modelItem => item.product_uom_id, new SelectList(ViewBag.UOMSelectList, "Id", "Description", item.product_uom_id))%>
             </td>
 
             <td>
-                <%: Html.DisplayFor(modelItem => item.product_created_date) %>
+                <%:Html.TextBoxFor(modelItem => item.product_price, new { @class = "price" , Value=MyStore.App.Utilities.DecimalHelper.ToString(item.product_price, "#,###.#")})%>
             </td>
             <td>
-                <%: Html.DisplayFor(modelItem => item.product_quantity) %>
+                <%: Html.TextBoxFor(modelItem => item.product_description, new { @class = "description" })%>
             </td>
             <td>
-                <%: Html.ActionLink("Edit", "Edit", new {returnUrl=HttpContext.Current.Request.RawUrl , id=item.product_id }) %> |
+                <%: Html.TextAreaFor(modelItem => item.other_detail, new { @class = "long-description" })%>
+            </td>
+            <td>
+                <label id="<%:string.Format("status{0}", item.product_id) %>"></label>
+                <input type="submit" value="Save" />
+            </td>
+            <%}%>
+
+            <td>
                 <%: Html.ActionLink("Delete", "Delete", new {returnUrl=HttpContext.Current.Request.RawUrl , id=item.product_id}) %>
             </td>
 
@@ -151,20 +174,35 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
-    <%: Styles.Render("~/Content/themes/base/css") %>
     <%: Styles.Render("~/Content/PagedList.css") %>
 
-    <%: Scripts.Render("~/bundles/jqueryui") %>
-    <%: Scripts.Render("~/bundles/jqueryval") %>
-    <%: Scripts.Render("~/Scripts/main.admin.js") %>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#btnNew").button();
             $("#btnImport").button();
+            $("#btnImportExcel").button();
             $("#btnMove").button();
             $("#IsSelectedAll").change(function () {
                 $("input:checkbox").prop('checked', $(this).prop("checked"));
             });
+            $("input.price").keyup(function (event) {
+
+                // skip for arrow keys
+                if (event.which >= 37 && event.which <= 40) return;
+
+                // format number
+                $(this).val(function (index, value) {
+                    return value
+                    .replace(/\D/g, "")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    ;
+                });
+            });
+
+            tinymce.init({
+                selector: 'textarea',  // change this value according to your HTML
+            });
+
         });
     </script>
 </asp:Content>

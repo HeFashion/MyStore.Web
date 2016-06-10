@@ -58,12 +58,6 @@ mark {
     visibility: hidden;
 }
 
-#progressbar {
-    width: 250px;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-}
-
 h1, h2, h3,
 h4, h5, h6 {
     color: #000;
@@ -543,6 +537,10 @@ td button {
     color: #e80c4d;
 }
 
+.success {
+    color: #7ac0da;
+}
+
 /* styles for validation helpers */
 .field-validation-error {
     color: #e80c4d;
@@ -829,3 +827,37 @@ tr.pager td {
             margin: 0;
         }
 }
+
+/* Product Page */
+
+#progressbar {
+    width: 250px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+
+.product-table {
+    display: block;
+}
+
+    .product-table td {
+        margin: 0;
+        padding: 0;
+        padding-left: 0.5em;
+    }
+
+    .product-table .price {
+        width: 90px;
+        vertical-align: top;
+    }
+
+    .product-table .description {
+        width: 150px;
+        vertical-align: top;
+    }
+
+    .product-table .long-description {
+        width: 400px;
+        height: 90%;
+        vertical-align: top;
+    }

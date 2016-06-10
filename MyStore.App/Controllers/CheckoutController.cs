@@ -75,13 +75,71 @@ namespace MyStore.App.Controllers
                 msg.Dispose();
         }
 
+        private ActionResult CreateOrder()
+        {
+            CheckoutViewModel model = this.Session[CHECKOUT_SESSION_KEY] as CheckoutViewModel;
+            int newOrderId = 0;
+            if (model.CurrentStep != CheckoutStep.PaymentInfo)
+            {
+                return Index();
+            }
+            else
+            {
+                using (MyStoreEntities db = new MyStoreEntities())
+                {
+                    Order newOrder = new Order();
+                    newOrder.Order_Status_Codes = db.Order_Status_Codes.Where(p => p.order_status_description == "New").SingleOrDefault();
+                    newOrder.date_order_placed = DateTime.Now;
+
+                    if (model.IsPassword)
+                        newOrder.user_id = WebSecurity.CurrentUserId;
+                    else
+                        newOrder.email_address = model.UserName;
+                    newOrder.receipter_name = model.CustomerName;
+                    newOrder.order_address = model.OrderAddress;
+                    newOrder.phone_number = model.PhoneNumber;
+                    newOrder.order_description = model.OrderDescription;
+                    var cartDetailsList = CartHelper.GetCartDetail(this.HttpContext);
+                    if (cartDetailsList != null)
+                    {
+                        foreach (var item in cartDetailsList)
+                        {
+                            Order_Items newItem = new Order_Items();
+                            var inventory = db.Products.Where(p => p.product_id == item.ProductId)
+                                                       .Select(p => p.product_quantity)
+                                                       .SingleOrDefault();
+                            if (inventory < item.TotalQuantity)
+                                newItem.Ref_Order_Item_Status_Codes = db.Ref_Order_Item_Status_Codes.Where(p => p.order_item_status_description == "Out Of Stock")
+                                                                                                    .SingleOrDefault();
+                            else
+                                newItem.Ref_Order_Item_Status_Codes = db.Ref_Order_Item_Status_Codes.Where(p => p.order_item_status_description == "Normal")
+                                                                                                    .SingleOrDefault();
+                            newItem.product_id = item.ProductId;
+                            newItem.order_item_quantity = item.TotalQuantity;
+                            newItem.order_item_amount = item.TotalAmount;
+                            newOrder.Order_Items.Add(newItem);
+                        }
+                    }
+
+                    db.Orders.Add(newOrder);
+                    db.SaveChanges();
+                    newOrderId = newOrder.order_id;
+                }
+                //Send mail to Web's Owner
+                //SendMail(newOrderId);
+
+                this.Session[CHECKOUT_SESSION_KEY] = null;
+                Utilities.CartHelper.EmptyCart(this.HttpContext);
+                return RedirectToAction("Index", "Home");
+            }
+        }
         //
         // GET: /Checkout/
         [CheckShoppingCart]
         [InitializeSimpleMembership]
         public ActionResult Index()
         {
-
+            ViewBag.BreadCrumbActive = "Tính Tiền";
             CheckoutViewModel checkoutObj = this.Session[CHECKOUT_SESSION_KEY] as CheckoutViewModel;
 
             if (checkoutObj == null)
@@ -116,6 +174,7 @@ namespace MyStore.App.Controllers
         [InitializeSimpleMembership]
         public ActionResult AuthenticationMethod(CheckoutViewModel viewModel)
         {
+            ViewBag.BreadCrumbActive = "Tính Tiền";
             ModelErrorClear(ModelState);
             if (ModelState.IsValidField("UserName"))
             {
@@ -151,6 +210,7 @@ namespace MyStore.App.Controllers
         [InitializeSimpleMembership]
         public ActionResult DeliveryInformation(CheckoutViewModel viewModel)
         {
+            ViewBag.BreadCrumbActive = "Tính Tiền";
             if (ModelState.IsValidField("CustomerName") &&
                 ModelState.IsValidField("OrderAddress") &&
                 ModelState.IsValidField("PhoneNumber"))
@@ -168,7 +228,7 @@ namespace MyStore.App.Controllers
 
                     this.Session[CHECKOUT_SESSION_KEY] = model;
 
-                    return View("Index", model);
+                    return this.CreateOrder();
                 }
                 else
                     return Index();
@@ -178,7 +238,7 @@ namespace MyStore.App.Controllers
             viewModel.CurrentStep = CheckoutStep.BillingInfo;
             return View("Index", viewModel);
         }
-
+        /*
         [CheckShoppingCart]
         public ActionResult CreateOrder()
         {
@@ -238,5 +298,6 @@ namespace MyStore.App.Controllers
                 return RedirectToAction("Index", "Product");
             }
         }
+         * */
     }
 }

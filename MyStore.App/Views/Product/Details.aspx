@@ -13,7 +13,7 @@
                     src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",Model.Image, "detail.jpg")) %>"
                     alt="<%:Model.Image %>"
                     data-zoom-image="<%:Url.Content(System.IO.Path.Combine("~/Images/shop", Model.Image,"original.jpg")) %>" />
-                <h3>Rê chuột để xem chi tiết</h3>
+                <h3>Rê chuột(hoặc chọn vào hình) để Zoom</h3>
             </div>
         </div>
         <div class="col-sm-7">
@@ -81,7 +81,8 @@
 
             <div class="tab-pane fade  active in" id="details">
                 <div class="col-sm-12">
-                    <p><%:Model.OtherDetails %></p>
+                    <%--<p><%:Model.OtherDetails %></p>--%>
+                    <%:Html.Raw(Model.OtherDetails) %>
                 </div>
             </div>
             <div class="tab-pane fade" id="reviews">
@@ -103,13 +104,7 @@
 
 <asp:Content ID="scriptContent" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%: Styles.Render("~/Content/themes/mystyle/jquery.rateyo.css") %>
-    <%: Scripts.Render("~/Scripts/jquery.rateyo.js") %>
-    <%: Scripts.Render( "~/Scripts/jquery.elevateZoom.js") %>
-    <%: Scripts.Render("~/Scripts/numericInput.js") %>
-    <%: Scripts.Render("~/Scripts/addtocart.js") %>
-    <%: Scripts.Render("~/Scripts/facebook.js") %>
-    <%: Scripts.Render("~/Scripts/googleplus.js") %>
-    <%: Scripts.Render("~/Scripts/rateObject.js") %>
+    <%: Scripts.Render("~/bundles/product/details") %>
 
     <script>
         $(document).ready(function () {
@@ -118,11 +113,9 @@
 
             Rating_Initialize("<%:ViewBag.BlogRate%>",
                               "<%:Model.Id%>",
-                              "<%:(short)MyStore.App.Models.MyData.VoteType.Product %>",
-                              "<%:Url.Action("VoteTo", "Vote")%>");
+                              "<%:(short)MyStore.App.Models.MyData.VoteType.Product %>");
 
-            var selectedObj = $(":button.add-to-cart");
-            SendProductAction(selectedObj, "<%: Url.Action("AddToCart", "Cart")%>");
+            SendProductAction(":button.add-to-cart");
 
             $(":button.cart").click(function (e) {
                 e.preventDefault();
@@ -131,7 +124,7 @@
                     productId: "<%:Model.Id%>",
                     productQuantity: $("#txtQuantity").val()
                 };
-                AddToCart("<%: Url.Action("AddToCart", "Cart")%>", sendInfo);
+                AddToCart(sendInfo);
             });
         });
     </script>

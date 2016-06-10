@@ -62,43 +62,24 @@
 
 </asp:Content>
 <asp:Content ID="scriptSection" ContentPlaceHolderID="ScriptsSection" runat="server">
-    <%:Scripts.Render("~/bundles/jqueryui")%>
     <%:Scripts.Render("~/Scripts/addtocart.js")%>
+    <%:Scripts.Render("~/Scripts/main.js")%>
+    <%:Scripts.Render("~/Scripts/jquery.scrollUp.js")%>
+
     <script type="text/javascript">
-        var nextIndex = 2;
+        var nextIndex = 1;
         var isEnded = false;
-        function GetData() {
-            $.ajax({
-                type: 'GET',
-                url: "<%:Url.Action("ListItemPartial","Product")%>",
-                data: { "page": nextIndex },
-                content: "application/json; charset=utf-8",
-                success: function (data) {
-                    if (data != null) {
-                        $("#featureItems").append(data);
-                        nextIndex++;
-                    }
-                },
-                beforeSend: function () {
-                    $("#progress").show();
-                },
-                complete: function () {
-                    $("#progress").hide();
-                },
-                error: function () {
-                    alert("Error while retrieving data!");
-                }
-            });
-        }
+        var isLocked = false;
+
+        //var obj = $();
+        SendProductAction(":button.add-to-cart");
 
         $(document).ready(function () {
-            var obj = $(":button.add-to-cart");
-            SendProductAction(obj, "<%: Url.Action("AddToCart", "Cart")%>");
 
             $(window).scroll(function () {
-                if (!isEnded) {
+                if (!isEnded && !isLocked) {
                     if ($(this).scrollTop() + $(window).height() > $('#footer').offset().top + 50) {
-                        GetData();
+                        GetData(nextIndex);
                     }
                 }
             });

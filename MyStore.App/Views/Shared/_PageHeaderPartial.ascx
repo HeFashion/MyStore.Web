@@ -8,7 +8,12 @@
                 <div class="col-sm-6 ">
                     <div class="contactinfo">
                         <ul class="nav nav-pills">
-                            <li><a href="#"><i class="fa fa-phone"></i>0933 243 688</a></li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-phone"></i>
+                                    <%:System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_PHONE] %>
+                                </a>
+                            </li>
                             <% var strEmail = System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_EMAIL]; %>
                             <li><a href="<%:string.Format("mailto:{0}", strEmail) %>"><i class="fa fa-envelope"></i><%:strEmail%></a></li>
                         </ul>
@@ -65,7 +70,7 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><%: Html.ActionLink("Trang Chủ","Index", "Home" ) %></li>
+                            <li><%: Html.ActionLink("Trang Chủ", "Index", "Home")%></li>
                             <li><%: Html.ActionLink("Bài Viết","Index", "Blog") %></li>
                             <li><%: Html.ActionLink("Giới Thiệu","About", "Home" ) %></li>
                             <li><%: Html.ActionLink("Địa Điểm", "Contact", "Home") %></li>
@@ -88,7 +93,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
     <!--header-bottom-->
