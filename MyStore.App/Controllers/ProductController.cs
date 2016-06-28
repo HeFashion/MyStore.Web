@@ -19,22 +19,46 @@ namespace MyStore.App.Controllers
         private MyStoreEntities db = new MyStoreEntities();
 
         #region **Private Functions**
+        private int CheckProductTypeId(int proTypeID)
+        {
+            int result = 0;
+            if (db.Ref_Product_Type.Any(p => p.product_type_id == proTypeID))
+            {
+                result = proTypeID;
+            }
+            else
+            {
+                result = GetDefaultProductType();
+            }
+            return result;
+        }
         private int GetDefaultProductType()
         {
             var query = from q in db.Ref_Product_Type
-                        where q.parent_product_type_id != null
+                        where q.is_active
                         orderby q.product_type_id
-                        select q;
-            int result = query.Select(p => p.product_type_id)
-                              .FirstOrDefault();
+                        select q.product_type_id;
+            int result = query.First();
             return result;
         }
 
         private string GetProductTypeName(int prodTypeID)
         {
-            var query = db.Ref_Product_Type.Where(p => p.product_type_id == prodTypeID)
-                                           .Select(p => p.product_type_description_vn);
+            int typeId = CheckProductTypeId(prodTypeID);
+
+            var query = db.Ref_Product_Type
+                          .Where(p => p.product_type_id == typeId)
+                          .Select(p => p.product_type_description_vn);
+
             return query.SingleOrDefault();
+        }
+
+        private int GetProductTypeId(int prodID)
+        {
+            var query = db.Products.Where(p => p.product_id == prodID)
+                                           .Select(p => p.product_type_id);
+            int result = query.SingleOrDefault();
+            return result == 0 ? 1 : result;
         }
 
         private IList<ProductModel> GetRecommendProduct(int productId)
@@ -60,41 +84,35 @@ namespace MyStore.App.Controllers
                            .ToList();
         }
 
-        #endregion
-
-        public ActionResult ShowCart()
+        private IQueryable<ProductModel> GetFindQuery(int? prodType, string searchString)
         {
-            ViewBag.BreadCrumbActive = "Giỏ Hàng";
-
-            return View("ShoppingCart", CartHelper.GetCartDetail(this.HttpContext));
-        }
-
-        //
-        // GET: /Product/'
-        public ActionResult Index(int? prodType, int? page, string searchString)
-        {
-            ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
-
-            int pageSize = Convert.ToInt32(this.Session[GeneralContanstClass.PageSize_Session_Key]);
-            int pageNum = page ?? 1;
-
-            var products = from pro in db.Products.Include("Unit_Of_Measure")
+            var products = from pro in db.Products
+                                         .Include("Unit_Of_Measure")
+                                         .Include("Ref_Product_Type")
                            select pro;
-
             if (!string.IsNullOrEmpty(searchString))
             {
                 ViewBag.ProductTypeName = MvcHtmlString.Create(string.Format("\"{0}\"", searchString));
-                ViewBag.SearchString = searchString;
-                products = products.Where(p => p.product_name.StartsWith(searchString));
+                ViewData["SearchString"] = searchString;
+                products = products.Where(p => p.product_name.StartsWith(searchString) &&
+                                               p.Ref_Product_Type.is_active);
+
+            }
+            else if (prodType != null && prodType.HasValue)
+            {
+                int currentType = CheckProductTypeId(prodType.Value);
+                string prodTypeName = GetProductTypeName(currentType);
+
+                ViewBag.ProductTypeName = prodTypeName;
+                ViewData.Add("prodType", currentType);
+                products = products.Where(p => p.product_type_id == currentType &&
+                                               p.Ref_Product_Type.is_active);
+
             }
             else
             {
-                prodType = prodType ?? GetDefaultProductType();
-                ViewBag.ProductTypeName = GetProductTypeName(prodType ?? 0);
-                ViewData.Add("prodType", prodType);
-                products = products.Where(p => p.product_type_id == prodType);
+                products = products.Where(p => p.Ref_Product_Type.is_active);
             }
-
             var result = products.OrderByDescending(p => p.product_created_date)
                                  .Select(p => new ProductModel()
                                  {
@@ -106,16 +124,43 @@ namespace MyStore.App.Controllers
                                      Image = p.product_image,
                                      DateCreated = p.product_created_date ?? DateTime.Now
                                  });
+            return result;
+        }
+        #endregion
 
-            return View(result.ToPagedList(pageNum, pageSize));
+        [HttpGet]
+        public ActionResult ShowCart()
+        {
+            ViewBag.BreadCrumbActive = "Giỏ Hàng";
+            return View("ShoppingCart", CartHelper.GetCartDetail(this.HttpContext));
+        }
+
+        //
+        // GET: /Product/'
+        [HttpGet]
+        public ActionResult Index(int? prodType, int? page, string searchString)
+        {
+            int pageSize = Convert.ToInt32(this.Session[GeneralContanstClass.PageSize_Session_Key]);
+            int pageNum = page ?? 1;
+
+            ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
+
+            IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
+            string strCrumb = string.IsNullOrEmpty(searchString) ? GetProductTypeName(prodType ?? 0) : "Phân Loại";
+            dCrumbs.Add(strCrumb, string.Empty);
+            ViewData["BreadCrumbs"] = dCrumbs;
+
+            var result = GetFindQuery(prodType, searchString);
+
+            return View(result.Take(pageSize)
+                              .ToList());
         }
 
         //
         // GET: /Product/Details/5
+        [HttpGet]
         public ActionResult Details(int id = 0)
         {
-            ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
-
             var query = from pro in db.Products
                         join puom in db.Unit_Of_Measure on pro.product_uom_id equals puom.UOM_id
                         where pro.product_id == id
@@ -123,6 +168,7 @@ namespace MyStore.App.Controllers
                         select new ProductModel()
                         {
                             Id = pro.product_id,
+                            Type = pro.Ref_Product_Type.product_type_description_vn,
                             Name = pro.product_name,
                             Description = pro.product_description,
                             UOM = puom.UOM_description,
@@ -140,6 +186,11 @@ namespace MyStore.App.Controllers
             }
             else
             {
+                ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
+                IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
+                dCrumbs.Add(product.Type, Url.Action("Index", "Product", new { @prodType = GetProductTypeId(id) }));
+                dCrumbs.Add("Chi Tiết", string.Empty);
+                ViewData["BreadCrumbs"] = dCrumbs;
                 if (product.Total_Voted == 0)
                     ViewBag.BlogRate = 0;
                 else
@@ -174,31 +225,25 @@ namespace MyStore.App.Controllers
                 return PartialView("_CartTablePartial", CartHelper.GetCartDetail(this.HttpContext));
         }
 
-        public PartialViewResult ListItemPartial(int? page)
+        [HttpGet]
+        public PartialViewResult ListItemPartial(int? page, int? prodType, string searchString)
         {
             int pageSize = Convert.ToInt32(this.Session[GeneralContanstClass.PageSize_Session_Key]);
-            int pageNum = page ?? 1;
+            int loadSize = Convert.ToInt32(this.Session[GeneralContanstClass.LoadSize_Session_Key]);
+            int pageNum = page ?? 0;
+            int pageSkip = pageSize + (loadSize * pageNum);
+            ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
 
-            var products = from pro in db.Products.Include("Unit_Of_Measure")
-                           select pro;
+            var result = GetFindQuery(prodType, searchString);
 
-            var result = products.OrderByDescending(p => p.product_created_date)
-                                 .Select(p => new ProductModel()
-                                 {
-                                     Id = p.product_id,
-                                     Name = p.product_name,
-                                     Description = p.product_description,
-                                     UOM = p.Unit_Of_Measure.UOM_description,
-                                     Price = p.product_price,
-                                     Image = p.product_image,
-                                     DateCreated = p.product_created_date ?? DateTime.Now
-                                 });
-            ViewData["IsEnded"] = db.Products.Count() <= (pageNum * pageSize);
-            return PartialView("_ListItemsPartial", result.Skip(pageNum * pageSize)
-                                                          .Take(pageSize)
+            ViewData["IsEnded"] = result.Count() <= pageSkip;
+
+            return PartialView("_ListItemsPartial", result.Skip(pageSkip)
+                                                          .Take(loadSize)
                                                           .ToList());
         }
 
+        [HttpGet]
         public PartialViewResult FeatureItemPartial(string strListTitle, IEnumerable<ProductModel> partialModel)
         {
 
@@ -209,11 +254,110 @@ namespace MyStore.App.Controllers
             return PartialView("_FeatureItemPartial", partialModel);
         }
 
+        [HttpGet]
+        public PartialViewResult AddToCompareProduct(int productId = 1)
+        {
+            IList<int> listCompare = this.Session[GeneralContanstClass.COMPARE_PRODUCT_SESSION_KEY] as List<int>;
+            if (listCompare == null)
+                listCompare = new List<int>();
+            if (listCompare.Count >= 10)
+            {
+                ViewBag.CompareListTitle = string.Format("Quý khách đã dùng hết {0}/10 sản phẩm, bắt đầu so sánh ngay.", listCompare.Count);
+            }
+            else
+            {
+                if (!listCompare.Any(p => p == productId))
+                {
+                    listCompare.Add(productId);
+                    this.Session[GeneralContanstClass.COMPARE_PRODUCT_SESSION_KEY] = listCompare;
+                }
+                ViewBag.CompareListTitle = string.Format("Danh sách tối đa 10 sản phẩm, quý khách đã dùng {0}/10 sản phẩm.", listCompare.Count);
+            }
+
+            var query = db.Products
+                          .Where(p => listCompare.Contains(p.product_id))
+                          .Select(p => new ProductModel()
+                          {
+                              Id = p.product_id,
+                              Name = p.product_name,
+                              Description = p.product_description,
+                              UOM = p.Unit_Of_Measure.UOM_description,
+                              Price = p.product_price,
+                              Image = p.product_image,
+                              DateCreated = p.product_created_date ?? DateTime.Now
+                          })
+                          .ToList();
+            return PartialView("_ProductComparePartial", query);
+        }
+
+        [HttpGet]
+        public PartialViewResult RemoveFromCompareProduct(int productId = 1)
+        {
+            IList<int> listCompare = this.Session[GeneralContanstClass.COMPARE_PRODUCT_SESSION_KEY] as List<int>;
+            if (listCompare == null)
+                listCompare = new List<int>();
+
+            listCompare.Remove(productId);
+            this.Session[GeneralContanstClass.COMPARE_PRODUCT_SESSION_KEY] = listCompare;
+
+            if (listCompare.Count <= 0)
+            {
+                ViewBag.CompareListTitle = "Danh sách của quý khách đang rỗng.";
+                return PartialView("_ProductComparePartial");
+            }
+            else
+            {
+                ViewBag.CompareListTitle = string.Format("Danh sách tối đa 10 sản phẩm, quý khách đã dùng {0}/10 sản phẩm.", listCompare.Count);
+            }
+
+            var query = db.Products
+                          .Where(p => listCompare.Contains(p.product_id))
+                          .Select(p => new ProductModel()
+                          {
+                              Id = p.product_id,
+                              Name = p.product_name,
+                              Description = p.product_description,
+                              UOM = p.Unit_Of_Measure.UOM_description,
+                              Price = p.product_price,
+                              Image = p.product_image,
+                              DateCreated = p.product_created_date ?? DateTime.Now
+                          })
+                          .ToList();
+            return PartialView("_ProductComparePartial", query);
+        }
+
+        [HttpGet]
+        public ActionResult Compare()
+        {
+            IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
+            dCrumbs.Add("So Sánh", string.Empty);
+            ViewData["BreadCrumbs"] = dCrumbs;
+            IList<int> listCompare = this.Session[GeneralContanstClass.COMPARE_PRODUCT_SESSION_KEY] as List<int>;
+            if (listCompare == null)
+            {
+                return View("Compare", null);
+            }
+
+            var query = db.Products
+                          .Where(p => listCompare.Contains(p.product_id))
+                          .Select(p => new ProductModel()
+                          {
+                              Id = p.product_id,
+                              Description = p.product_description,
+                              UOM = p.Unit_Of_Measure.UOM_description,
+                              Price = p.product_price,
+                              Image = p.product_image,
+                              OtherDetails = p.other_detail,
+                              Total_Score = p.total_vote_score ?? 0,
+                              Total_Voted = p.total_vote_count ?? 0
+                          })
+                          .ToList();
+            return View("Compare", query);
+        }
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
             base.Dispose(disposing);
         }
-
     }
 }

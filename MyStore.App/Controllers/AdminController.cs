@@ -286,7 +286,7 @@ namespace MyStore.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateInput(false)] 
+        [ValidateInput(false)]
         public string QuickEditProduct()
         {
             int id = 0;

@@ -31,7 +31,9 @@ namespace MyStore.App.Controllers
                 int pageSize = Convert.ToInt32(this.Session[GeneralContanstClass.PageSize_Session_Key]);
 
                 var model = from pro in db.Products
-                            join puom in db.Unit_Of_Measure on pro.product_uom_id equals puom.UOM_id
+                                      .Include("Unit_Of_Measure")
+                                      .Include("Ref_Product_Type")
+                            where pro.Ref_Product_Type.is_active
                             orderby pro.product_created_date descending
                             select new ProductModel()
                             {
@@ -39,7 +41,7 @@ namespace MyStore.App.Controllers
                                 Type = pro.Ref_Product_Type.product_type_description_vn,
                                 Name = pro.product_name,
                                 Description = pro.product_description,
-                                UOM = puom.UOM_description,
+                                UOM = pro.Unit_Of_Measure.UOM_description,
                                 Price = pro.product_price,
                                 Image = pro.product_image,
                                 DateCreated = pro.product_created_date ?? DateTime.Now
@@ -47,6 +49,8 @@ namespace MyStore.App.Controllers
                 var recommendList = db.Product_Recommend
                                       .Include("Product")
                                       .Include("Product.Unit_Of_Measure")
+                                      .Include("Product.Ref_Product_Type")
+                                      .Where(p => p.Product.Ref_Product_Type.is_active)
                                       .OrderBy(p => p.recommend_order)
                                       .Select(pro => new ProductModel()
                                       {
@@ -67,6 +71,9 @@ namespace MyStore.App.Controllers
         public ActionResult About()
         {
             ViewBag.Message = "Hè-Vải Sợi xin giới thiệu";
+            IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
+            dCrumbs.Add("Giới Thiệu", string.Empty);
+            ViewData["BreadCrumbs"] = dCrumbs;
 
             return View();
         }
@@ -75,6 +82,9 @@ namespace MyStore.App.Controllers
         {
             MvcCaptcha.ResetCaptcha("SimpleCaptcha");
             ViewBag.IsDisplayMesg = isDisplayMesg ?? false;
+            IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
+            dCrumbs.Add("Địa Điểm", string.Empty);
+            ViewData["BreadCrumbs"] = dCrumbs;
 
             return View();
         }

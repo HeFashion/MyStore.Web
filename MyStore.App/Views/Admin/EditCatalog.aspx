@@ -39,7 +39,13 @@
             <%: Html.EditorFor(model => model.product_type_description_en) %>
             <%: Html.ValidationMessageFor(model => model.product_type_description_en) %>
         </div>
-
+        <div class="editor-label">
+            <%: Html.Label("Is Active") %>
+        </div>
+        <div class="editor-field">
+            <%: Html.CheckBoxFor(model => model.is_active) %>
+            <%: Html.ValidationMessageFor(model => model.product_type_description_en) %>
+        </div>
         <p>
             <input type="submit" value="Save" />
         </p>
@@ -56,5 +62,4 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
-    
 </asp:Content>

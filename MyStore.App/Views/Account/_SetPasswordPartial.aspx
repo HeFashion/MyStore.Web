@@ -5,7 +5,7 @@
     Vui lòng thiết lập mật khẩu để có thể đăng nhập mà không cần xử dụng mạng xã hội.
 </p>
 
-<h2 class="title text-left">Thiết lập mật khẩu</h2>
+<h2 class="title text-center">Thiết lập mật khẩu</h2>
 
 <div class="manage-form">
     <% using (Ajax.BeginForm("Manage", "Account", new AjaxOptions

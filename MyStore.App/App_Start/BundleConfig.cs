@@ -104,6 +104,15 @@ namespace MyStore.App
                "~/Scripts/facebook.js",
                "~/Scripts/googleplus.js",
                "~/Scripts/rateObject.js"));
+            bundles.Add(new ScriptBundle("~/bundles/blog/details").Include(
+                "~/Scripts/jquery.rateyo.js",
+                "~/Scripts/facebook.js",
+                "~/Scripts/googleplus.js",
+                "~/Scripts/rateObject.js"
+                ));
+            bundles.Add(new ScriptBundle("~/bundles/product/compare").Include(
+              "~/Scripts/jquery.elevateZoom.js",
+              "~/Scripts/addtocart.js"));
         }
     }
 }

@@ -8,6 +8,8 @@
 
 <asp:Content ID="mainContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="blog-post-area">
+        <%:Html.Partial("_BreadCrumbPartial", ViewData["BreadCrumbs"]) %>
+
         <h2 class="title text-center">Danh Sách Các Bài Viết</h2>
         <%foreach (var item in Model)
           { %>

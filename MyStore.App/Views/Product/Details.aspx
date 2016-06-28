@@ -1,10 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.master" Inherits="System.Web.Mvc.ViewPage<MyStore.App.ViewModels.ProductModel>" %>
 
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Sản phẩm - Chi tiết
+    Chi Tiết | Hè-Vải Sợi
 </asp:Content>
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
+    <%:Html.Partial("_BreadCrumbPartial", ViewData["BreadCrumbs"]) %>
+
     <!--product-details-->
     <div class="product-details">
         <div class="col-sm-5">
@@ -13,7 +15,14 @@
                     src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",Model.Image, "detail.jpg")) %>"
                     alt="<%:Model.Image %>"
                     data-zoom-image="<%:Url.Content(System.IO.Path.Combine("~/Images/shop", Model.Image,"original.jpg")) %>" />
-                <h3>Rê chuột(hoặc chọn vào hình) để Zoom</h3>
+                <%if (!MyStore.App.Utilities.DeviceHelper.IsSmartPhone(Request.UserAgent))
+                  { %>
+                <h3>Rê chuột để Zoom</h3>
+                <%}
+                  else
+                  {%>
+                <h3>Chọn vào hình để Zoom</h3>
+                <%} %>
             </div>
         </div>
         <div class="col-sm-7">
@@ -21,7 +30,7 @@
                 <!--/product-information-->
                 <%:Html.Action("BlogVotePartial", "Blog", new {totalScore=Model.Total_Score, totalVoted=Model.Total_Voted})%>
                 <%int dateDiff = Convert.ToInt32((DateTime.Now - Model.DateCreated).TotalDays); %>
-                <%if (dateDiff < ViewBag.DateCompare)%>
+                <%if (dateDiff <= ViewBag.DateCompare)%>
                 <%{%>
                 <img src="<%:Url.Content("~/Images/shop/new.jpg") %>" class="newarrival" alt="" />
                 <%}%>
@@ -81,8 +90,16 @@
 
             <div class="tab-pane fade  active in" id="details">
                 <div class="col-sm-12">
-                    <%--<p><%:Model.OtherDetails %></p>--%>
                     <%:Html.Raw(Model.OtherDetails) %>
+                    <p class="product-note">
+                        (*) Nếu có điều kiện, Shop khuyên bạn nên đến địa chỉ 
+                        <a href="<%:Url.Action("Contact", "Home") %>">
+                            <%:Convert.ToString(System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_ADDRESS]) %>
+                        </a>
+                        để lựa vải, bạn sẽ cảm nhận được sự khác biệt, ưu điểm, khuyết điểm của từng loại vải. Từ đó, bạn sẽ chọn được cho mình những bộ vải ưng ý nhất.
+                        <br />
+                        <strong>Hè-Vải Sợi</strong> chuyên cung cấp các loại vải (đặc biệt là vải áo dài) rẻ & đẹp, đảm bảo chất lượng, nguồn gốc rõ ràng, bán hàng uy tín tại <strong>TT.Long Thành, T. Đồng Nai</strong>.
+                    </p>
                 </div>
             </div>
             <div class="tab-pane fade" id="reviews">
@@ -108,7 +125,17 @@
 
     <script>
         $(document).ready(function () {
+            <%if (!MyStore.App.Utilities.DeviceHelper.IsSmartPhone(Request.UserAgent))
+              {%>
             $("<%:"#"+ Model.Name %>").elevateZoom();
+            <%}
+              else
+              {%>
+            $("<%:"#"+ Model.Name %>").elevateZoom({
+                zoomType: "inner",
+                cursor: "crosshair"
+            });
+            <%}%>
             $("#txtQuantity").numericInput({ allowFloat: true });
 
             Rating_Initialize("<%:ViewBag.BlogRate%>",

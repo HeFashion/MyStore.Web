@@ -5,11 +5,11 @@ function ShowModal() {
     }
 }
 
-function GetData(index) {
+function getData(myData) {
     $.ajax({
         type: 'GET',
         url: "/Product/ListItemPartial",
-        data: { "page": index },
+        data: myData,
         content: "application/json; charset=utf-8",
         success: function (data) {
             if (data != null) {
@@ -29,6 +29,20 @@ function GetData(index) {
             alert("Error while retrieving data!");
         }
     });
+}
+/*
+function GetData(index, iType, strSearch) {
+    var sendData = {
+        "page": index,
+        "prodType": iType,
+        "searchString": strSearch
+    };
+    return getData(sendData);
+}
+*/
+function GetData(index) {
+    var sendData = { "page": index };
+    return getData(sendData);
 }
 $('#sl2').slider();
 
@@ -57,4 +71,16 @@ $(document).ready(function () {
             zIndex: 2147483647 // Z-Index for the overlay
         });
     });
+
+    $('#slide-submenu').on('click', function () {
+        $(this).closest('.list-group').fadeOut('slide', function () {
+            $('.mini-submenu').fadeIn();
+        });
+
+    });
+
+    $('.mini-submenu').on('click', function () {
+        $(this).next('.list-group').toggle('slide');
+        $('.mini-submenu').hide();
+    })
 });

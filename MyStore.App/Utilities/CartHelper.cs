@@ -15,15 +15,34 @@ namespace MyStore.App.Utilities
             //ViewModels.ShoppingCart cart = ViewModels.ShoppingCart.GetCart(this.HttpContext);
             using (MyStoreEntities db = new MyStoreEntities())
             {
+                IList<int> listId = cart.CartDetails
+                                        .Select(p => p.ProductId)
+                                        .ToList();
+                var query = db.Products
+                              .Include("Unit_Of_Measure")
+                              .Where(p => listId.Contains(p.product_id))
+                              .Select(p => new ShoppingCartViewModel()
+                              {
+                                  ProductId = p.product_id,
+                                  ProductDescription = p.product_description,
+                                  ProductImage = p.product_image,
+                                  Price = p.product_price ?? 1,
+                                  ProductName = p.product_name,
+                                  UOM = p.Unit_Of_Measure.UOM_description
+                              })
+                              .ToList();
+
                 foreach (var item in cart.CartDetails)
                 {
-                    var query = db.Products.Where(p => p.product_id == item.ProductId).Select(p => new { p.product_description, p.product_image, p.product_name, p.product_price }).Single();
-                    if (query != null)
+                    var cartRow = query.Where(p => p.ProductId == item.ProductId)
+                                       .SingleOrDefault();
+                    if (cartRow != null)
                     {
-                        item.ProductDescription = query.product_description;
-                        item.ProductImage = query.product_image;
-                        item.Price = query.product_price ?? 1;
-                        item.ProductName = query.product_name;
+                        item.ProductDescription = cartRow.ProductDescription;
+                        item.ProductImage = cartRow.ProductImage;
+                        item.Price = cartRow.Price;
+                        item.ProductName = cartRow.ProductName;
+                        item.UOM = cartRow.UOM;
                     }
                 }
             }

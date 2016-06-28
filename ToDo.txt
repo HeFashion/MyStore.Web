@@ -44,7 +44,7 @@ Vote for Product(done)
 
 Improve span in Detail of product.(done)
 
-Add number of comment on tab "Nhận Xét".(need check)
+Add number of comment on tab "Nhận Xét".(done)
 
 About Us
  + Index(done)
@@ -81,7 +81,7 @@ Fix addtocart on product/details(done)
 Lazy load when scroll page(done)
 Stop rollup button jump.(done)
 Import data to table(first step)
-Change font for web(no need)
+Change font for web(done)
 
 
 Add Number of products for each of Category(done)
@@ -89,23 +89,35 @@ Add Actor div in each of blog detail.(done)
 Create second blog details.(done)
 
 Bug when user addtocart on Home(done)
-Quick way for managing Product page.(70%)
-Implete RichTextEditor for create new blog.
-Change next and previous url for blog Detail
-Add active field to Product entity
- 
+Quick way for managing Product page.(done)
+Custom HTTP Not Found page(done)
+
+Hide all Unactive product catalog(done)
+Add one more value/key for lazyload in Web.config(done)
+Impletement lazy load for Product/Index(done)
+Change order for ProductCatalog(done)
+Bug in http://www.hevaisoi.com/Product?prodType=482(done)
+Change next and previous url for blog Detail(done)
+Add Share button on Blog details(done)
+Manage account form miss when display(no need)
 
 Create compare product page
 
-Custom HTTP Not Found page(done)
+Change padding for paging buttons.
+
+Implete RichTextEditor for create new blog.
+
+Add active field to Product entity
+
 Improve addtocart.js(no need for data-url)
 
-Move shipping image when scroll(don't suitable with mobi. Append)	
+Move shipping image when scroll(don't suitable with mobi. Append)
 Add Current navigation to _PageHeaderParital.(append)
 Fix margin-left for Account Manage li
 Take alook _ChangePasswordPartial- change viewpage to viewcontrol
-Manage account form miss when display
-Change padding for paging buttons
 
 Bring all Menu button on top and frozen them.
 change the way to show product overlay
+Add more key to web.config for Facebook + Google page.
+Add more detail to _CompletedAddToCart
+Bug when user navigate to /Product 

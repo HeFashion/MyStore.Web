@@ -209,6 +209,8 @@ namespace MyStore.App.ViewModels
         public string ProductDescription { get; set; }
         [DisplayName("Sản Phẩm")]
         public string ProductImage { get; set; }
+        [DisplayName("Đơn Vị")]
+        public string UOM { get; set; }
         [DisplayName("Mã Hàng")]
         public string ProductName { get; set; }
         [DisplayName("Đơn Giá")]

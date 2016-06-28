@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<MyStore.App.Models.Authentication.LocalPasswordModel>" %>
 
 
-<h2 class="title text-left">Thay Đổi Mật Khẩu</h2>
+<h2 class="title text-center">Thay Đổi Mật Khẩu</h2>
 
 
 <div class="manage-form">

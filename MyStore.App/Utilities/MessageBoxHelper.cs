@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MyStore.App.Utilities
 {
@@ -32,12 +33,18 @@ namespace MyStore.App.Utilities
 
         public static string GetLoginMessage()
         {
-            return string.Format(MessBox_Template, "Quý khách vui lòng đăng nhập để sử dụng chức năng này.");
+            UrlHelper url = new UrlHelper(HttpContext.Current.Request.RequestContext);
+            return string.Format(MessBox_Template, "Quý khách vui lòng <a href='" + url.Action("Login", "Account") + "'>đăng nhập</a> để sử dụng chức năng này.");
         }
 
         public static string GetVotedMessage()
         {
             return string.Format(MessBox_Template, "Quý khách đã từng cho điểm đối tượng này rồi.");
+        }
+
+        public static string GetExistedProductInCompare()
+        {
+            return string.Format(MessBox_Template, "Danh sách so sánh đã tồn tại sản phẩm này rồi.");
         }
     }
 }

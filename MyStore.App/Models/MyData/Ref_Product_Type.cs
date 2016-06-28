@@ -24,6 +24,8 @@ namespace MyStore.App.Models.MyData
         public Nullable<int> parent_product_type_id { get; set; }
         public string product_type_description_vn { get; set; }
         public string product_type_description_en { get; set; }
+        public bool is_active { get; set; }
+        public byte product_type_order { get; set; }
     
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Ref_Product_Type> Child_Product_Types { get; set; }

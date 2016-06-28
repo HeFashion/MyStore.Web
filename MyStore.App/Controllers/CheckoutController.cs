@@ -20,6 +20,8 @@ namespace MyStore.App.Controllers
 {
     public class CheckoutController : Controller
     {
+
+        #region Private
         private static readonly string CHECKOUT_SESSION_KEY = "CHECKOUT";
 
         private void ModelErrorClear(ModelStateDictionary modelState)
@@ -73,6 +75,13 @@ namespace MyStore.App.Controllers
             }
             if (msg != null)
                 msg.Dispose();
+        }
+
+        private void SetBreadCrumbs()
+        {
+            IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
+            dCrumbs.Add("Thanh Toán", string.Empty);
+            ViewData["BreadCrumbs"] = dCrumbs;
         }
 
         private ActionResult CreateOrder()
@@ -133,13 +142,14 @@ namespace MyStore.App.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        #endregion
+
         //
         // GET: /Checkout/
         [CheckShoppingCart]
         [InitializeSimpleMembership]
         public ActionResult Index()
         {
-            ViewBag.BreadCrumbActive = "Tính Tiền";
             CheckoutViewModel checkoutObj = this.Session[CHECKOUT_SESSION_KEY] as CheckoutViewModel;
 
             if (checkoutObj == null)
@@ -164,7 +174,7 @@ namespace MyStore.App.Controllers
             {
                 checkoutObj.CurrentStep = Request.IsAuthenticated ? ViewModels.CheckoutStep.BillingInfo : ViewModels.CheckoutStep.Authentication;
             }
-
+            SetBreadCrumbs();
             return View("Index", checkoutObj);
         }
 
@@ -202,6 +212,7 @@ namespace MyStore.App.Controllers
             }
             this.Session[CHECKOUT_SESSION_KEY] = viewModel;
 
+            SetBreadCrumbs();
             return View("Index", viewModel);
         }
 
@@ -210,7 +221,6 @@ namespace MyStore.App.Controllers
         [InitializeSimpleMembership]
         public ActionResult DeliveryInformation(CheckoutViewModel viewModel)
         {
-            ViewBag.BreadCrumbActive = "Tính Tiền";
             if (ModelState.IsValidField("CustomerName") &&
                 ModelState.IsValidField("OrderAddress") &&
                 ModelState.IsValidField("PhoneNumber"))
@@ -236,6 +246,7 @@ namespace MyStore.App.Controllers
             }
 
             viewModel.CurrentStep = CheckoutStep.BillingInfo;
+            SetBreadCrumbs();
             return View("Index", viewModel);
         }
         /*

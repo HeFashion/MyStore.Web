@@ -17,12 +17,14 @@
                 <div class="item active">
                     <%foreach (MyStore.App.ViewModels.ProductModel recommendItem in Model.Take(4))%>
                     <%{ %>
+
                     <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.Id })%>">
                         <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",recommendItem.Image, "cart.jpg")) %>" alt="<%:recommendItem.Name %>" />
                     </a>
+
                     <%} %>
                 </div>
-                <%for (int i = 3; i < Model.Count; i += 4)%>
+                <%for (int i = 4; i < Model.Count; i += 4)%>
                 <%{ %>
                 <div class="item">
                     <%var takeList = Model.Skip(i).Take(4); %>
@@ -46,6 +48,10 @@
         </div>
     </div>
     <div class="modal-footer">
+        <a class="btn btn-default get" href="<%:Url.Action("ShowCart", "Product") %>">
+            <i class="fa fa-shopping-cart"></i>
+            Giỏ hàng
+        </a>
         <a class="btn btn-default get" href="<%:Url.Action("Index", "Checkout") %>">
             <i class="fa fa-money"></i>
             Thanh toán

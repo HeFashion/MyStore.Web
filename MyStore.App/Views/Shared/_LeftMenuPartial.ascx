@@ -1,10 +1,22 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<dynamic>" %>
-
 <div class="left-sidebar">
+    <div class="mini-submenu">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </div>
+    <div class="list-group">
+        <span class="list-group-item active">Phân Loại
+            <%if (Request.Browser.IsMobileDevice &&
+                  MyStore.App.Utilities.DeviceHelper.IsSmartPhone(Request.UserAgent))
+              {%>
+            
+            <span class="pull-right" id="slide-submenu">
+                <i class="fa fa-times"></i>
+            </span>
+            <%} %>
 
-    <h2>Phân Loại Sản Phẩm</h2>
-    <div class="panel-group category-products" id="accordian">
-        <!--category-productsr-->
+        </span>
         <%IList<MyStore.App.Models.Menu> myMenu = this.Session[MyStore.App.Utilities.GeneralContanstClass.Menu_Session_Key] as List<MyStore.App.Models.Menu>; %>
         <%if (myMenu == null)
           {
@@ -12,64 +24,21 @@
           } %>
         <%foreach (var menuItem in myMenu)
           {%>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <%if (menuItem.ChildMenu == null)%>
-                    <%{%>
-                    <%:Html.ActionLink(string.Format("{0} ({1})", menuItem.MenuDesc, menuItem.TotalProduct),
-                                                    "Index", 
-                                                    "Product", 
-                                                    new { prodType=menuItem.MenuId },
-                                                    null) %>
-                    <%} %>
-                    <%else%>
-                    <%{ %>
-                    <a data-toggle="collapse" data-parent="#accordian" href="<%:string.Format("#menu{0}", menuItem.MenuId) %>">
-                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                        <%:string.Format("{0} ({1})", menuItem.MenuDesc, menuItem.TotalProduct) %>
-                    </a>
-                    <%} %>
-                    
-                </h4>
-            </div>
-            <%if (menuItem.ChildMenu != null &&
-                  menuItem.ChildMenu.Count != 0)
-              {%>
-            <div id="<%:string.Format("menu{0}", menuItem.MenuId) %>" class="panel-collapse collapse">
-                <div class="panel-body">
-                    <ul>
-                        <%foreach (var subMenu in menuItem.ChildMenu)
-                          {%>
-                        <li>
-                            <a href="<%: Url.Action("Index", "Product", new { prodType=subMenu.MenuId }) %>">
-                                <%:string.Format("{0} ({1})", subMenu.MenuDesc, subMenu.TotalProduct) %>
-                            </a>
-                        </li>
-                        <%} %>
-                    </ul>
-                </div>
-            </div>
-            <%} %>
-        </div>
-        <% } %>
-
-        <%--        <!--price-range-->
-        <div class="price-range">
-            <h2>Phân loại theo giá</h2>
-            <div class="well">
-                <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br />
-                <b>$ 0</b> <b class="pull-right">$ 600</b>
-            </div>
-
-        </div>
-        <!--/price-range-->--%>
-
+        <a href="<%:Url.Action("Index", 
+                               "Product", 
+                               new { prodType=menuItem.MenuId },
+                               null) %>"
+            class="list-group-item">
+            <%:menuItem.MenuDesc %>
+            <span class="badge"><%:menuItem.TotalProduct %></span>
+        </a>
+        <%} %>
         <!--shipping-->
         <div id="shippingImg" class="shipping text-center">
             <img src="<%: Url.Content("~/Images/home/shipping.jpg") %>" alt="" />
         </div>
         <!--/shipping-->
-
     </div>
+
+
 </div>

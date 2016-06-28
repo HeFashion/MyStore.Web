@@ -15,7 +15,9 @@
     <%-- Begin Cart Items --%>
     <section id="cart_items">
         <div class="container">
-            <%:Html.Partial("_BreadCrumbPartial") %>
+            <%IDictionary<string, string> dCrumbs = new Dictionary<string, string>(); %>
+            <%dCrumbs.Add("Giỏ Hàng", string.Empty); %>
+            <%:Html.Partial("_BreadCrumbPartial", dCrumbs) %>
 
             <div class="table-responsive cart_info" id="cartResult">
                 <%:Html.Partial("_CartTablePartial", Model) %>
@@ -30,7 +32,7 @@
         <div class="container">
             <div class="heading">
                 <h3>Bạn có muốn tính tiền hay không?</h3>
-                <p>Quý khách vui lòng kiểm tra bảng thanh toán bên dưới và click vào <b>Thanh Toán</b>, sau đó làm theo các bước hướng dẫn để nhận hàng</p>
+                <p>Quý khách vui lòng kiểm tra bảng thanh toán bên trên và click vào <b>Thanh Toán</b>, sau đó làm theo các bước hướng dẫn để nhận hàng</p>
             </div>
             <div class="row">
                 <%--<div class="col-sm-6">

@@ -1,35 +1,53 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.master" Inherits="System.Web.Mvc.ViewPage<PagedList.IPagedList<MyStore.App.ViewModels.ProductModel>>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<System.Collections.Generic.IList<MyStore.App.ViewModels.ProductModel>>" %>
 
 <%@ Import Namespace="PagedList.Mvc" %>
 
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Sản phẩm - Danh sách
+    Phân Loại | Hè-Vải Sợi
 </asp:Content>
 
 <asp:Content ID="indexFeatured" ContentPlaceHolderID="FeaturedContent" runat="server">
     <section id="advertisement">
         <div class="container">
-            <img src="<%: Url.Content("~/Images/shop/panel.jpg") %>" alt="" />
+            <img src="<%: Url.Content("~/Images/shop/panel.gif") %>" alt="" />
         </div>
     </section>
 
 </asp:Content>
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
+    <%:Html.Partial("_BreadCrumbPartial", ViewData["BreadCrumbs"]) %>
 
     <%:Html.Action("FeatureItemPartial", new {strListTitle = string.Format("Các Sản Phẩm Thuộc {0}", ViewBag.ProductTypeName), partialModel = Model.ToList()}) %>
-    <%:Html.PagedListPager(Model, 
-                           page=>Url.Action("Index",
-                                            new {prodType = Convert.ToInt32(ViewData["prodType"]),
-                                                 page,
-                                                 searchString=ViewBag.SearchString})) %>
+    <div id="progress" style="display: none">
+        <img src="<%:Url.Content("~/Images/loading.gif") %>" alt="load" />
+    </div>
 </asp:Content>
 <asp:Content ID="scripSection" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%:Scripts.Render("~/bundles/jqueryui") %>
     <%:Scripts.Render("~/Scripts/addtocart.js") %>
     <script type="text/javascript">
+        SendProductAction(":button.add-to-cart");
+
+        var nextIndex = 0;
+        var isEnded = false;
+        var isLocked = true;
+        $(window).load(function () {
+            $(window).scroll(function () {
+                if (!isEnded && !isLocked) {
+                    if ($(this).scrollTop() + $(window).height() > $('#footer').offset().top + 30) {
+                        var sendData = {
+                            "page": nextIndex,
+                            "prodType": "<%:ViewData["prodType"]%>",
+                            "searchString": "<%:ViewData["SearchString"]%>"
+                        };
+                        getData(sendData);
+                    }
+                }
+            });
+        });
         $(document).ready(function () {
-            SendProductAction(":button.add-to-cart");
+            isLocked = false;
         });
     </script>
 </asp:Content>

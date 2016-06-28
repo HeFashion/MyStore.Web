@@ -28,6 +28,25 @@
             <img src="<%:Url.Content("~/Images/home/new.png") %>" class="new" alt="" />
             <%} %>
         </div>
+        <div class="choose">
+            <ul class="nav nav-pills nav-justified">
+                <li>
+                    <% var actionLink = Ajax.ActionLink("ListCompare",
+                                       "AddToCompareProduct",
+                                       "Product",
+                                       new { productId = item.Id },
+                                       new AjaxOptions
+                                       {
+                                           HttpMethod = "Get",
+                                           InsertionMode = InsertionMode.Replace,
+                                           UpdateTargetId = "modalContent",
+                                           OnComplete = "ShowModal()"
+                                       });%>
+                    <%:Html.Raw(actionLink.ToString().Replace("ListCompare","<i class='fa fa-plus-square'></i>Danh sách so sánh")) %>
+                </li>
+            </ul>
+        </div>
+
     </div>
 </div>
 <%} %>

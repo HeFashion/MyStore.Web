@@ -67,22 +67,28 @@
     <%:Scripts.Render("~/Scripts/jquery.scrollUp.js")%>
 
     <script type="text/javascript">
-        var nextIndex = 1;
+        var nextIndex = 0;
         var isEnded = false;
-        var isLocked = false;
+        var isLocked = true;
 
-        //var obj = $();
         SendProductAction(":button.add-to-cart");
 
-        $(document).ready(function () {
-
+        $(window).load(function () {
             $(window).scroll(function () {
                 if (!isEnded && !isLocked) {
-                    if ($(this).scrollTop() + $(window).height() > $('#footer').offset().top + 50) {
-                        GetData(nextIndex);
+                    if ($(this).scrollTop() + $(window).height() > $('#footer').offset().top + 30) {
+                        var sendData = {
+                            "page": nextIndex,
+                            "prodType": "<%:ViewData["prodType"]%>",
+                            "searchString": "<%:ViewData["SearchString"]%>"
+                        };
+                        getData(sendData);
                     }
                 }
             });
+        });
+        $(document).ready(function () {
+            isLocked = false;
         });
 
     </script>

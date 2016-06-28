@@ -6,10 +6,12 @@
 
     <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
         <%if (Model != null)
-          { %>
+          {
+              int recommendSize = 4;
+        %>
         <div class="carousel-inner">
             <div class="item active">
-                <%foreach (MyStore.App.ViewModels.ProductModel recommendItem in Model.Take(4))%>
+                <%foreach (MyStore.App.ViewModels.ProductModel recommendItem in Model.Take(recommendSize))%>
                 <%{ %>
                 <div class="col-sm-3">
                     <div class="product-image-wrapper">
@@ -25,14 +27,32 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="choose">
+                            <ul class="nav nav-pills nav-justified">
+                                <li>
+                                    <% var actionLink = Ajax.ActionLink("ListCompare",
+                                       "AddToCompareProduct",
+                                       "Product",
+                                       new { productId = recommendItem.Id },
+                                       new AjaxOptions
+                                       {
+                                           HttpMethod = "Get",
+                                           InsertionMode = InsertionMode.Replace,
+                                           UpdateTargetId = "modalContent",
+                                           OnComplete = "ShowModal()"
+                                       });%>
+                                    <%:Html.Raw(actionLink.ToString().Replace("ListCompare","<i class='fa fa-plus-square'></i>Danh sách so sánh")) %>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <%} %>
             </div>
-            <%for (int i = 3; i < Model.Count; i += 4)%>
+            <%for (int i = recommendSize; i < Model.Count; i += 4)%>
             <%{ %>
             <div class="item">
-                <%var takeList = Model.Skip(i).Take(4); %>
+                <%var takeList = Model.Skip(i).Take(recommendSize); %>
                 <%foreach (MyStore.App.ViewModels.ProductModel recommendItem in takeList)%>
                 <%{%>
                 <div class="col-sm-3">
@@ -48,6 +68,24 @@
                                     <i class="fa fa-shopping-cart"></i>+1 giỏ hàng
                                 </button>
                             </div>
+                        </div>
+                        <div class="choose">
+                            <ul class="nav nav-pills nav-justified">
+                                <li>
+                                    <% var actionLink = Ajax.ActionLink("ListCompare",
+                                       "AddToCompareProduct",
+                                       "Product",
+                                       new { productId = recommendItem.Id },
+                                       new AjaxOptions
+                                       {
+                                           HttpMethod = "Get",
+                                           InsertionMode = InsertionMode.Replace,
+                                           UpdateTargetId = "modalContent",
+                                           OnComplete = "ShowModal()"
+                                       });%>
+                                    <%:Html.Raw(actionLink.ToString().Replace("ListCompare","<i class='fa fa-plus-square'></i>Danh sách so sánh")) %>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

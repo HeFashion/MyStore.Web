@@ -6,6 +6,8 @@
 
 <asp:Content ID="detailContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="blog-post-area">
+        <%:Html.Partial("_BreadCrumbPartial", ViewData["BreadCrumbs"]) %>
+
         <h2 class="title text-center"><%:Model.blog_title %></h2>
         <div class="single-blog-post">
 
@@ -39,7 +41,16 @@
         <table class="socials-share">
             <tr>
                 <td class="facebook-like">
-                    <a class="fb-like" data-href="<%:Request.Url.AbsoluteUri %>" data-layout="button_count" data-action="like" data-show-faces="true"></a>
+                    <a class="fb-like"
+                        data-href="<%:Request.Url.AbsoluteUri %>"
+                        data-layout="button_count"
+                        data-action="like"
+                        data-show-faces="true"></a>
+                </td>
+                <td class="facebook-share">
+                    <a class="fb-share-button"
+                        data-href="<%:Request.Url.AbsoluteUri %>"
+                        data-layout="button_count"></a>
                 </td>
                 <td class="google-plus">
                     <!-- Google + one -->
@@ -86,10 +97,7 @@
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%: Styles.Render("~/Content/themes/mystyle/jquery.rateyo.css") %>
-    <%: Scripts.Render("~/Scripts/jquery.rateyo.js") %>
-    <%: Scripts.Render("~/Scripts/facebook.js") %>
-    <%: Scripts.Render("~/Scripts/googleplus.js") %>
-    <%: Scripts.Render("~/Scripts/rateObject.js") %>
+    <%: Scripts.Render("~/bundles/blog/details") %>
 
     <script type="text/javascript">
         $(document).ready(function () {

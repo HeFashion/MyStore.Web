@@ -13,6 +13,7 @@ namespace MyStore.App.Models
         public string MenuDesc { get; set; }
         public List<Menu> ChildMenu { get; set; }
         public int TotalProduct { get; set; }
+        public short MenuOrder { get; set; }
     }
     public static class MyMenu
     {
@@ -22,23 +23,28 @@ namespace MyStore.App.Models
             {
                 var query1 = from parent in dbContext.Ref_Product_Type
                              join child in dbContext.Ref_Product_Type on parent.product_type_id equals child.parent_product_type_id
+                             where parent.is_active == true
                              select new
                              {
                                  ParentId = parent.product_type_id,
                                  ParentName = parent.product_type_description_vn,
                                  ChildId = (int?)child.product_type_id,
-                                 ChildName = child.product_type_description_vn
+                                 ChildName = child.product_type_description_vn,
+                                 OrderNo = parent.product_type_order
                              };
                 var query2 = from menu in dbContext.Ref_Product_Type
                              where menu.parent_product_type_id == null
+                             where menu.is_active == true
                              select new
                              {
                                  ParentId = menu.product_type_id,
                                  ParentName = menu.product_type_description_vn,
                                  ChildId = menu.parent_product_type_id,
-                                 ChildName = menu.product_type_description_vn
+                                 ChildName = menu.product_type_description_vn,
+                                 OrderNo = menu.product_type_order
                              };
                 var queryResult = query1.Union(query2)
+                                        .OrderBy(p => p.OrderNo)
                                         .ToList();
                 if (queryResult != null && queryResult.Count > 0)
                 {

@@ -35,7 +35,7 @@
                 <p>Mã hàng: <%:item.ProductName %></p>
             </td>
             <td class="cart_price">
-                <p><%:item.Price %></p>
+                <p><%:item.Price.ToString("#,###.#")%> / <%:item.UOM %></p>
             </td>
             <td class="cart_quantity">
                 <div class="cart_quantity_button">
@@ -68,7 +68,7 @@
                     </tr>
                     <tr class="shipping-cost">
                         <td>Chi phí vận chuyển</td>
-                        <td>Free</td>
+                        <td>Thỏa thuận</td>
                     </tr>
                     <tr>
                         <td>Tổng cộng</td>

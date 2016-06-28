@@ -7,60 +7,40 @@
                 <div class="col-sm-2">
                     <div class="companyinfo">
                         <h2><span>Hè</span>-Vải Sợi</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
+                        <p>
+                            <strong>Số ĐKKD - MST: 8082286746 do UBND Huyện Long Thành, T. Đồng Nai, cấp ngày 28/07/2015</strong>
+                        </p>
+                        <p>
+                            <strong>Địa Chỉ: <%:Convert.ToString(System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_ADDRESS]) %></strong>
+                        </p>
                     </div>
                 </div>
                 <div class="col-sm-7">
+                    <%var footerList = this.Session[MyStore.App.Utilities.GeneralContanstClass.Blog_Footer_Session_Key] as List<MyStore.App.ViewModels.FooterBlogListViewModel>;%>
+                    <%if (footerList != null && footerList.Count > 0)
+                      {%>
+                    <%foreach (var item in footerList)
+                      { %>
                     <div class="col-sm-3">
                         <div class="video-gallery text-center">
-                            <a href="#">
+                            <a href="<%:Url.Action("Details", "Blog", new { id=item.Id })%>">
                                 <div class="iframe-img">
-                                    <img src="<%:Url.Content("~/images/home/iframe1.png") %>" alt="" />
-                                </div>
-                                <div class="overlay-icon">
-                                    <i class="fa fa-play-circle-o"></i>
+                                    <img src="<%:Url.Content(string.Format("~/Images/blog/Blog_{0}/iframe.jpg", item.Id)) %>" alt="" />
                                 </div>
                             </a>
-                            <p>Circle of Hands</p>
-                            <h2>24 DEC 2014</h2>
+                            <p><%:item.Title %></p>
+                            <h2><%:string.Format("{0:dd, MM, yyyy}", item.CreatedDate) %></h2>
                         </div>
                     </div>
 
-                    <div class="col-sm-3">
-                        <div class="video-gallery text-center">
-                            <a href="#">
-                                <div class="iframe-img">
-                                    <img src="<%:Url.Content("~/images/home/iframe1.png") %>" alt="" />
-                                </div>
-                                <div class="overlay-icon">
-                                    <i class="fa fa-play-circle-o"></i>
-                                </div>
-                            </a>
-                            <p>Circle of Hands</p>
-                            <h2>24 DEC 2014</h2>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-3">
-                        <div class="video-gallery text-center">
-                            <a href="#">
-                                <div class="iframe-img">
-                                    <img src="<%:Url.Content("~/images/home/iframe3.png") %>" alt="" />
-                                </div>
-                                <div class="overlay-icon">
-                                    <i class="fa fa-play-circle-o"></i>
-                                </div>
-                            </a>
-                            <p>Circle of Hands</p>
-                            <h2>24 DEC 2014</h2>
-                        </div>
-                    </div>
-
+                    <%} %>
+                    <%} %>
                 </div>
                 <div class="col-sm-3">
                     <div class="address">
-                        <img src="<%:Url.Content("~/images/home/map.png") %>" alt="" />
-                        <p>Tổ 12, Khu Phước Hải, TT. Long Thành, T. Đồng Nai</p>
+                        <a href="<%:Convert.ToString(System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_GOV]) %>" target="_blank">
+                            <img src="<%:Url.Content("~/Images/bo_cong_thuong.png") %>" alt="" />
+                        </a>
                     </div>
                 </div>
             </div>

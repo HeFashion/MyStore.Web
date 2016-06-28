@@ -70,13 +70,38 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><%: Html.ActionLink("Trang Chủ", "Index", "Home")%></li>
-                            <li><%: Html.ActionLink("Bài Viết","Index", "Blog") %></li>
-                            <li><%: Html.ActionLink("Giới Thiệu","About", "Home" ) %></li>
-                            <li><%: Html.ActionLink("Địa Điểm", "Contact", "Home") %></li>
+                            <li>
+                                <a href="<%:Url.Action("Index", "Home") %>" class="btn btn-default">
+                                    <i class="fa fa-home"></i>
+                                    Trang Chủ
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<%:Url.Action("Index", "Blog") %>" class="btn btn-default">
+                                    <i class="fa fa-newspaper-o"></i>
+                                    Bài Viết
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<%:Url.Action("About", "Home") %>" class="btn btn-default">
+                                    <i class="fa fa-hand-peace-o"></i>
+                                    Giới Thiệu
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<%:Url.Action("Contact", "Home") %>" class="btn btn-default">
+                                    <i class="fa fa-map-o"></i>
+                                    Địa Điểm
+                                </a>
+                            </li>
                             <%if (Request.IsAuthenticated)
                               {%>
-                            <li><%: Html.ActionLink("Quản Lý Đơn Hàng", "Index", "Order" )%></li>
+                            <li>
+                                <a href="<%:Url.Action("Index", "Order") %>" class="btn btn-default">
+                                    <i class="fa fa-file-o"></i>
+                                    Đơn Hàng
+                                </a>
+                            </li>
                             <%} %>
                         </ul>
                     </div>

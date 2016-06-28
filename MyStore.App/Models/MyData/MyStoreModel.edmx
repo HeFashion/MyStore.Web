@@ -64,9 +64,9 @@
             <PropertyRef Name="actor_id" />
           </Key>
           <Property Name="actor_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="actor_name" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="actor_image" Type="nvarchar" MaxLength="200" />
           <Property Name="actor_description" Type="nvarchar(max)" />
-          <Property Name="actor_name" Type="nvarchar" Nullable="false" MaxLength="100" />
         </EntityType>
         <EntityType Name="Blogs">
           <Key>
@@ -133,7 +133,6 @@
           <Property Name="other_detail" Type="nvarchar(max)" />
           <Property Name="total_vote_score" Type="int" />
           <Property Name="total_vote_count" Type="int" />
-          <Property Name="product_recommend" Type="bit" />
         </EntityType>
         <EntityType Name="Ref_Order_Item_Status_Codes">
           <Key>
@@ -150,6 +149,8 @@
           <Property Name="parent_product_type_id" Type="int" />
           <Property Name="product_type_description_vn" Type="nvarchar" MaxLength="1000" />
           <Property Name="product_type_description_en" Type="nvarchar" MaxLength="1000" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="product_type_order" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Shipping_Bills">
           <Key>
@@ -401,6 +402,8 @@
           <NavigationProperty Name="Products" Relationship="MyStoreModel.fk_Product_ProductType" FromRole="Ref_Product_Type" ToRole="Products" />
           <NavigationProperty Name="Child_Product_Types" Relationship="MyStoreModel.fk_Parent_ProductId" FromRole="Ref_Product_Type" ToRole="Ref_Product_Type1" />
           <NavigationProperty Name="Parent_Product_Type" Relationship="MyStoreModel.fk_Parent_ProductId" FromRole="Ref_Product_Type1" ToRole="Ref_Product_Type" />
+          <Property Type="Boolean" Name="is_active" Nullable="false" />
+          <Property Type="Byte" Name="product_type_order" Nullable="false" />
         </EntityType>
         <EntityType Name="Unit_Of_Measure">
           <Key>
@@ -689,7 +692,9 @@
     <EntitySetMapping Name="Ref_Product_Type">
       <EntityTypeMapping TypeName="IsTypeOf(MyStoreModel.Ref_Product_Type)">
         <MappingFragment StoreEntitySet="Ref_Product_Type">
-          <ScalarProperty Name="product_type_id" ColumnName="product_type_id" />
+          <ScalarProperty Name="product_type_order" ColumnName="product_type_order" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="product_type_id" ColumnName="product_type_id" />
           <ScalarProperty Name="parent_product_type_id" ColumnName="parent_product_type_id" />
           <ScalarProperty Name="product_type_description_vn" ColumnName="product_type_description_vn" />
           <ScalarProperty Name="product_type_description_en" ColumnName="product_type_description_en" />

@@ -377,11 +377,13 @@
     </Compile>
     <Compile Include="Utilities\CartHelper.cs" />
     <Compile Include="Utilities\DecimalHelper.cs" />
+    <Compile Include="Utilities\DeviceHelper.cs" />
     <Compile Include="Utilities\GeneralContanstClass.cs" />
     <Compile Include="Utilities\MailMananager.cs" />
     <Compile Include="Utilities\MessageBoxHelper.cs" />
     <Compile Include="ViewModels\BlogVoteViewModel.cs" />
     <Compile Include="ViewModels\CheckoutViewModel.cs" />
+    <Compile Include="ViewModels\FooterBlogListViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ShippingInfoViewModel.cs" />
     <Compile Include="ViewModels\ShoppingCartViewModel.cs" />
@@ -400,7 +402,6 @@
     </Content>
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\themes\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\themes\mystyle\animate.css" />
     <Content Include="Content\themes\mystyle\bootstrap-social.css" />
     <Content Include="Content\themes\mystyle\bootstrap.css" />
@@ -499,7 +500,6 @@
     <Content Include="Content\themes\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\themes\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\themes\fonts\FontAwesome.otf" />
-    <Content Include="Content\themes\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Properties\PublishProfiles\File_MyStore.pubxml" />
     <None Include="Properties\PublishProfiles\FTP_MyStore.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -736,14 +736,16 @@
     <Content Include="Views\Order\Details.aspx" />
     <Content Include="Views\Order\Index.aspx" />
     <Content Include="Views\Order\_OrderDetailPartial.ascx" />
+    <Content Include="Views\Product\Compare.aspx" />
     <Content Include="Views\Product\Details.aspx" />
     <Content Include="Views\Product\Index.aspx" />
     <Content Include="Views\Product\ShoppingCart.aspx" />
     <Content Include="Views\Product\_CartTablePartial.ascx" />
+    <Content Include="Views\Product\_CompareItemPartial.ascx" />
     <Content Include="Views\Product\_CompletedAddToCart.ascx" />
     <Content Include="Views\Product\_FeatureItemPartial.ascx" />
     <Content Include="Views\Product\_ListItemsPartial.ascx" />
-    <Content Include="Views\Product\_ProductCommentPartial.ascx" />
+    <Content Include="Views\Product\_ProductComparePartial.ascx" />
     <Content Include="Views\Product\_RecommendItemsPartial.ascx" />
     <Content Include="Views\Shared\_BreadCrumbPartial.ascx" />
     <Content Include="Views\Shared\_LeftMenuPartial.ascx" />

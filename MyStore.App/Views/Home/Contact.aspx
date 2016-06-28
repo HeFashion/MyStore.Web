@@ -7,6 +7,8 @@
 
 <asp:Content ID="contactContent" ContentPlaceHolderID="MainContent" runat="server">
     <div id="contact-page" class="container">
+        <%:Html.Partial("_BreadCrumbPartial", ViewData["BreadCrumbs"]) %>
+
         <div class="bg">
             <div class="row">
                 <div class="col-sm-12">
@@ -58,22 +60,20 @@
                             <input type="submit" name="submit" class="btn btn-primary pull-right" value="Gửi Góp Ý">
                         </div>
                         <%} %>
-                        <%--<form id="main-contact-form" class="contact-form row" name="contact-form" method="post">
-                        </form>--%>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="contact-info">
-                        <h2 class="title text-center">Địa Chỉ Liên Lạc</h2>
+                        <h2 class="title text-center">Địa Chỉ</h2>
                         <address>
-                            <p>Cửa Hàng Vải Hè</p>
-                            <p>Đường Lê Duẩn, tổ 12, khu Phước Hải, TT. Long Thành, Đồng Nai</p>
-                            <p>Đối diện Ủy Ban Nhân Dân TT.Long Thành</p>
-                            <p>Mobile: +84 933 24 36 88</p>
-                            <p>Email: nhamayhe@gmail.com</p>
+                            <p>Cửa Hàng <strong>Hè - Vải Sợi</strong></p>
+                            <p>ĐC: <%:Convert.ToString(System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_ADDRESS]) %></p>
+
+                            <p><i class="fa fa-phone"></i>: <%:System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_PHONE] %></p>
+                            <p><i class="fa fa-envelope"></i>: <%:System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_EMAIL] %></p>
                         </address>
                         <div class="social-networks">
-                            <h2 class="title text-center">Mạng Xã Hội</h2>
+                            <h2 class="title text-center">Liên Kết</h2>
                             <ul>
                                 <li>
                                     <a href="#"><i class="fa fa-facebook"></i></a>
