@@ -46,22 +46,33 @@ namespace MyStore.App.Controllers
                                 Image = pro.product_image,
                                 DateCreated = pro.product_created_date ?? DateTime.Now
                             };
-                var recommendList = db.Product_Recommend
-                                      .Include("Product")
-                                      .Include("Product.Unit_Of_Measure")
-                                      .Include("Product.Ref_Product_Type")
-                                      .Where(p => p.Product.Ref_Product_Type.is_active)
-                                      .OrderBy(p => p.recommend_order)
-                                      .Select(pro => new ProductModel()
-                                      {
-                                          Id = pro.product_id,
-                                          Name = pro.Product.product_image,
-                                          Description = pro.Product.product_description,
-                                          UOM = pro.Product.Unit_Of_Measure.UOM_description,
-                                          Price = pro.Product.product_price,
-                                          Image = pro.Product.product_image,
-                                          DateCreated = pro.Product.product_created_date ?? DateTime.Now
-                                      });
+                //var recommendList = db.Product_Recommend
+                //                      .Where(p => p.Product.Ref_Product_Type.is_active)
+                //                      .OrderBy(p => p.recommend_order)
+                //                      .Select(pro => new ProductModel()
+                //                      {
+                //                          Id = pro.product_id,
+                //                          Name = pro.Product.product_image,
+                //                          Description = pro.Product.product_description,
+                //                          UOM = pro.Product.Unit_Of_Measure.UOM_description,
+                //                          Price = pro.Product.product_price,
+                //                          Image = pro.Product.product_image,
+                //                          DateCreated = pro.Product.product_created_date ?? DateTime.Now
+                //                      });
+                var recommendList = from rec in db.Product_Recommend
+                                    join prd in db.Products on rec.product_id equals prd.product_id
+                                    where prd.Ref_Product_Type.is_active
+                                    orderby rec.recommend_order
+                                    select new ProductModel()
+                                    {
+                                        Id = prd.product_id,
+                                        Name = prd.product_image,
+                                        Description = prd.product_description,
+                                        UOM = prd.Unit_Of_Measure.UOM_description,
+                                        Price = prd.product_price,
+                                        Image = prd.product_image,
+                                        DateCreated = prd.product_created_date ?? DateTime.Now
+                                    };
                 ViewData["RecommendList"] = recommendList.ToList();
 
                 return View("Index", model.Take(pageSize).ToList());

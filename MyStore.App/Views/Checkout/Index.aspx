@@ -3,6 +3,13 @@
 <asp:Content ID="titleContent" ContentPlaceHolderID="TitleContent" runat="server">
     Thông tin giao hàng
 </asp:Content>
+<asp:Content ID="panelContent" ContentPlaceHolderID="FeaturedContent" runat="server">
+    <section id="advertisement">
+        <div class="container">
+            <img src="<%: Url.Content("~/Images/shop/delivery-process.jpg") %>" alt="" />
+        </div>
+    </section>
+</asp:Content>
 
 <asp:Content ID="mainContent" ContentPlaceHolderID="MainContent" runat="server">
     <section id="cart_items">

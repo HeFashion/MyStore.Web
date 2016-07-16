@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site_Admin.Master" Inherits="System.Web.Mvc.ViewPage<MyStore.App.Models.MyData.Ad_Sliders>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-   Advertisement
+    Advertisement
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -67,6 +67,8 @@
             <% string urlContent = string.IsNullOrEmpty(Model.slider_sub_img) ? "#" : Url.Content(System.IO.Path.Combine("~/Images/home", Model.slider_sub_img)); %>
             <img id="subImg" src="<%:urlContent %>" alt="main image" height="100" />
             <a href="#" class="btn btn-default" id="btnSubImg">Change</a>
+
+            <a href="#" class="btn btn-default" id="btnDelete">Delete</a>
         </div>
 
         <p>
@@ -93,7 +95,7 @@
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%: Styles.Render("~/bundles/bootstapadmin") %>
-    
+
     <%: Scripts.Render("~/Scripts/bootstrap.js")%>
     <%: Scripts.Render("~/Scripts/edit.advertisement.js") %>
 </asp:Content>

@@ -1,5 +1,22 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.master" Inherits="System.Web.Mvc.ViewPage<MyStore.App.Models.MyData.Blog>" %>
 
+<asp:Content ID="indexMeta" ContentPlaceHolderID="MetaContent" runat="server">
+    <meta property="og:title" content="<%:Model.blog_title %>" />
+    <meta property="og:description" content="<%:Model.blog_description %>" />
+    <%var result = string.Empty;
+      Uri requestUrl = HttpContext.Current.Request.Url;
+
+      result = string.Format("{0}://{1}{2}",
+                             requestUrl.Scheme,
+                             requestUrl.Authority,
+                             VirtualPathUtility.ToAbsolute(Url.Content(System.IO.Path.Combine("~",
+                                                                "Images",
+                                                                "blog",
+                                                                string.Format("Blog_{0}", Model.blog_id),
+                                                                Model.blog_img_title)))); %>
+    <meta property="og:image" content="<%: result%>" />
+    <meta property="og:url" content="<%:Request.Url.AbsoluteUri%>" />
+</asp:Content>
 <asp:Content ID="detailTitle" ContentPlaceHolderID="TitleContent" runat="server">
     <%:Model.blog_title %>
 </asp:Content>
@@ -21,14 +38,18 @@
             </div>
             <%: Html.Raw(Model.blog_content) %>
             <div class="pager-area">
-                <ul class="pager pull-right">
+                <ul class="pager">
                     <%if (ViewBag.PrevId != 0)
                       {%>
-                    <li><%:Html.ActionLink("<< Bài cũ","Details", new{id = ViewBag.PrevId}) %></li>
+                    <li class="pull-left">
+                        <%:Html.ActionLink("<< Bài cũ", "Details", new { id = ViewBag.PrevId })%>
+                    </li>
                     <%} %>
                     <%if (ViewBag.NextId != 0)
                       {%>
-                    <li><%:Html.ActionLink("Bài mới >>","Details", new{id = ViewBag.NextId}) %></li>
+                    <li class="pull-right">
+                        <%:Html.ActionLink("Bài mới >>","Details", new{id = ViewBag.NextId})%>
+                    </li>
                     <%} %>
                 </ul>
             </div>
@@ -71,15 +92,6 @@
                 <p>
                     <%:actor.actor_description %>
                 </p>
-                <%--<div class="blog-socials">
-                    <ul>
-                        <li><a href=""><i class="fa fa-facebook"></i></a></li>
-                        <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                        <li><a href=""><i class="fa fa-dribbble"></i></a></li>
-                        <li><a href=""><i class="fa fa-google-plus"></i></a></li>
-                    </ul>
-                    <a class="btn btn-primary" href="">Other Posts</a>
-                </div>--%>
             </div>
         </div>
         <%} %>

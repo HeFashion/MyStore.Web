@@ -3,7 +3,7 @@
 <%@ Import Namespace="PagedList.Mvc" %>
 
 <asp:Content ID="titleContent" ContentPlaceHolderID="TitleContent" runat="server">
-    Hè-Vải Sợi|Bài Viết
+   Bài Viết | Hè-Vải Sợi
 </asp:Content>
 
 <asp:Content ID="mainContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -32,7 +32,9 @@
                     alt="<%:item.blog_img_title %>">
             </a>
             <p><%:item.blog_description %></p>
-            <a class="btn btn-default get" href="<%:Url.Action("Details", new { id=item.blog_id})%>">Xem Ngay</a>
+            <a class="btn btn-primary"
+                href="<%:Url.Action("Details", new { id=item.blog_id})%>">Xem Ngay
+            </a>
         </div>
         <%} %>
         <%:Html.PagedListPager(Model, 

@@ -16,6 +16,8 @@
     <fieldset>
         <legend>Edit For <%:Model.product_type_description_vn %></legend>
         <%:Html.HiddenFor(model=>model.product_type_id) %>
+        <%:Html.HiddenFor(model=>model.product_type_order) %>
+        
         <div class="editor-label">
             <%: Html.LabelFor(model => model.parent_product_type_id) %>
         </div>
@@ -44,7 +46,6 @@
         </div>
         <div class="editor-field">
             <%: Html.CheckBoxFor(model => model.is_active) %>
-            <%: Html.ValidationMessageFor(model => model.product_type_description_en) %>
         </div>
         <p>
             <input type="submit" value="Save" />

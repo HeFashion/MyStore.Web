@@ -9,6 +9,11 @@
 }
 $(document).ready(function () {
     var selectedType = 1;
+    $("#btnDelete").click(function (e) {
+        e.preventDefault();
+        $("#slider_sub_img").val('');
+        $("#subImg").attr("src", null);
+    });
     $("#btnMainImg").click(function (e) {
         e.preventDefault();
         selectedType = 1;

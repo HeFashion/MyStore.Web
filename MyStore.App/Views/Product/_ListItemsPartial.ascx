@@ -22,10 +22,21 @@
                     </button>
                 </div>
             </div>
-            <%int dateDiff = Convert.ToInt32((DateTime.Now - item.DateCreated).TotalDays); %>
-            <%if (dateDiff <= ViewBag.DateCompare)%>
-            <%{%>
-            <img src="<%:Url.Content("~/Images/home/new.png") %>" class="new" alt="" />
+            <%string srcImage = string.Empty; %>
+            <%switch (item.Sale_Off)
+              {
+                  case 10:
+                      srcImage = "~/Images/home/sale10.png";
+                      break;
+                  default:
+                      int dateDiff = Convert.ToInt32((DateTime.Now - item.DateCreated).TotalDays);
+                      if (dateDiff <= ViewBag.DateCompare)
+                          srcImage = "~/Images/home/new.png";
+                      break;
+              } %>
+            <%if (!string.IsNullOrEmpty(srcImage)) %>
+            <%{ %>
+            <img src="<%:Url.Content(srcImage) %>" class="new" alt="" />
             <%} %>
         </div>
         <div class="choose">

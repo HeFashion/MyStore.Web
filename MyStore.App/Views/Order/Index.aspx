@@ -77,7 +77,6 @@
                             </td>
 
                             <td>
-                                <%--<%: Html.ActionLink("Chi Tiết", "Details", new { id=item.OrderNumber }) %>--%>
                                 <%: Ajax.ActionLink("Chi Tiết", 
                                                     "Details",
                                                     new { id=item.OrderNumber }, 

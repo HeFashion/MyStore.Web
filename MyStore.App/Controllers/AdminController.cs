@@ -15,10 +15,12 @@ using MyStore.App.Models.MyData;
 using MyStore.App.ViewModels;
 using MyStore.App.Utilities;
 using System.Data.Objects.SqlClient;
+using MyStore.App.Filters;
 
 namespace MyStore.App.Controllers
 {
     [Authorize(Roles = "Admin")]
+    [InitializeSimpleMembership]
     public class AdminController : Controller
     {
         private MyStoreEntities db = new MyStoreEntities();
@@ -101,6 +103,30 @@ namespace MyStore.App.Controllers
                 return true;
             }
             return false;
+        }
+
+        private bool DeleteProductData(int productId)
+        {
+            try
+            {
+                var recommend = db.Product_Recommend
+                               .Where(p => p.product_id == productId)
+                               .ToList();
+                foreach (var item in recommend)
+                {
+                    db.Product_Recommend.Remove(item);
+                }
+
+                var prd = db.Products.Find(productId);
+                db.Products.Remove(prd);
+
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
         protected override void Dispose(bool disposing)
@@ -338,11 +364,9 @@ namespace MyStore.App.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id, string returnUrl)
         {
-            if (DeleteProductPhoto(id))
+            if (DeleteProductData(id))
             {
-                Product product = db.Products.Single(p => p.product_id == id);
-                db.Products.Remove(product);
-                db.SaveChanges();
+                DeleteProductPhoto(id);
             }
 
             return RedirectToLocal(returnUrl);
@@ -388,7 +412,7 @@ namespace MyStore.App.Controllers
                     product_name = "temp",
                     product_uom_id = prodUOM,
                     product_description = "Vải chưa phân loại",
-                    product_price = 150000,
+                    product_price = 0,
                     product_created_date = DateTime.Now,
                     other_detail = "Trên chất liệu mềm mại, cùng hoa văn sang trọng, Sắc Phương Nam 8 của Thái Tuấn tôn vinh vẻ đẹp phụ nữ Việt Nam theo một cách rất riêng. Bên cạnh áo dài, Thái Tuấn còn rất nhiều dòng sản phẩm khác, trong đó có ELLA là một trong những những sản phẩm đang được yêu chuộng. Chất liệu comple trơn và độ co giãn cao giúp bộ trang phục thêm phần sang trọng và thoải mái. Bạn gái sẽ duyên dáng hơn trong bộ đầm được thiết kế trên nền vải hoa văn lập thể vừa nhẹ nhàng vừa tinh tế. ELLA cũng có độ rủ, thích hợp với cho những chiếc đầm, váy công sở ngọt ngào, đằm thắm.",
                     total_vote_count = 0,
@@ -494,6 +518,7 @@ namespace MyStore.App.Controllers
                 workBook = null;
             }
         }
+
         #endregion
 
         #region Product Catalog Management
@@ -502,7 +527,8 @@ namespace MyStore.App.Controllers
         {
             var model = db.Ref_Product_Type
                           .Where(p => p.parent_product_type_id == null)
-                          .Include("Child_Product_Types");
+                          .Include("Child_Product_Types")
+                          .OrderBy(p => p.product_type_order);
             return View("IndexProductCatalog", model.ToList());
         }
 
@@ -797,17 +823,16 @@ namespace MyStore.App.Controllers
             return View("IndexOrders", lstOrders);
         }
 
-        private const string SHIP_ORDER_SESSION_KEY = "ShipOrdersSession";
         [HttpPost]
         public PartialViewResult ShipOrders(IList<string> selectedOrder)
         {
-            this.HttpContext.Session[SHIP_ORDER_SESSION_KEY] = selectedOrder;
+            this.HttpContext.Session[GeneralContanstClass.SHIP_ORDER_SESSION_KEY] = selectedOrder;
             return PartialView("_ShipProductPartial");
         }
         [HttpPost]
         public ActionResult ShipOrdersConfirmed(ShippingInfoViewModel model)
         {
-            string[] selectedOrder = this.HttpContext.Session[SHIP_ORDER_SESSION_KEY] as string[];
+            string[] selectedOrder = this.HttpContext.Session[GeneralContanstClass.SHIP_ORDER_SESSION_KEY] as string[];
             if (selectedOrder == null ||
                 selectedOrder.Length == 0)
             {
@@ -863,6 +888,49 @@ namespace MyStore.App.Controllers
 
             ModelState.AddModelError(string.Empty, "Nothing was selected. Cannot save.");
             return ListOfOrder();
+        }
+
+        [HttpGet]
+        public ActionResult Details(int id = 0)
+        {
+            var query = from o in db.Order_Items
+                        join p in db.Products on o.product_id equals p.product_id
+                        where o.order_id == id
+                        select new MyStore.App.ViewModels.OrderDetailViewModel()
+                        {
+                            ItemId = o.order_item_id,
+                            ItemProductId = o.product_id,
+                            ItemQuantity = o.order_item_quantity,
+                            ItemPrice = o.order_item_amount ?? 0,
+                            //ItemTotalAmt = ((decimal)o.order_item_quantity) * (o.order_item_amount ?? 0),
+                            ItemImage = p.product_image,
+                            ItemCode = p.product_name,
+                            ItemUnit = o.Product.Unit_Of_Measure.UOM_description
+                        };
+            return PartialView("_OrderDetailPartial", query.ToList());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateDetails(IEnumerable<OrderDetailViewModel> OrderItems)
+        {
+            if (OrderItems != null)
+            {
+                foreach (var item in OrderItems)
+                {
+                    Order_Items orderItem = db.Order_Items.Find(item.ItemId);
+                    if (orderItem == null) continue;
+                    if (item.IsDelete)
+                        db.Order_Items.Remove(orderItem);
+                    else
+                    {
+                        orderItem.order_item_quantity = item.ItemQuantity;
+                        orderItem.order_item_amount = item.ItemTotalAmt;
+                    }
+                }
+                db.SaveChanges();
+            }
+            return RedirectToAction("ListOfOrder");
         }
         #endregion
 

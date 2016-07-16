@@ -18,5 +18,6 @@ namespace MyStore.App.ViewModels
         public string OtherDetails { get; set; }
         public int Total_Voted { get; set; }
         public int Total_Score { get; set; }
+        public Int16 Sale_Off { get; set; }
     }
 }

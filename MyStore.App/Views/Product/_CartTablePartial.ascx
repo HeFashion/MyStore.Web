@@ -1,13 +1,14 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IEnumerable<MyStore.App.ViewModels.ShoppingCartViewModel>>" %>
 
-<table class="table table-condensed">
+<table class="table table-condensed" id="cartResult">
     <thead>
-        <tr class="cart_menu">
+        <tr class="cart-header">
             <td class="image">Sản phẩm</td>
             <td class="description"></td>
             <td class="price">Giá</td>
-            <td class="quantity">Số lượng</td>
-            <td class="total">Tổng tiền</td>
+            <td class="measure">Đơn Vị</td>
+            <td>Số lượng</td>
+            <td>Tổng tiền</td>
             <td></td>
         </tr>
     </thead>
@@ -25,30 +26,36 @@
         <%{ %>
         <tr>
 
-            <td class="cart_product">
+            <td class="cart-image">
                 <a href="<%:Url.Action("Details", "Product", new { id = item.ProductId })%>">
                     <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop", item.ProductImage,"cart.jpg")) %>" alt="">
                 </a>
             </td>
-            <td class="cart_description">
+            <td class="cart-description">
                 <h4><a href="<%:Url.Action("Details", "Product", new {id=item.ProductId}) %>"><%:item.ProductDescription %></a></h4>
                 <p>Mã hàng: <%:item.ProductName %></p>
             </td>
-            <td class="cart_price">
-                <p><%:item.Price.ToString("#,###.#")%> / <%:item.UOM %></p>
+            <td class="cart-price">
+                <p><%:item.Price.ToString("#,###.#")%></p>
             </td>
-            <td class="cart_quantity">
+            <td class="cart-price">
+                <p><%:item.UOM%></p>
+            </td>
+            <td class="cart-quantity">
                 <div class="cart_quantity_button">
-                    <a class="cart_quantity_up" href="<%:Url.Action("PlusQuantity", "Cart", new { product_Id=item.ProductId })%>">+</a>
-                    <input class="cart_quantity_input" type="text" name="quantity" value="<%:item.TotalQuantity %>" autocomplete="off" size="2" readonly="true">
-                    <a class="cart_quantity_down" href="<%:Url.Action("MinusQuantity", "Cart", new { product_Id=item.ProductId })%>">-</a>
+                    <input class="cart_quantity_input"
+                        type="text"
+                        id="<%:item.ProductId %>"
+                        name="quantity"
+                        value="<%:item.TotalQuantity %>"
+                        size="2">
                 </div>
             </td>
-            <td class="cart_total">
-                <p class="cart_total_price"><%:item.TotalAmount.ToString("#,###.#") %></p>
+            <td class="cart-total-price">
+                <p><%:item.TotalAmount.ToString("#,###.#") %></p>
             </td>
-            <td class="cart_delete">
-                <a class="cart_quantity_delete" title="Xóa khỏi giỏ" href="<%:Url.Action("Remove", "Cart", new { id=item.ProductId })%>">
+            <td class="cart-delete">
+                <a title="Xóa khỏi giỏ" href="<%:Url.Action("Remove", "Cart", new { id=item.ProductId })%>">
                     <i class="fa fa-times"></i>
                 </a>
             </td>

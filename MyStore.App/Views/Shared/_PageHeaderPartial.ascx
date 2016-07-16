@@ -11,19 +11,25 @@
                             <li>
                                 <a href="#">
                                     <i class="fa fa-phone"></i>
-                                    <%:System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_PHONE] %>
+                                    &nbsp&nbsp<%:System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_PHONE] %>
                                 </a>
                             </li>
                             <% var strEmail = System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_EMAIL]; %>
-                            <li><a href="<%:string.Format("mailto:{0}", strEmail) %>"><i class="fa fa-envelope"></i><%:strEmail%></a></li>
+                            <li>
+                                <a href="<%:string.Format("mailto:{0}", strEmail) %>"><i class="fa fa-envelope"></i>
+                                    &nbsp&nbsp<%:strEmail%>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="social-icons pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="<%:Convert.ToString(System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.FACE_BOOK_LINK]) %>"
+                                target="_blank"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="<%:Convert.ToString(System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.GOOGLE_PLUS_LINK]) %>"
+                                target="_blank"><i class="fa fa-google-plus"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -124,7 +130,7 @@
     <!--header-bottom-->
 </header>
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog" data-url="<%:Url.Action("ShowCompletedAddToCart","Product") %>">
+<div id="myModal" class="modal fade" role="dialog">
     <div id="modalContent" class="modal-dialog">
     </div>
 </div>

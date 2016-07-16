@@ -6,6 +6,8 @@
 <head runat="server">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <asp:ContentPlaceHolder ID="MetaContent" runat="server">
+    </asp:ContentPlaceHolder>
     <title>
         <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
     </title>
@@ -14,8 +16,8 @@
     <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
     <%: Styles.Render("~/Content/themes/mystyle/css") %>
     <!--[if lt IE 9]>
-    <script src="/Scripts/html5shiv.js"></script>
-    <script src="/Scripts/respond.min.js"></script>
+    <script src="<%:Url.Content("~/Scripts/html5shiv.js") %>"></script>
+    <script src="<%:Url.Content("~/Scripts/respond.min.js") %>"></script>
     <![endif]-->
 </head>
 <body>
@@ -32,7 +34,7 @@
                     <%: Html.Partial("_LeftMenuPartial") %>
                 </div>
 
-                <div class="col-sm-9 padding-right">
+                <div class="col-sm-9 padding-right" id="main-content">
                     <asp:ContentPlaceHolder ID="MainContent" runat="server" />
                 </div>
             </div>

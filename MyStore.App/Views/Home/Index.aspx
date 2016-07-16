@@ -62,16 +62,14 @@
 
 </asp:Content>
 <asp:Content ID="scriptSection" ContentPlaceHolderID="ScriptsSection" runat="server">
-    <%:Scripts.Render("~/Scripts/addtocart.js")%>
-    <%:Scripts.Render("~/Scripts/main.js")%>
-    <%:Scripts.Render("~/Scripts/jquery.scrollUp.js")%>
+    <%:Scripts.Render("~/bundles/home/index")%>
 
     <script type="text/javascript">
         var nextIndex = 0;
         var isEnded = false;
         var isLocked = true;
 
-        SendProductAction(":button.add-to-cart");
+        SendProductAction(":button.add-to-cart", "<%:HttpContext.Current.Request.RawUrl%>");
 
         $(window).load(function () {
             $(window).scroll(function () {

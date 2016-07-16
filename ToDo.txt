@@ -101,23 +101,52 @@ Change next and previous url for blog Detail(done)
 Add Share button on Blog details(done)
 Manage account form miss when display(no need)
 
-Create compare product page
+Create compare product page(done).
 
-Change padding for paging buttons.
-
-Implete RichTextEditor for create new blog.
-
-Add active field to Product entity
-
-Improve addtocart.js(no need for data-url)
-
+Change padding for paging buttons.(done)
+Rewrite AboutUs page(done)
 Move shipping image when scroll(don't suitable with mobi. Append)
 Add Current navigation to _PageHeaderParital.(append)
+Add more key to web.config for Facebook + Google page.(done)
+Bug when user navigate to /Product (done)
+Add logic for Email Password confirm.(done)
+Add logic for email password recovery(done)
+Improve addtocart.js(done)
+Add delete button to Ad_slider(done)
+
+Cannot load Item image in orderManagement, admin side.(done)
+
+Implement sale off atrribute in Products.(done)
+
+Allow user input number in ShoppingCart.(done)
+
+Create new _partial view in OrderManagement page.
+  1. Allow Admin input actual sale revenue.(done)
+Error when delete product in product_recommend list.(done)
+Facebook like product cannot show complete.(done)
+
+Set cookies when user close left menu.(done)
+Create page in Facebook and link to Apps.(done)
+Change schema for Product_Recommend.(done)
+Create child menu in left baner.
+
+Implement sale off button in Products admin page.
+Implement Product's name follow catalog when create new product.
+
+Add new logic for sending order complete to hoanhdn2004@gmail.com
+Change product_name when move product.
+Add active field to Product entity.
+Add meta tag for each page.
+Add more image details to product.
 Fix margin-left for Account Manage li
 Take alook _ChangePasswordPartial- change viewpage to viewcontrol
 
 Bring all Menu button on top and frozen them.
 change the way to show product overlay
-Add more key to web.config for Facebook + Google page.
+
 Add more detail to _CompletedAddToCart
-Bug when user navigate to /Product 
+
+Add log4net into project.
+
+
+Implete RichTextEditor for create new blog.

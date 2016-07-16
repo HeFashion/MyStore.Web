@@ -38,7 +38,7 @@ namespace MyStore.App.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("UserEntities", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    //WebSecurity.InitializeDatabaseConnection("UserEntities", "UserProfile", "UserId", "UserName", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

@@ -2,7 +2,7 @@
 
 <ul class="nav navbar-nav">
     <li>
-        <a href="<%:Url.Action("Index","Cart") %>">
+        <a href="<%:Url.Action("Index", "Cart", new { returnUrl=string.IsNullOrEmpty(ViewBag.ReturnUrl)?HttpContext.Current.Request.RawUrl: ViewBag.ReturnUrl})%>">
             <i class="fa fa-shopping-cart"></i>Giỏ hàng
         </a>
     </li>
@@ -48,7 +48,7 @@
       else
       { %>
     <li>
-        <a href="<%:Url.Action("Login", "Account", new { returnUrl=HttpContext.Current.Request.RawUrl })%>" id="loginLink">
+        <a href="<%:Url.Action("Login", "Account", new { returnUrl=string.IsNullOrEmpty(ViewBag.ReturnUrl)?HttpContext.Current.Request.RawUrl: ViewBag.ReturnUrl })%>" id="loginLink">
             <i class="fa fa-lock"></i>Đăng nhập
         </a>
     </li>

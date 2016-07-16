@@ -20,6 +20,7 @@ namespace MyStore.App
                         "~/Scripts/price-range.js",
                         "~/Scripts/jquery.scrollUp.js",
                         "~/Scripts/jquery.prettyPhoto.js",
+                        "~/Scripts/jquery.cookie-{version}.js",
                         "~/Scripts/main.js"
                         ));
             bundles.Add(new ScriptBundle("~/bundles/admin/jquery").Include(
@@ -46,6 +47,7 @@ namespace MyStore.App
                          "~/Scripts/price-range.js",
                         "~/Scripts/jquery.scrollUp.js",
                         "~/Scripts/jquery.prettyPhoto.js",
+                        "~/Scripts/googleAnalysis.js",
                         "~/Scripts/main.js"));
             bundles.Add(new ScriptBundle("~/bundles/contact").Include(
                 "~/Scripts/gmaps.js",
@@ -113,6 +115,13 @@ namespace MyStore.App
             bundles.Add(new ScriptBundle("~/bundles/product/compare").Include(
               "~/Scripts/jquery.elevateZoom.js",
               "~/Scripts/addtocart.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/home/index").Include(
+             "~/Scripts/addtocart.js",
+             "~/Scripts/jquery.scrollUp.js"));
+            bundles.Add(new ScriptBundle("~/bundles/cart/shopping").Include(
+            "~/Scripts/numericInput.js",
+            "~/Scripts/shoppingCart.js"));
         }
     }
 }

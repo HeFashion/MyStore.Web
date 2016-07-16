@@ -75,14 +75,10 @@
                         <div class="social-networks">
                             <h2 class="title text-center">Liên Kết</h2>
                             <ul>
-                                <li>
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                </li>
-
-                                <li>
-                                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                                </li>
-
+                                <li><a href="<%:Convert.ToString(System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.FACE_BOOK_LINK]) %>"
+                                    target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="<%:Convert.ToString(System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.GOOGLE_PLUS_LINK]) %>"
+                                    target="_blank"><i class="fa fa-google-plus"></i></a></li>
                             </ul>
                         </div>
                     </div>

@@ -99,17 +99,18 @@ namespace MyStore.App.Models.Authentication
     {
         [Required]
         [Display(Name = "Tên đăng nhập")]
+        [EmailAddress(ErrorMessage = "Địa chỉ email không hợp lệ.")]
         public string UserName { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Mật khẩu {0} phải có ít nhất {2} ký tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "Mật khẩu và xác nhận mật khẩu không đúng.")]
         public string ConfirmPassword { get; set; }
         /*
         [Required]
@@ -127,5 +128,29 @@ namespace MyStore.App.Models.Authentication
         public string Provider { get; set; }
         public string ProviderDisplayName { get; set; }
         public string ProviderUserId { get; set; }
+    }
+
+    public class RecoveryModel
+    {
+        [Required]
+        [Display(Name = "Email")]
+        [EmailAddress(ErrorMessage = "Địa chỉ email không hợp lệ")]
+        public string UserName { get; set; }
+    }
+
+    public class RecoveryModelConfirmed
+    {
+        public string RecoveryToken { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "Mật khẩu {0} phải có ít nhất {2} ký tự.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Mật khẩu mới")]
+        public string NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("NewPassword", ErrorMessage = "Mật khẩu và xác nhận mật khẩu không đúng.")]
+        public string ConfirmPassword { get; set; }
     }
 }

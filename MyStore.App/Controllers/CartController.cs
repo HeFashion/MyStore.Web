@@ -40,64 +40,40 @@ namespace MyStore.App.Controllers
 
         //
         // GET: /Cart/
-        public ActionResult Index()
+        public ActionResult Index(string returnUrl)
         {
-            return RedirectToAction("ShowCart", "Product");
+            return RedirectToAction("ShowCart", "Product", new { @returnUrl = returnUrl });
         }
 
-        public ActionResult PlusQuantity(int product_Id)
-        {
-            ViewModels.ShoppingCart cart = ViewModels.ShoppingCart.GetCart(this.HttpContext);
-            double count = cart.GetCount(product_Id);
-            if (count <= 50)
-            {
-                bool result = cart.AddToCart(product_Id, 1);
-                cart.SaveChanges(this.HttpContext);
-            }
-            return Index();
-        }
-
-        public ActionResult MinusQuantity(int product_Id)
-        {
-            ViewModels.ShoppingCart cart = ViewModels.ShoppingCart.GetCart(this.HttpContext);
-            double count = cart.GetCount(product_Id);
-            if (count >= 2)
-            {
-                bool result = cart.AddToCart(product_Id, -1);
-                cart.SaveChanges(this.HttpContext);
-            }
-            return Index();
-
-        }
-
-        //
-        // GET: /Cart/Delete/5
-
+        /// <summary>
+        /// Remove item from Cart
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Remove(int id)
         {
             ViewModels.ShoppingCart cart = ViewModels.ShoppingCart.GetCart(this.HttpContext);
             bool result = cart.RemoveFromCart(id);
             cart.SaveChanges(this.HttpContext);
 
-            return Index();
+            return Index(string.Empty);
         }
 
-        //
-        // POST: /Cart/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        /// <summary>
+        /// Change quantity of Cart item when use changed on ShoppingCart
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="qty"></param>
+        /// <returns></returns>
+        public ActionResult ChangeQuantity(int id, double qty)
         {
-            try
+            ViewModels.ShoppingCart cart = ViewModels.ShoppingCart.GetCart(this.HttpContext);
+            if (qty > 0 && qty < 50)
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                bool result = cart.ChangeQuantity(id, qty);
+                cart.SaveChanges(this.HttpContext);
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("ShoppingCartList", "Product");
         }
     }
 }

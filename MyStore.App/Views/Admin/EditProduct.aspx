@@ -17,6 +17,8 @@
         <legend>Product</legend>
         <%: Html.HiddenFor(model => model.product_id)%>
         <%: Html.HiddenFor(model => model.product_image)%>
+        <%: Html.HiddenFor(model=>model.total_vote_count) %>
+        <%: Html.HiddenFor(model=>model.total_vote_score) %>
         <div class="editor-label">
             <%: Html.LabelFor(model => model.product_type_id, "Ref_Product_Type")%>
         </div>

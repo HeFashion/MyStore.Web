@@ -1,5 +1,5 @@
 ﻿
-function SendProductAction(component) {
+function SendProductAction(component, returnUrl) {
     $(document).on('click', component, function (e) {
         e.preventDefault();
 
@@ -7,11 +7,11 @@ function SendProductAction(component) {
             productId: e.target.value,
             productQuantity: 1
         };
-        AddToCart(sendInfo);
+        AddToCart(sendInfo, returnUrl);
     });
 }
 
-function AddToCart(sendInfo) {
+function AddToCart(sendInfo, returnUrl) {
     $.ajax({
         type: "POST",
         content: "application/json; charset=utf-8",
@@ -19,10 +19,10 @@ function AddToCart(sendInfo) {
         data: sendInfo,
         success: function (data) {
             if (data.status) {
-                var url = $("#myModal").data("url");
+                var url = '/Product/ShowCompletedAddToCart';
 
                 $.get(url,
-                    { selectedId: sendInfo.productId },
+                    { selectedId: sendInfo.productId, returnUrl: returnUrl },
                     function (data) {
                         $("#modalContent").html(data);
                         $("#myModal").modal('show');

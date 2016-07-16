@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="3e8845f68cba4644a3ea0eb879447357" Name="Diagram1" ZoomLevel="81">
+      <Diagram DiagramId="3e8845f68cba4644a3ea0eb879447357" Name="Diagram1" ZoomLevel="206">
         <EntityTypeShape EntityType="MyStoreModel.Order_Items" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="MyStoreModel.Order_Status_Codes" Width="1.5" PointX="7" PointY="11.125" IsExpanded="true" />
         <EntityTypeShape EntityType="MyStoreModel.Order" Width="1.5" PointX="4.875" PointY="10.75" IsExpanded="true" />
@@ -25,10 +25,9 @@
         <AssociationConnector Association="MyStoreModel.FK_Orders_Shipping_Bills" />
         <EntityTypeShape EntityType="MyStoreModel.Blog" Width="1.5" PointX="11.625" PointY="1.375" />
         <EntityTypeShape EntityType="MyStoreModel.Vote" Width="1.5" PointX="10.25" PointY="10" />
-        <EntityTypeShape EntityType="MyStoreModel.Product_Recommend" Width="1.5" PointX="2.875" PointY="10.875" />
-        <AssociationConnector Association="MyStoreModel.prodduct_recommend_fk" />
         <EntityTypeShape EntityType="MyStoreModel.Blog_Actors" Width="1.5" PointX="15" PointY="1.875" />
         <AssociationConnector Association="MyStoreModel.Blog_Blog_Actor_FK" />
+        <EntityTypeShape EntityType="MyStoreModel.Product_Recommend" Width="1.5" PointX="8" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

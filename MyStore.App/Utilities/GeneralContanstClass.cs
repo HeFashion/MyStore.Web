@@ -20,5 +20,8 @@ namespace MyStore.App.Utilities
         public const string PAGE_ADDRESS = "shopAddress";
         public const string PAGE_GOV = "shopGOV";
         public const string COMPARE_PRODUCT_SESSION_KEY = "_listProductCompare";
+        public const string GOOGLE_PLUS_LINK = "googleLink";
+        public const string FACE_BOOK_LINK = "facebookLink";
+        public const string SHIP_ORDER_SESSION_KEY = "ShipOrdersSession";
     }
 }

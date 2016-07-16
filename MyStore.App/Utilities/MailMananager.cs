@@ -7,6 +7,7 @@ using System.Web;
 using System.Configuration;
 
 using MyStore.App.Utilities;
+using System.Threading.Tasks;
 
 namespace MyStore.App.Utilities
 {
@@ -24,11 +25,12 @@ namespace MyStore.App.Utilities
         {
             string sendEmail = ConfigurationManager.AppSettings[GeneralContanstClass.PAGE_EMAIL];
             if (string.IsNullOrEmpty(sendEmail)) return null;
-            SmtpClient result = new SmtpClient("mail.hevaisoi.com");
-            result.Credentials = new NetworkCredential(sendEmail, "!Hcchcc87");
+            SmtpClient result = new SmtpClient("hevaisoi.com", 25);
+            result.Credentials = new NetworkCredential(sendEmail, "zF~s51q8");
             return result;
         }
 
+        /*
         public MailMessage GetOrderMessage(int OrderId)
         {
             string sendEmail = ConfigurationManager.AppSettings[GeneralContanstClass.PAGE_EMAIL];
@@ -54,6 +56,64 @@ namespace MyStore.App.Utilities
             message.Priority = MailPriority.High;
 
             return message;
+        }
+         */
+
+        public async Task SendPasswordConfirmationEmail(string recieverEmail, string confirmationToken)
+        {
+
+            string sendEmail = ConfigurationManager.AppSettings[GeneralContanstClass.PAGE_EMAIL];
+            if (string.IsNullOrEmpty(sendEmail)) return;
+
+            using (var outClient = GetClient())
+            {
+                var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress(sendEmail);
+                message.To.Add(recieverEmail);
+                message.Subject = "HeVaiSoi - Kích hoạt tài khoản";
+                string mailBody = System.IO.File.ReadAllText(HttpContext.Current.Server.MapPath("~/EmailTemplates/PasswordConfirmationTemplate.htm"));
+                mailBody = mailBody.Replace("#PasswordConfirmation",
+                                            urlHelper.Action("RegisterConfirmation",
+                                                             "Account",
+                                                             new { @id = confirmationToken },
+                                                             "http"));
+                message.Body = mailBody;
+
+                message.IsBodyHtml = true;
+                message.Priority = MailPriority.High;
+
+                await outClient.SendMailAsync(message);
+            }
+        }
+        public async Task SendPasswordResetEmail(string recieverEmail, string confirmationToken)
+        {
+
+            string sendEmail = ConfigurationManager.AppSettings[GeneralContanstClass.PAGE_EMAIL];
+            if (string.IsNullOrEmpty(sendEmail)) return;
+
+            using (var outClient = GetClient())
+            {
+                var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress(sendEmail);
+                message.To.Add(recieverEmail);
+                message.Subject = "HeVaiSoi - Khôi Phục Mật Khẩu";
+                string mailBody = System.IO.File.ReadAllText(HttpContext.Current.Server.MapPath("~/EmailTemplates/PasswordResetTemplate.htm"));
+                mailBody = mailBody.Replace("#PasswordReset",
+                                            urlHelper.Action("PasswordRecoveryConfirm",
+                                                             "Account",
+                                                             new { @id = confirmationToken },
+                                                             "http"));
+                message.Body = mailBody;
+
+                message.IsBodyHtml = true;
+                message.Priority = MailPriority.High;
+
+                await outClient.SendMailAsync(message);
+            }
         }
     }
 }

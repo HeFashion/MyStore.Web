@@ -92,7 +92,7 @@
                     <td>
                         <%: Ajax.ActionLink("Chi Tiết", 
                                             "Details",
-                                            "Order",
+                                            "Admin",
                                             new { id=item.OrderNumber }, 
                                             new AjaxOptions{HttpMethod="Get", 
                                                 InsertionMode=InsertionMode.Replace, 
@@ -127,9 +127,10 @@
     <%: Scripts.Render("~/bundles/jqueryui") %>
     <%: Scripts.Render("~/bundles/jqueryval") %>
     <%: Scripts.Render("~/Scripts/main.admin.js") %>
+    <%: Scripts.Render("~/Scripts/numericInput.js") %>
 
     <script type="text/javascript">
-       
+
         $(document).ready(function () {
             var btnShip = $("#btnShip").button();
             var btnDone = $("#btnDone").button();
@@ -170,7 +171,7 @@
                         content: "application/json; charset=utf-8",
                         success: function (data) {
                             $("#modalContent").html(data);
-                            OpenDialog(400,800);
+                            OpenDialog(400, 800);
                         }
                     });
                 }

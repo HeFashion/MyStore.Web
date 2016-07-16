@@ -8,9 +8,6 @@
                     <div class="companyinfo">
                         <h2><span>Hè</span>-Vải Sợi</h2>
                         <p>
-                            <strong>Số ĐKKD - MST: 8082286746 do UBND Huyện Long Thành, T. Đồng Nai, cấp ngày 28/07/2015</strong>
-                        </p>
-                        <p>
                             <strong>Địa Chỉ: <%:Convert.ToString(System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_ADDRESS]) %></strong>
                         </p>
                     </div>
@@ -41,6 +38,9 @@
                         <a href="<%:Convert.ToString(System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_GOV]) %>" target="_blank">
                             <img src="<%:Url.Content("~/Images/bo_cong_thuong.png") %>" alt="" />
                         </a>
+                        <p>
+                            <strong>Số ĐKKD - MST: 8082286746 do UBND Huyện Long Thành, T. Đồng Nai, cấp ngày 28/07/2015</strong>
+                        </p>
                     </div>
                 </div>
             </div>

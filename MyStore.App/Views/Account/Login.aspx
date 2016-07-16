@@ -10,6 +10,10 @@
             <div class="row">
                 <div class="col-sm-4 col-sm-offset-1">
                     <%:Html.Partial("_LoginFormPartial", Model) %>
+                    <%if (ViewBag.IsRecovery)
+                      { %>
+                         Quên mật khẩu? Nhấp vào <a href="<%:Url.Action("PasswordRecovery","Account") %>">Khôi Phục</a> để khôi phục mật khẩu.
+                    <%} %>
                 </div>
 
                 <div class="col-sm-1">
@@ -29,5 +33,4 @@
 </asp:Content>
 
 <asp:Content ID="scriptsContent" ContentPlaceHolderID="ScriptsSection" runat="server">
-    
 </asp:Content>

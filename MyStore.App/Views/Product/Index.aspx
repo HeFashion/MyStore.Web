@@ -27,11 +27,12 @@
     <%:Scripts.Render("~/bundles/jqueryui") %>
     <%:Scripts.Render("~/Scripts/addtocart.js") %>
     <script type="text/javascript">
-        SendProductAction(":button.add-to-cart");
+        SendProductAction(":button.add-to-cart", "<%:HttpContext.Current.Request.RawUrl%>");
 
         var nextIndex = 0;
         var isEnded = false;
         var isLocked = true;
+
         $(window).load(function () {
             $(window).scroll(function () {
                 if (!isEnded && !isLocked) {

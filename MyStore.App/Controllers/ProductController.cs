@@ -122,16 +122,18 @@ namespace MyStore.App.Controllers
                                      UOM = p.Unit_Of_Measure.UOM_description,
                                      Price = p.product_price,
                                      Image = p.product_image,
-                                     DateCreated = p.product_created_date ?? DateTime.Now
+                                     DateCreated = p.product_created_date ?? DateTime.Now,
+                                     Sale_Off = p.product_sale_off
                                  });
             return result;
         }
         #endregion
 
         [HttpGet]
-        public ActionResult ShowCart()
+        public ActionResult ShowCart(string returnUrl)
         {
             ViewBag.BreadCrumbActive = "Giỏ Hàng";
+            ViewBag.ReturnUrl = returnUrl;
             return View("ShoppingCart", CartHelper.GetCartDetail(this.HttpContext));
         }
 
@@ -144,13 +146,14 @@ namespace MyStore.App.Controllers
             int pageNum = page ?? 1;
 
             ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
+            ViewBag.ProductTypeName = string.IsNullOrEmpty(searchString) ? GetProductTypeName(prodType ?? 0) : searchString;
 
             IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
-            string strCrumb = string.IsNullOrEmpty(searchString) ? GetProductTypeName(prodType ?? 0) : "Phân Loại";
+            string strCrumb = string.IsNullOrEmpty(searchString) ? GetProductTypeName(prodType ?? 0) : "Tìm Kiếm";
             dCrumbs.Add(strCrumb, string.Empty);
             ViewData["BreadCrumbs"] = dCrumbs;
-
-            var result = GetFindQuery(prodType, searchString);
+            int productType = prodType ?? GetDefaultProductType();
+            var result = GetFindQuery(productType, searchString);
 
             return View(result.Take(pageSize)
                               .ToList());
@@ -175,6 +178,7 @@ namespace MyStore.App.Controllers
                             Price = pro.product_price,
                             Image = pro.product_image,
                             DateCreated = pro.product_created_date ?? DateTime.Now,
+                            Sale_Off = pro.product_sale_off,
                             OtherDetails = pro.other_detail,
                             Total_Score = pro.total_vote_score ?? 0,
                             Total_Voted = pro.total_vote_count ?? 0
@@ -202,9 +206,10 @@ namespace MyStore.App.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult ShowCompletedAddToCart(int selectedId)
+        public PartialViewResult ShowCompletedAddToCart(int selectedId, string returnUrl)
         {
             ViewBag.RecommendTitle = "Các Sản Phẩm Liên Quan";
+            ViewBag.ReturnUrl = returnUrl;
             return PartialView("_CompletedAddToCart", GetRecommendProduct(selectedId));
         }
 
@@ -335,7 +340,7 @@ namespace MyStore.App.Controllers
             IList<int> listCompare = this.Session[GeneralContanstClass.COMPARE_PRODUCT_SESSION_KEY] as List<int>;
             if (listCompare == null)
             {
-                return View("Compare", null);
+                return RedirectToAction("Index", "Home");
             }
 
             var query = db.Products
@@ -354,6 +359,7 @@ namespace MyStore.App.Controllers
                           .ToList();
             return View("Compare", query);
         }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

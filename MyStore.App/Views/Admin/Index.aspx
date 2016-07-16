@@ -151,7 +151,9 @@
             <%}%>
 
             <td>
-                <%: Html.ActionLink("Delete", "Delete", new {returnUrl=HttpContext.Current.Request.RawUrl , id=item.product_id}) %>
+                <%: Html.ActionLink("Delete", 
+                                    "Delete", 
+                                    new {returnUrl=HttpContext.Current.Request.RawUrl , id=item.product_id}) %>
             </td>
 
         </tr>

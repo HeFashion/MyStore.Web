@@ -6,7 +6,7 @@
         <span class="icon-bar"></span>
     </div>
     <div class="list-group">
-        <span class="list-group-item active">Phân Loại
+        <span class="list-group-item header">Phân Loại
             <%if (Request.Browser.IsMobileDevice &&
                   MyStore.App.Utilities.DeviceHelper.IsSmartPhone(Request.UserAgent))
               {%>

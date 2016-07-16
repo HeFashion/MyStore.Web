@@ -51,6 +51,22 @@ namespace MyStore.App.ViewModels
                 item.TotalQuantity += productQuan;
             return true;
         }
+        public bool ChangeQuantity(int productId, double productQuan)
+        {
+            if (CartDetails == null) return false;
+            var item = CartDetails.Where(p => p.ProductId == productId)
+                                  .SingleOrDefault();
+            if (item == null)
+            {
+                item = new ShoppingCartViewModel();
+                item.ProductId = productId;
+                item.TotalQuantity = productQuan;
+                this.CartDetails.Add(item);
+            }
+            else
+                item.TotalQuantity = productQuan;
+            return true;
+        }
         public bool RemoveFromCart(int productId)
         {
             if (CartDetails == null) return false;

@@ -1,5 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.master" Inherits="System.Web.Mvc.ViewPage<MyStore.App.ViewModels.ProductModel>" %>
 
+<asp:Content ID="indexMeta" ContentPlaceHolderID="MetaContent" runat="server">
+    <meta property="og:title" content="<%:Model.Description %>" />
+    <%var result = string.Empty;
+      Uri requestUrl = HttpContext.Current.Request.Url;
+
+      result = string.Format("{0}://{1}{2}",
+                             requestUrl.Scheme,
+                             requestUrl.Authority,
+                             VirtualPathUtility.ToAbsolute(Url.Content(System.IO.Path.Combine("~/Images/shop", Model.Image, "detail.jpg")))); %>
+    <meta property="og:image" content="<%: result%>" />
+    <meta property="og:url" content="<%:Request.Url.AbsoluteUri%>" />
+</asp:Content>
+
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">
     Chi Tiết | Hè-Vải Sợi
 </asp:Content>
@@ -29,11 +42,22 @@
             <div class="product-information">
                 <!--/product-information-->
                 <%:Html.Action("BlogVotePartial", "Blog", new {totalScore=Model.Total_Score, totalVoted=Model.Total_Voted})%>
-                <%int dateDiff = Convert.ToInt32((DateTime.Now - Model.DateCreated).TotalDays); %>
-                <%if (dateDiff <= ViewBag.DateCompare)%>
-                <%{%>
-                <img src="<%:Url.Content("~/Images/shop/new.jpg") %>" class="newarrival" alt="" />
-                <%}%>
+                <%string srcImage = string.Empty; %>
+                <%switch (Model.Sale_Off)
+                  {
+                      case 10:
+                          srcImage = "~/Images/shop/sale10.jpg";
+                          break;
+                      default:
+                          int dateDiff = Convert.ToInt32((DateTime.Now - Model.DateCreated).TotalDays);
+                          if (dateDiff <= ViewBag.DateCompare)
+                              srcImage = "~/Images/shop/new.jpg";
+                          break;
+                  } %>
+                <%if (!string.IsNullOrEmpty(srcImage)) %>
+                <%{ %>
+                <img src="<%:Url.Content(srcImage) %>" class="newarrival" alt="" />
+                <%} %>
                 <h2><%:Model.Description %></h2>
 
                 <p>Mã hàng: <%:Model.Name %></p>
@@ -55,8 +79,9 @@
 
                 <table class="socials-share">
                     <tr>
-                        <td>
-                            <a class="fb-like" data-href="<%:Request.Url.AbsoluteUri %>" data-layout="button_count" data-action="like" data-show-faces="true"></a>
+                        <td class="facebook-like">
+                            <a class="fb-like" data-href="<%:Request.Url.AbsoluteUri %>" data-width="80px" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></a>
+                            <%--  --%>
                         </td>
                         <td class="google-plus">
                             <!-- Google + one -->
@@ -64,7 +89,6 @@
                         </td>
                     </tr>
                 </table>
-
             </div>
             <!--/product-information-->
         </div>
@@ -142,7 +166,7 @@
                               "<%:Model.Id%>",
                               "<%:(short)MyStore.App.Models.MyData.VoteType.Product %>");
 
-            SendProductAction(":button.add-to-cart");
+            SendProductAction(":button.add-to-cart", "<%:HttpContext.Current.Request.RawUrl%>");
 
             $(":button.cart").click(function (e) {
                 e.preventDefault();

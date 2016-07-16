@@ -13,6 +13,7 @@ using MyStore.App.Filters;
 using MyStore.App.Models.Authentication;
 using DotNetOpenAuth.GoogleOAuth2;
 using MyStore.App.Utilities;
+using System.Threading.Tasks;
 
 namespace MyStore.App.Controllers
 {
@@ -27,6 +28,7 @@ namespace MyStore.App.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            ViewBag.IsRecovery = false;
             return View();
         }
 
@@ -38,19 +40,24 @@ namespace MyStore.App.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            bool isRecovery = false;
+            if (ModelState.IsValid)
             {
-                if (Roles.IsUserInRole(model.UserName, "Admin"))
+                if (WebSecurity.IsConfirmed(model.UserName) &&
+                    WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
                 {
-                    return RedirectToAction("Index", "Admin");
+                    if (Roles.IsUserInRole(model.UserName, "Admin"))
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
                 }
-                else
-                {
-                    return RedirectToLocal(returnUrl);
-                }
+                isRecovery = true;
             }
-
+            ViewBag.IsRecovery = isRecovery;
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "Tài khoản hoặc mật khẩu không đúng.");
             return View(model);
@@ -83,17 +90,23 @@ namespace MyStore.App.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public async Task<ActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password, new { EmailAddress = model.UserName });
+                    string confirmationToken = WebSecurity.CreateUserAndAccount(model.UserName,
+                                                                                model.Password,
+                                                                                new { EmailAddress = model.UserName },
+                                                                                true);
                     Roles.AddUserToRole(model.UserName, "User");
-                    WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Product");
+                    await MailMananager.GetInstance()
+                                       .SendPasswordConfirmationEmail(model.UserName, confirmationToken);
+                    ViewBag.Title = "Xác Nhận Email Của Quý Khách";
+                    ViewBag.Message = string.Format("<p>Một email xác nhận đã được gửi tới <strong>{0}</strong>, quý khách vui lòng truy cập vào email và làm theo hướng dẫn để kích hoạt tài khoản.</p>", model.UserName);
+                    return View("RegisterConfirmation");
                 }
                 catch (MembershipCreateUserException e)
                 {
@@ -105,9 +118,23 @@ namespace MyStore.App.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
+        public ActionResult RegisterConfirmation(string id)
+        {
+            ViewBag.Title = "Xin Chào Quý Khách";
+
+            if (WebSecurity.ConfirmAccount(id))
+            {
+                ViewBag.Message = string.Format("<p>Chào mừng bạn đến với Website của chúng tôi.<br />Bấm vào <a href='{0}'>đây</a> để đăng nhập ngay.</p>", Url.Action("Login"));
+            }
+            else
+                ViewBag.Message = string.Format("Không thể xác minh mã kích hoạt.<br />Bấm vào <a href='{0}'>đây</a> để quay lại trang chủ.</p>", Url.Action("Index", "Home"));
+
+            return View("RegisterConfirmation");
+        }
+
         //
         // POST: /Account/Disassociate
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Disassociate(string provider, string providerUserId)
@@ -418,6 +445,72 @@ namespace MyStore.App.Controllers
             return PartialView("_RemoveExternalLoginsPartial", externalLogins);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult PasswordRecovery()
+        {
+            return View("PasswordRecovery");
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> PasswordRecoverySend(RecoveryModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (WebSecurity.UserExists(model.UserName))
+                {
+                    string strToken = WebSecurity.GeneratePasswordResetToken(model.UserName, 2880);
+                    await MailMananager.GetInstance()
+                                       .SendPasswordResetEmail(model.UserName, strToken);
+                    ViewBag.Title = "Xác Nhận Qua Email";
+                    ViewBag.Message = string.Format("<p>Một email xác nhận đã được gửi tới <strong>{0}</strong>, quý khách vui lòng truy cập vào email và làm theo hướng dẫn để khôi phục mật khẩu.<br /> <strong>Lưu ý:</strong> Email chỉ có tác dụng trong vòng 2 ngày.</p>", model.UserName);
+                    return View("RegisterConfirmation");
+                }
+            }
+            return View("PasswordRecovery", model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult PasswordRecoveryConfirm(string id)
+        {
+            if (string.IsNullOrEmpty(id) ||
+                WebSecurity.GetUserIdFromPasswordResetToken(id) <= 0)
+            {
+                ViewBag.Title = "Không Thể Xác Nhận";
+                ViewBag.Message = "<p>Không thể xác nhận mã khôi phục, quý khách vui lòng chọn <a href='/Account/PasswordRecovery'>Khôi Phục</a> để gửi lại mã khôi phục.</p>";
+                return View("RegisterConfirmation");
+            }
+            RecoveryModelConfirmed model = new RecoveryModelConfirmed()
+            {
+                RecoveryToken = id
+            };
+            return View("PasswordRecoveryConfirm", model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult PasswordRecoveryAction(RecoveryModelConfirmed model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (WebSecurity.ResetPassword(model.RecoveryToken, model.NewPassword))
+                {
+                    ViewBag.Title = "Mật Khẩu Đã Được Thay Đổi";
+                    ViewBag.Message = string.Format("<p>Chào mừng quý khác quay lại Website của chúng tôi.<br />Bấm vào <a href='{0}'>Đăng Nhập</a> để đăng nhập ngay.</p>", Url.Action("Login"));
+
+                    return View("RegisterConfirmation");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Mã khôi phục đã được sử dụng, hoặc đã hết hạn sử dụng");
+                }
+            }
+            return View("PasswordRecoveryConfirm", model);
+        }
         #region Helpers
         private ActionResult RedirectToLocal(string returnUrl)
         {

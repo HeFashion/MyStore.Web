@@ -19,7 +19,7 @@
             <%dCrumbs.Add("Giỏ Hàng", string.Empty); %>
             <%:Html.Partial("_BreadCrumbPartial", dCrumbs) %>
 
-            <div class="table-responsive cart_info" id="cartResult">
+            <div class="table-responsive cart_info">
                 <%:Html.Partial("_CartTablePartial", Model) %>
             </div>
         </div>
@@ -35,72 +35,19 @@
                 <p>Quý khách vui lòng kiểm tra bảng thanh toán bên trên và click vào <b>Thanh Toán</b>, sau đó làm theo các bước hướng dẫn để nhận hàng</p>
             </div>
             <div class="row">
-                <%--<div class="col-sm-6">
-                    <div class="chose_area">
-                        <ul class="user_option">
-                            <li>
-                                <input type="checkbox">
-                                <label>Use Coupon Code</label>
-                            </li>
-                            <li>
-                                <input type="checkbox">
-                                <label>Use Gift Voucher</label>
-                            </li>
-                            <li>
-                                <input type="checkbox">
-                                <label>Estimate Shipping & Taxes</label>
-                            </li>
-                        </ul>
-                        <ul class="user_info">
-                            <li class="single_field">
-                                <label>Country:</label>
-                                <select>
-                                    <option>United States</option>
-                                    <option>Bangladesh</option>
-                                    <option>UK</option>
-                                    <option>India</option>
-                                    <option>Pakistan</option>
-                                    <option>Ucrane</option>
-                                    <option>Canada</option>
-                                    <option>Dubai</option>
-                                </select>
-
-                            </li>
-                            <li class="single_field">
-                                <label>Region / State:</label>
-                                <select>
-                                    <option>Select</option>
-                                    <option>Dhaka</option>
-                                    <option>London</option>
-                                    <option>Dillih</option>
-                                    <option>Lahore</option>
-                                    <option>Alaska</option>
-                                    <option>Canada</option>
-                                    <option>Dubai</option>
-                                </select>
-
-                            </li>
-                            <li class="single_field zip-field">
-                                <label>Zip Code:</label>
-                                <input type="text">
-                            </li>
-                        </ul>
-                        <a class="btn btn-default update" href="#">Get Quotes</a>
-                        <a class="btn btn-default check_out" href="#">Continue</a>
-                    </div>
-                </div>
-                --%>
                 <div class="col-sm-6">
                     <div class="total_area">
-                        <%--<ul>
-                            <li>Tổng cộng tiền hàng <span><%:Model.Sum(p=>p.TotalAmount).ToString("#,###.#") %> VND</span></li>
-                            <li>Chi phí vận chuyển <span>Free</span></li>
-                            <li>Tổng cộng <span><%:Model.Sum(p=>p.TotalAmount).ToString("#,###.#") %> VND</span></li>
-                        </ul>--%>
                         <a class="btn btn-default check_out" href="<%:Url.Action("Index", "Checkout") %>">
                             <i class="fa fa-money"></i>
                             Thanh toán
                         </a>
+                        <%if (!string.IsNullOrEmpty(ViewBag.ReturnUrl))
+                          { %>
+                        <a class="btn btn-default check_out" href="<%:ViewBag.ReturnUrl %>">
+                            <i class="fa fa-reply"></i>
+                            Quay lại
+                        </a>
+                        <%} %>
                     </div>
                 </div>
             </div>
@@ -111,4 +58,5 @@
 </asp:Content>
 
 <asp:Content ID="scriptContent" ContentPlaceHolderID="ScriptsSection" runat="server">
+    <%: Scripts.Render("~/bundles/cart/shopping") %>
 </asp:Content>
