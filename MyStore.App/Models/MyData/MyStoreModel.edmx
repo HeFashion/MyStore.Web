@@ -154,6 +154,7 @@
           <Property Name="product_type_description_en" Type="nvarchar" MaxLength="1000" />
           <Property Name="is_active" Type="bit" Nullable="false" />
           <Property Name="product_type_order" Type="tinyint" Nullable="false" />
+          <Property Name="product_type_code" Type="nvarchar" Nullable="false" MaxLength="5" />
         </EntityType>
         <EntityType Name="Shipping_Bills">
           <Key>
@@ -391,6 +392,7 @@
           <NavigationProperty Name="Parent_Product_Type" Relationship="MyStoreModel.fk_Parent_ProductId" FromRole="Ref_Product_Type1" ToRole="Ref_Product_Type" />
           <Property Type="Boolean" Name="is_active" Nullable="false" />
           <Property Type="Byte" Name="product_type_order" Nullable="false" />
+          <Property Type="String" Name="product_type_code" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Unit_Of_Measure">
           <Key>
@@ -646,7 +648,8 @@
     <EntitySetMapping Name="Ref_Product_Type">
       <EntityTypeMapping TypeName="IsTypeOf(MyStoreModel.Ref_Product_Type)">
         <MappingFragment StoreEntitySet="Ref_Product_Type">
-          <ScalarProperty Name="product_type_order" ColumnName="product_type_order" />
+          <ScalarProperty Name="product_type_code" ColumnName="product_type_code" />
+                <ScalarProperty Name="product_type_order" ColumnName="product_type_order" />
                 <ScalarProperty Name="is_active" ColumnName="is_active" />
                 <ScalarProperty Name="product_type_id" ColumnName="product_type_id" />
           <ScalarProperty Name="parent_product_type_id" ColumnName="parent_product_type_id" />

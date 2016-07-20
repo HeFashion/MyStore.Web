@@ -99,13 +99,16 @@ namespace MyStore.App
                 "~/Content/themes/mystyle/responsive.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/product/details").Include(
+               "~/Scripts/product.detail.js",
                "~/Scripts/jquery.rateyo.js",
                "~/Scripts/jquery.elevateZoom.js",
                "~/Scripts/numericInput.js",
                "~/Scripts/addtocart.js",
+#if (!DEBUG)
                "~/Scripts/facebook.js",
                "~/Scripts/googleplus.js",
-               "~/Scripts/rateObject.js"));
+#endif
+ "~/Scripts/rateObject.js"));
             bundles.Add(new ScriptBundle("~/bundles/blog/details").Include(
                 "~/Scripts/jquery.rateyo.js",
                 "~/Scripts/facebook.js",

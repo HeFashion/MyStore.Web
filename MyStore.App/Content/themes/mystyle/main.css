@@ -145,7 +145,7 @@ a#scrollUp {
 }
 
 #header {
-    background: url("/Images/background03.png");
+    background: url("/Images/header_background.png");
     /*background-repeat: repeat-x;*/
     background-size: contain;
 }
@@ -1192,6 +1192,9 @@ h2.title {
     margin-top: 40px;
 }
 
+#slider-details {
+    margin-top: 20px;
+}
 
 #reviews {
     padding-left: 25px;
@@ -1199,8 +1202,8 @@ h2.title {
 }
 
 .product-details {
-    /*margin-bottom: 40px;*/
-    /*overflow: hidden;*/
+    margin-bottom: 40px;
+    overflow: hidden;
     margin-top: 10px;
 }
 
@@ -1242,6 +1245,15 @@ h2.title {
             display: inline-block;
             /*margin: 5px;*/
         }
+
+#slider-details .carousel-inner .item {
+    padding-left: 0px;
+}
+
+    #slider-details .carousel-inner .item img {
+        display: inline-block;
+        margin-left: 15px;
+    }
 
 .item-control {
     position: absolute;

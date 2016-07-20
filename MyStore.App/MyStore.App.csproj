@@ -538,6 +538,7 @@
     <Content Include="Scripts\numericInput.js" />
     <Content Include="Scripts\numericInput.min.js" />
     <Content Include="Scripts\price-range.js" />
+    <Content Include="Scripts\product.detail.js" />
     <Content Include="Scripts\rateObject.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\shoppingCart.js" />
@@ -750,6 +751,7 @@
     <Content Include="Views\Product\_FeatureItemPartial.ascx" />
     <Content Include="Views\Product\_ListItemsPartial.ascx" />
     <Content Include="Views\Product\_ProductComparePartial.ascx" />
+    <Content Include="Views\Product\_ProductImageDetails.ascx" />
     <Content Include="Views\Product\_RecommendItemsPartial.ascx" />
     <Content Include="Views\Shared\_BreadCrumbPartial.ascx" />
     <Content Include="Views\Shared\_LeftMenuPartial.ascx" />

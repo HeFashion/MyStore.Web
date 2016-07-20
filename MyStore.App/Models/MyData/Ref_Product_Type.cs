@@ -26,6 +26,7 @@ namespace MyStore.App.Models.MyData
         public string product_type_description_en { get; set; }
         public bool is_active { get; set; }
         public byte product_type_order { get; set; }
+        public string product_type_code { get; set; }
     
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Ref_Product_Type> Child_Product_Types { get; set; }

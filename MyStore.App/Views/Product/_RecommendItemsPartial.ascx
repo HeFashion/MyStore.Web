@@ -18,9 +18,12 @@
                         <div class="single-products">
                             <div class="productinfo text-center">
                                 <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.Id })%>">
-                                    <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",recommendItem.Image, "recommend.jpg")) %>" alt="" />
+                                    <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",recommendItem.Image, "index.jpg")) %>" alt="" />
                                 </a>
-                                <h2><%:MyStore.App.Utilities.DecimalHelper.ToString(recommendItem.Price, "#,###.#") %></h2>
+                                <h2>
+                                    <%:MyStore.App.Utilities.DecimalHelper.ToString(recommendItem.Price, "#,###.#") %>
+                                    <sup>đ</sup>
+                                </h2>
                                 <p><%:recommendItem.Description %></p>
                                 <button class="btn add-to-cart" value="<%:recommendItem.Id %>">
                                     <i class="fa fa-shopping-cart"></i>+1 giỏ hàng
@@ -60,9 +63,12 @@
                         <div class="single-products">
                             <div class="productinfo text-center">
                                 <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.Id })%>">
-                                    <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",recommendItem.Image, "recommend.jpg")) %>" alt="" />
+                                    <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",recommendItem.Image, "index.jpg")) %>" alt="" />
                                 </a>
-                                <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(recommendItem.Price, "#,###.#")%></h2>
+                                <h2>
+                                    <%: MyStore.App.Utilities.DecimalHelper.ToString(recommendItem.Price, "#,###.#")%>
+                                    <sup>đ</sup>
+                                </h2>
                                 <p><%: recommendItem.Description %></p>
                                 <button type="button" class="btn btn-default add-to-cart" value="<%:recommendItem.Id %>">
                                     <i class="fa fa-shopping-cart"></i>+1 giỏ hàng

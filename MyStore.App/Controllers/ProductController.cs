@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -199,8 +200,24 @@ namespace MyStore.App.Controllers
                     ViewBag.BlogRate = 0;
                 else
                     ViewBag.BlogRate = ((float)(product.Total_Score) / (float)(product.Total_Voted));
-
+                //Get all similar product
                 ViewData.Add("RecommendProduct", GetRecommendProduct(id));
+                //Get more detail images
+                string productFolder = Server.MapPath(System.IO.Path.Combine("~/Images/shop", product.Image));
+                if (System.IO.Directory.Exists(productFolder))
+                {
+                    string[] allFiles = System.IO.Directory.GetFiles(productFolder, "*footer*");
+                    if (allFiles != null && allFiles.Length > 0)
+                    {
+                        IList<string> moreDetails = new List<string>();
+                        for (int i = 0; i < allFiles.Length; i++)
+                        {
+                            moreDetails.Add(System.IO.Path.GetFileName(allFiles[i]));
+                        }
+
+                        ViewData.Add("DetailImg", moreDetails);
+                    }
+                }
             }
             return View(product);
         }
@@ -360,6 +377,15 @@ namespace MyStore.App.Controllers
             return View("Compare", query);
         }
 
+        [HttpGet]
+        public PartialViewResult GetImageDetail(int selectedIndex, string folderName)
+        {
+            ViewBag.FolderName = folderName;
+            ViewBag.DetailImg = selectedIndex <= 0 ? "detail.jpg" : string.Concat("detail_", selectedIndex, ".jpg");
+            ViewBag.OriginalImg = selectedIndex <= 0 ? "original.jpg" : string.Concat("original_", selectedIndex, ".jpg");
+
+            return PartialView("_ProductImageDetails");
+        }
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

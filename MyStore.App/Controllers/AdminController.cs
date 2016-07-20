@@ -62,16 +62,15 @@ namespace MyStore.App.Controllers
                                                            extensionName)));
                 }
                 //Save detail image
-                using (System.Drawing.Bitmap photoIndex = new System.Drawing.Bitmap(photoImage, 268, 249))
+                using (System.Drawing.Bitmap photoIndex = new System.Drawing.Bitmap(photoImage, 268, 381))
                 {
                     photoIndex.Save(System.IO.Path.Combine(rootPath, string.Format("detail{0}", extensionName)));
                 }
-                //Save recommend image
-                using (System.Drawing.Bitmap photoIndex = new System.Drawing.Bitmap(photoImage, 268, 249))
+                //Save footer image
+                using (System.Drawing.Bitmap photoIndex = new System.Drawing.Bitmap(photoImage, 85, 84))
                 {
-                    photoIndex.Save(System.IO.Path.Combine(rootPath, string.Format("recommend{0}", extensionName)));
+                    photoIndex.Save(System.IO.Path.Combine(rootPath, string.Format("footer{0}", extensionName)));
                 }
-
                 //Save cart image
                 using (System.Drawing.Bitmap photoIndex = new System.Drawing.Bitmap(photoImage, 110, 110))
                 {
@@ -446,6 +445,10 @@ namespace MyStore.App.Controllers
             if (lstProduct == null || lstProduct.Count == 0)
                 return Json(new { status = false, mess = "Move fail." });
             int pro_id = 0;
+            var proType = db.Ref_Product_Type
+                            .Where(p => p.product_type_id == selectedType)
+                            .Select(p => new { typeCode = p.product_type_code, typeName = p.product_type_description_vn })
+                            .SingleOrDefault();
             foreach (var item in lstProduct)
             {
                 if (!int.TryParse(item, out pro_id)) continue;
@@ -454,13 +457,11 @@ namespace MyStore.App.Controllers
                 if (updateProd == null) continue;
 
                 updateProd.product_type_id = selectedType;
+                updateProd.product_name = string.Concat(proType.typeCode, updateProd.product_id.ToString());
                 db.SaveChanges();
             }
-            string typeName = db.Ref_Product_Type
-                                .Where(p => p.product_type_id == selectedType)
-                                .Select(p => p.product_type_description_vn)
-                                .SingleOrDefault();
-            return Json(new { status = false, mess = string.Format("Completed moving {0} products to {1}", lstProduct.Count, typeName) });
+
+            return Json(new { status = true, mess = string.Format("Completed moving {0} products to {1}", lstProduct.Count, proType.typeName) });
         }
 
         public PartialViewResult GetImportProductExcel()

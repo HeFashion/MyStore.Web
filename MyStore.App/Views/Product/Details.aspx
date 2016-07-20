@@ -24,10 +24,13 @@
     <div class="product-details">
         <div class="col-sm-5">
             <div class="view-product">
-                <img id="<%:Model.Name %>"
-                    src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",Model.Image, "detail.jpg")) %>"
-                    alt="<%:Model.Image %>"
-                    data-zoom-image="<%:Url.Content(System.IO.Path.Combine("~/Images/shop", Model.Image,"original.jpg")) %>" />
+                <%:Html.Action("GetImageDetail", 
+                "Product", 
+                new 
+                { 
+                    selectedIndex=0, 
+                    folderName = Model.Image 
+                })%>
                 <%if (!MyStore.App.Utilities.DeviceHelper.IsSmartPhone(Request.UserAgent))
                   { %>
                 <h3>Rê chuột để Zoom</h3>
@@ -36,7 +39,56 @@
                   {%>
                 <h3>Chọn vào hình để Zoom</h3>
                 <%} %>
+
+                <img id="loadingImg"
+                    src="<%:Url.Content(System.IO.Path.Combine("~/Images","loading-img.gif")) %>"
+                    style="display: none" />
+
             </div>
+            <%if (ViewData.ContainsKey("DetailImg"))
+              {%>
+            <div id="slider-details"
+                class="carousel slide"
+                data-ride="carousel"
+                data-interval="false">
+                <% var listDetails = ViewData["DetailImg"] as System.Collections.Generic.IList<string>;
+                   int detailSize = 3;%>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <%foreach (string item in listDetails.Take(detailSize))
+                          {%>
+
+                        <a href="#" id="<%:listDetails.IndexOf(item) %>">
+                            <img src="<%: Url.Content(System.IO.Path.Combine("~/Images/shop",Model.Image, Convert.ToString(item))) %>"
+                                alt="<%:item %>"></a>
+                        <%} %>
+                    </div>
+                    <%for (int i = detailSize; i < listDetails.Count; i += detailSize)%>
+                    <%{ %>
+                    <div class="item">
+                        <%var takeList = listDetails.Skip(i).Take(detailSize); %>
+                        <%foreach (string item in takeList)%>
+                        <%{%>
+                        <a href="#" id="<%:listDetails.IndexOf(item) %>">
+                            <img src="<%: Url.Content(System.IO.Path.Combine("~/Images/shop",Model.Image, Convert.ToString(item))) %>"
+                                alt="<%:item %>"></a>
+                        <%} %>
+                    </div>
+
+                    <%} %>
+                </div>
+
+                <!-- Controls -->
+                <a class="left item-control" href="#similar-product" data-slide="prev">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                <a class="right item-control" href="#similar-product" data-slide="next">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+            <%} %>
         </div>
         <div class="col-sm-7">
             <div class="product-information">
@@ -148,18 +200,25 @@
     <%: Scripts.Render("~/bundles/product/details") %>
 
     <script>
+        var isSmartPhone = false;
+        $(window).load(function () {
+            LoadingImage(false);
+        });
+
         $(document).ready(function () {
-            <%if (!MyStore.App.Utilities.DeviceHelper.IsSmartPhone(Request.UserAgent))
-              {%>
-            $("<%:"#"+ Model.Name %>").elevateZoom();
+             <%if (!MyStore.App.Utilities.DeviceHelper.IsSmartPhone(Request.UserAgent))
+               {%>
+            isSmartPhone = true;
             <%}
-              else
-              {%>
-            $("<%:"#"+ Model.Name %>").elevateZoom({
-                zoomType: "inner",
-                cursor: "crosshair"
-            });
+               else
+               {%>
+            isSmartPhone = false;
             <%}%>
+
+            LoadingImage(true);
+            ZoomImage(isSmartPhone);
+
+
             $("#txtQuantity").numericInput({ allowFloat: true });
 
             Rating_Initialize("<%:ViewBag.BlogRate%>",
@@ -168,15 +227,15 @@
 
             SendProductAction(":button.add-to-cart", "<%:HttpContext.Current.Request.RawUrl%>");
 
-            $(":button.cart").click(function (e) {
-                e.preventDefault();
+            var btnAddToCart = $(":button.cart");
+            var sendInfo = {
+                productId: "<%:Model.Id%>",
+                productQuantity: $("#txtQuantity").val()
+            };
+            AddToCartWithNumber(btnAddToCart, sendInfo);
 
-                var sendInfo = {
-                    productId: "<%:Model.Id%>",
-                    productQuantity: $("#txtQuantity").val()
-                };
-                AddToCart(sendInfo);
-            });
+            var imageDetail = $("#slider-details .carousel-inner .item a");
+            SwapImageAsyn(imageDetail, "<%:Model.Image%>");
         });
     </script>
 </asp:Content>

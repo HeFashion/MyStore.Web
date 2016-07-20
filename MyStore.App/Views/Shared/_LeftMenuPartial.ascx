@@ -10,7 +10,7 @@
             <%if (Request.Browser.IsMobileDevice &&
                   MyStore.App.Utilities.DeviceHelper.IsSmartPhone(Request.UserAgent))
               {%>
-            
+
             <span class="pull-right" id="slide-submenu">
                 <i class="fa fa-times"></i>
             </span>
