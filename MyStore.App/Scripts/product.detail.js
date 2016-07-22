@@ -1,5 +1,5 @@
-﻿function LoadingImage(isLoaded) {
-    if (isLoaded) {
+﻿function LoadingImage(isLoading) {
+    if (isLoading) {
         $("#detailImg").hide();
         $("#loadingImg").show();
     }
@@ -28,13 +28,13 @@ function SwapImageAsyn(target, strImg) {
             content: "application/json; charset=utf-8",
             data: myData,
             beforeSend: function () {
-                LoadingImage(false);
+                LoadingImage(true);
             },
             complete: function () {
-                LoadingImage(true);
+                LoadingImage(false);
             },
             error: function () {
-                LoadingImage(true);
+                LoadingImage(false);
                 alert("Error while retrieving data!");
             },
             success: function (data) {

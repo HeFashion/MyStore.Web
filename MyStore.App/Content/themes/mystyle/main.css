@@ -193,11 +193,6 @@ a#scrollUp {
         outline: 0 none;
     }
 
-.btn-group.open .dropdown-toggle {
-    background: rgba(0, 0, 0, 0);
-    box-shadow: none;
-}
-
 .shop-menu .btn-group {
     vertical-align: top;
     margin-top: 10px;
@@ -317,6 +312,38 @@ a#scrollUp {
     }
 
 /*  Dropdown menu*/
+.usa {
+    border-radius: 0;
+    color: #B4B1AB;
+    font-size: 12px;
+    margin-right: 20px;
+    padding: 2px 15px;
+    margin-top: 10px;
+}
+
+    .usa:hover {
+        background: #FE980F;
+        color: #fff;
+        border-color: #FE980F;
+    }
+
+    .usa:active, .usa.active {
+        background: none repeat scroll 0 0 #FE980F;
+        box-shadow: inherit;
+        outline: 0 none;
+    }
+
+.btn-group.open .dropdown-toggle {
+    background: rgba(0, 0, 0, 0);
+    box-shadow: none;
+}
+
+.dropdown-menu li a:hover, .dropdown-menu li a:focus {
+    background-color: #FE980F;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+}
 
 .navbar-header .navbar-toggle .icon-bar {
     background-color: #fff;
@@ -606,7 +633,9 @@ ul.sub-menu {
             text-decoration: underline;
         }
 
-
+#progress img {
+    width: 100%;
+}
 /*************************
 ******* Home ******
 **************************/
@@ -700,7 +729,6 @@ ul.sub-menu {
 .category-products {
     margin-bottom: 35px;
     padding-bottom: 20px;
-    padding-top: 15px;
 }
 
 .left-sidebar {
@@ -816,9 +844,7 @@ h2.title {
 }
 
 .category-products .badge {
-    background: none;
     border-radius: 10px;
-    color: #696763;
     display: inline-block;
     font-size: 12px;
     font-weight: bold;
@@ -913,6 +939,20 @@ h2.title {
 .features_items {
     overflow: hidden;
 }
+
+    .features_items .header_items {
+        display: block;
+        margin-bottom: 20px;
+    }
+
+        .features_items .header_items .title {
+            margin-bottom: 0px;
+        }
+
+        .features_items .header_items .btn-group {
+            position: relative;
+            left: 58%;
+        }
 
 .home_items {
     overflow: hidden;
@@ -1177,7 +1217,8 @@ h2.title {
 
 
 #advertisement {
-    padding-bottom: 45px;
+    /*padding-bottom: 45px;*/
+    padding: 10px 0px;
 }
 
     #advertisement img {
@@ -1631,6 +1672,8 @@ h2.title {
     .breadcrumbs .breadcrumb {
         background: transparent;
         padding-left: 0;
+        padding-bottom: 0;
+        margin-bottom: 10px;
     }
 
         .breadcrumbs .breadcrumb li a {

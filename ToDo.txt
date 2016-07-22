@@ -130,6 +130,9 @@ Create page in Facebook and link to Apps.(done)
 Change schema for Product_Recommend.(done)
 Change product_name when move product.(done)
 Implement Product's name follow catalog when create new product.(done)
+Error when create new ProductType(done)
+Create child menu in left baner.(done)
+Fix loading image wrong when user scroll(done)
 
 Add and show more product details images.
  1. Add footer image in product-information(done)
@@ -137,9 +140,8 @@ Add and show more product details images.
  3. Update all product folder by hand
  4. Add one button to render Footer and Detail image for each of product.
 
-Create child menu in left baner.
 Allow user sort by Price...
-Improve Bootstrap modal when user
+Improve Bootstrap modal when user add to compare list on smart-phone.
 Implement sale off button in Products admin page.
 
 Add new logic for sending order complete to hoanhdn2004@gmail.com

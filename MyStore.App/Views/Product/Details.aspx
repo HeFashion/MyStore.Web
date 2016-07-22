@@ -218,7 +218,6 @@
             LoadingImage(true);
             ZoomImage(isSmartPhone);
 
-
             $("#txtQuantity").numericInput({ allowFloat: true });
 
             Rating_Initialize("<%:ViewBag.BlogRate%>",

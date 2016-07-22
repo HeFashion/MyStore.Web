@@ -14,7 +14,7 @@ namespace MyStore.App.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(int? page)
+        public ActionResult Index(string sortString)
         {
             using (MyStore.App.Models.MyData.MyStoreEntities db = new Models.MyData.MyStoreEntities())
             {
@@ -34,7 +34,6 @@ namespace MyStore.App.Controllers
                                       .Include("Unit_Of_Measure")
                                       .Include("Ref_Product_Type")
                             where pro.Ref_Product_Type.is_active
-                            orderby pro.product_created_date descending
                             select new ProductModel()
                             {
                                 Id = pro.product_id,
@@ -46,19 +45,25 @@ namespace MyStore.App.Controllers
                                 Image = pro.product_image,
                                 DateCreated = pro.product_created_date ?? DateTime.Now
                             };
-                //var recommendList = db.Product_Recommend
-                //                      .Where(p => p.Product.Ref_Product_Type.is_active)
-                //                      .OrderBy(p => p.recommend_order)
-                //                      .Select(pro => new ProductModel()
-                //                      {
-                //                          Id = pro.product_id,
-                //                          Name = pro.Product.product_image,
-                //                          Description = pro.Product.product_description,
-                //                          UOM = pro.Product.Unit_Of_Measure.UOM_description,
-                //                          Price = pro.Product.product_price,
-                //                          Image = pro.Product.product_image,
-                //                          DateCreated = pro.Product.product_created_date ?? DateTime.Now
-                //                      });
+                switch (sortString)
+                {
+                    case "PriceAsc":
+                        model.OrderBy(p => p.Price);
+                        break;
+                    case "PriceDsc":
+                        model.OrderByDescending(p => p.Price);
+                        break;
+                    case "DateAsc":
+                        model.OrderBy(p => p.Price);
+                        break;
+                    case "DateDsc":
+                        model.OrderByDescending(p => p.Price);
+                        break;
+                    default:
+                        model.OrderByDescending(p => p.DateCreated);
+                        break;
+                }
+
                 var recommendList = from rec in db.Product_Recommend
                                     join prd in db.Products on rec.product_id equals prd.product_id
                                     where prd.Ref_Product_Type.is_active

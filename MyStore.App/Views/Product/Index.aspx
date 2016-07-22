@@ -19,13 +19,10 @@
     <%:Html.Partial("_BreadCrumbPartial", ViewData["BreadCrumbs"]) %>
 
     <%:Html.Action("FeatureItemPartial", new {strListTitle = string.Format("Các Sản Phẩm Thuộc {0}", ViewBag.ProductTypeName), partialModel = Model.ToList()}) %>
-    <div id="progress" style="display: none">
-        <img src="<%:Url.Content("~/Images/loading.gif") %>" alt="load" />
-    </div>
 </asp:Content>
 <asp:Content ID="scripSection" ContentPlaceHolderID="ScriptsSection" runat="server">
-    <%:Scripts.Render("~/bundles/jqueryui") %>
-    <%:Scripts.Render("~/Scripts/addtocart.js") %>
+    <%:Scripts.Render("~/bundles/home/index")%>
+
     <script type="text/javascript">
         SendProductAction(":button.add-to-cart", "<%:HttpContext.Current.Request.RawUrl%>");
 

@@ -6,18 +6,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 ">
-                    <div class="contactinfo">
+                    <div class="contactinfo pull-left">
                         <ul class="nav nav-pills">
                             <li>
                                 <a href="#">
                                     <i class="fa fa-phone"></i>
-                                    &nbsp&nbsp<%:System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_PHONE] %>
+                                    <%:System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_PHONE] %>
                                 </a>
                             </li>
                             <% var strEmail = System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_EMAIL]; %>
                             <li>
                                 <a href="<%:string.Format("mailto:{0}", strEmail) %>"><i class="fa fa-envelope"></i>
-                                    &nbsp&nbsp<%:strEmail%>
+                                    <%:strEmail%>
                                 </a>
                             </li>
                         </ul>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-8" style="left: 0px; top: 0px">
+                <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <%:Html.Partial("_LoginPartial") %>
                     </div>

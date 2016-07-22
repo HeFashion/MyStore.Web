@@ -21,20 +21,10 @@ namespace MyStore.App.Models
         {
             using (MyStoreEntities dbContext = new MyStoreEntities())
             {
-                var query1 = from parent in dbContext.Ref_Product_Type
-                             join child in dbContext.Ref_Product_Type on parent.product_type_id equals child.parent_product_type_id
-                             where parent.is_active == true
-                             select new
-                             {
-                                 ParentId = parent.product_type_id,
-                                 ParentName = parent.product_type_description_vn,
-                                 ChildId = (int?)child.product_type_id,
-                                 ChildName = child.product_type_description_vn,
-                                 OrderNo = parent.product_type_order
-                             };
-                var query2 = from menu in dbContext.Ref_Product_Type
-                             where menu.parent_product_type_id == null
-                             where menu.is_active == true
+                //Get All Parent Menu
+                var query1 = from menu in dbContext.Ref_Product_Type
+                             where menu.parent_product_type_id == null &&
+                                   menu.is_active == true
                              select new
                              {
                                  ParentId = menu.product_type_id,
@@ -43,6 +33,22 @@ namespace MyStore.App.Models
                                  ChildName = menu.product_type_description_vn,
                                  OrderNo = menu.product_type_order
                              };
+
+                //Get All Child Menu
+                var query2 = from parent in dbContext.Ref_Product_Type
+                             join child in dbContext.Ref_Product_Type
+                                        on parent.product_type_id equals child.parent_product_type_id
+                             where parent.is_active == true &&
+                                   child.is_active == true
+                             select new
+                             {
+                                 ParentId = parent.product_type_id,
+                                 ParentName = parent.product_type_description_vn,
+                                 ChildId = (int?)child.product_type_id,
+                                 ChildName = child.product_type_description_vn,
+                                 OrderNo = parent.product_type_order
+                             };
+
                 var queryResult = query1.Union(query2)
                                         .OrderBy(p => p.OrderNo)
                                         .ToList();
@@ -58,7 +64,8 @@ namespace MyStore.App.Models
                             {
                                 MenuId = menu.ParentId,
                                 MenuDesc = menu.ParentName,
-                                TotalProduct = dbContext.Products.Count(p => p.product_type_id == menu.ParentId)
+                                TotalProduct = dbContext.Products
+                                                        .Count(p => p.product_type_id == menu.ParentId)
                             };
                             result.Add(menuItem);
                         }
@@ -78,7 +85,8 @@ namespace MyStore.App.Models
                                 {
                                     MenuId = menu.ChildId ?? 0,
                                     MenuDesc = menu.ChildName,
-                                    TotalProduct = dbContext.Products.Count(p => p.product_type_id == menu.ChildId)
+                                    TotalProduct = dbContext.Products
+                                                            .Count(p => p.product_type_id == menu.ChildId)
                                 });
                             }
                         }

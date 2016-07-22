@@ -4,6 +4,17 @@ function ShowModal() {
         frmModal.modal("show");
     }
 }
+function hideLeftMenu(isHide, element) {
+    if (isHide) {
+        element.next('.list-group').toggle('slide');
+        $('.mini-submenu').hide();
+    }
+    else {
+        element.closest('.list-group').fadeOut('slide', function () {
+            $('.mini-submenu').fadeIn();
+        });
+    }
+}
 
 function getData(myData) {
     $.ajax({
@@ -16,17 +27,23 @@ function getData(myData) {
                 $("#featureItems").append(data);
                 nextIndex++;
             }
+            isLocked = false;
         },
         beforeSend: function () {
             $("#progress").show();
+            $("#featureItems").find("a").click(function (e) { e.preventDefault(); });
+            $("#footer").find("a").click(function (e) { e.preventDefault(); });
             isLocked = true;
         },
         complete: function () {
             $("#progress").hide();
-            isLocked = false;
+            $("#featureItems").find("a").unbind("click");
+            $("#footer").find("a").unbind("click");
         },
         error: function () {
             alert("Error while retrieving data!");
+            $("#featureItems").find("a").unbind("click");
+            $("#footer").find("a").unbind("click");
         }
     });
 }
@@ -35,24 +52,17 @@ function GetData(index) {
     var sendData = { "page": index };
     return getData(sendData);
 }
-$('#sl2').slider();
+
+function SortList(getUrl) {
+
+}
+//$('#sl2').slider();
 
 var RGBChange = function () {
     $('#RGB').css('background', 'rgb(' + r.getValue() + ',' + g.getValue() + ',' + b.getValue() + ')')
 };
-function hideLeftMenu(isHide, element) {
-    if (isHide) {
-        element.next('.list-group').toggle('slide');
-        $('.mini-submenu').hide();
-    }
-    else {
-        element.closest('.list-group').fadeOut('slide', function () {
-            $('.mini-submenu').fadeIn();
-        });
-    }
-}
-/*scroll to top*/
 
+/*scroll to top*/
 $(document).ready(function () {
     $(function () {
         $.scrollUp({

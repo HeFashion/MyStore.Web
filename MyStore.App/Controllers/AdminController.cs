@@ -554,6 +554,24 @@ namespace MyStore.App.Controllers
             {
                 try
                 {
+                    if (productType.parent_product_type_id != null)
+                    {
+                        var query = db.Ref_Product_Type
+                                      .Where(p => p.parent_product_type_id == productType.parent_product_type_id)
+                                      .OrderByDescending(p => p.product_type_order)
+                                      .Select(p => p.product_type_order)
+                                      .FirstOrDefault();
+                        productType.product_type_order = Convert.ToByte(query + 10);
+                    }
+                    else
+                    {
+                        var query = db.Ref_Product_Type
+                                      .OrderByDescending(p => p.product_type_order)
+                                      .Select(p => p.product_type_order)
+                                      .FirstOrDefault();
+                        productType.product_type_order = Convert.ToByte(query + 10);
+                    }
+                    productType.product_type_code = "A";
                     db.Ref_Product_Type.Add(productType);
                     db.SaveChanges();
                 }
@@ -594,6 +612,17 @@ namespace MyStore.App.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (productType.parent_product_type_id != null)
+                {
+                    var query = db.Ref_Product_Type
+                                  .Where(p => p.parent_product_type_id == productType.parent_product_type_id &&
+                                              p.product_type_id != productType.product_type_id)
+                                  .OrderByDescending(p => p.product_type_order)
+                                  .Select(p => p.product_type_order)
+                                  .FirstOrDefault();
+                    productType.product_type_order = Convert.ToByte(query + 10);
+                }
+
                 db.Ref_Product_Type.Attach(productType);
                 db.Entry(productType).State = EntityState.Modified;
                 db.SaveChanges();

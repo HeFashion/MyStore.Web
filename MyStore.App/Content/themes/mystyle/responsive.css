@@ -5,7 +5,6 @@
 /* md */
 @media (min-width: 992px) and (max-width: 1199px) {
 
-
     .usa {
         margin-right: 0;
     }
@@ -34,11 +33,18 @@
     #cart_items .cart_info .cart_description p {
         text-align: center;
     }
-}
 
+    .features_items .header_items .btn-group {
+        position: relative;
+        left: 57%;
+    }
+}
 
 /* sm */
 @media (min-width: 768px) and (max-width: 991px) {
+    .usa {
+        margin-right: 0;
+    }
 
     .shop-menu ul li a {
         padding-left: 0;
@@ -122,6 +128,11 @@
             font-size: 12px;
             top: 5px;
         }
+
+    .features_items .header_items .btn-group {
+        position: relative;
+        left: 47%;
+    }
 }
 
 /* xs */
@@ -276,6 +287,11 @@
     .well {
         display: inline-block;
     }
+
+    .features_items .header_items .btn-group {
+        position: relative;
+        left: 30%;
+    }
 }
 
 /* XS Portrait */
@@ -283,12 +299,8 @@
 
     .contactinfo {
         text-align: center;
+        padding-left: 30%;
     }
-
-        .contactinfo ul li a {
-            padding-right: 15px;
-            padding-left: 0;
-        }
 
     .social-icons.pull-right {
         float: none !important;
@@ -524,4 +536,39 @@
         .product-information span span {
             float: none;
         }
+
+    .socials-share {
+        margin-left: 15%;
+    }
+
+    .features_items .header_items .btn-group {
+        left: 15%;
+    }
+
+        .features_items .header_items .btn-group > .btn-group:first-child:not(:last-child) > .btn:last-child, .btn-group > .btn-group:first-child:not(:last-child) > .dropdown-toggle {
+            margin-right: 5px;
+        }
+}
+
+@media (max-width: 360px) {
+    .contactinfo {
+        text-align: center;
+        padding-left: 25%;
+    }
+
+    .socials-share {
+        margin-left: 10%;
+    }
+
+    .features_items .header_items .btn-group {
+        left: 10%;
+    }
+
+    .features_items .header_items .dropdown-menu {
+        min-width: 130px;
+    }
+
+    .features_items .header_items .btn-group > .btn-group:first-child:not(:last-child) > .btn:last-child, .btn-group > .btn-group:first-child:not(:last-child) > .dropdown-toggle {
+        margin-right: 5px;
+    }
 }

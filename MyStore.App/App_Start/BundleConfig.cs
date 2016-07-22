@@ -21,7 +21,10 @@ namespace MyStore.App
                         "~/Scripts/jquery.scrollUp.js",
                         "~/Scripts/jquery.prettyPhoto.js",
                         "~/Scripts/jquery.cookie-{version}.js",
-                        "~/Scripts/main.js"
+#if (!DEBUG)
+               "~/Scripts/googleAnalysis.js",
+#endif
+ "~/Scripts/main.js"
                         ));
             bundles.Add(new ScriptBundle("~/bundles/admin/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
@@ -42,13 +45,6 @@ namespace MyStore.App
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryextend").Include(
-                        "~/Scripts/bootstrap.js",
-                         "~/Scripts/price-range.js",
-                        "~/Scripts/jquery.scrollUp.js",
-                        "~/Scripts/jquery.prettyPhoto.js",
-                        "~/Scripts/googleAnalysis.js",
-                        "~/Scripts/main.js"));
             bundles.Add(new ScriptBundle("~/bundles/contact").Include(
                 "~/Scripts/gmaps.js",
                 "~/Scripts/contact.js"
@@ -111,17 +107,18 @@ namespace MyStore.App
  "~/Scripts/rateObject.js"));
             bundles.Add(new ScriptBundle("~/bundles/blog/details").Include(
                 "~/Scripts/jquery.rateyo.js",
-                "~/Scripts/facebook.js",
-                "~/Scripts/googleplus.js",
-                "~/Scripts/rateObject.js"
+#if (!DEBUG)
+               "~/Scripts/facebook.js",
+               "~/Scripts/googleplus.js",
+#endif
+ "~/Scripts/rateObject.js"
                 ));
             bundles.Add(new ScriptBundle("~/bundles/product/compare").Include(
               "~/Scripts/jquery.elevateZoom.js",
               "~/Scripts/addtocart.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/home/index").Include(
-             "~/Scripts/addtocart.js",
-             "~/Scripts/jquery.scrollUp.js"));
+             "~/Scripts/addtocart.js"));
             bundles.Add(new ScriptBundle("~/bundles/cart/shopping").Include(
             "~/Scripts/numericInput.js",
             "~/Scripts/shoppingCart.js"));

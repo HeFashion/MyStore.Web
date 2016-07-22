@@ -56,10 +56,7 @@
     <%var recommendList = ViewData["RecommendList"] as IList<MyStore.App.ViewModels.ProductModel>;%>
     <%: Html.Action("RecommendProductPartial", "Product", new{model=recommendList})%>
     <%: Html.Action("FeatureItemPartial", "Product", new {strListTitle = ViewBag.ListTitle,partialModel= Model}) %>
-    <div id="progress" style="display: none">
-        <img src="<%:Url.Content("~/Images/loading.gif") %>" alt="load" />
-    </div>
-
+   
 </asp:Content>
 <asp:Content ID="scriptSection" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%:Scripts.Render("~/bundles/home/index")%>

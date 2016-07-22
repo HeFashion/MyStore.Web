@@ -19,6 +19,9 @@
             <th>
                 <%: Html.DisplayName("English") %>
             </th>
+            <th>
+                <%: Html.DisplayName("Code") %>
+            </th>
             <th></th>
         </tr>
 
@@ -30,6 +33,9 @@
             </td>
             <td style="font-weight: 500">
                 <%: Html.DisplayFor(modelItem => item.product_type_description_en) %>
+            </td>
+            <td style="font-weight: 500">
+                <%: Html.DisplayFor(modelItem => item.product_type_code) %>
             </td>
             <td>
                 <%: Html.ActionLink("Edit", "EditCatalog", new {  id=item.product_type_id  }) %> |
@@ -44,6 +50,9 @@
             </td>
             <td style="text-indent: 50px">
                 <%: Html.DisplayFor(modelItem => childItem.product_type_description_en) %>
+            </td>
+            <td style="text-indent: 50px">
+                <%: Html.DisplayFor(modelItem => childItem.product_type_code) %>
             </td>
             <td>
                 <%: Html.ActionLink("Edit", "EditCatalog", new { id=childItem.product_type_id }) %> |
