@@ -133,6 +133,7 @@ Implement Product's name follow catalog when create new product.(done)
 Error when create new ProductType(done)
 Create child menu in left baner.(done)
 Fix loading image wrong when user scroll(done)
+Allow user sort by Price...(done)
 
 Add and show more product details images.
  1. Add footer image in product-information(done)
@@ -140,8 +141,14 @@ Add and show more product details images.
  3. Update all product folder by hand
  4. Add one button to render Footer and Detail image for each of product.
 
-Allow user sort by Price...
+Implement chat in my web(important)
 Improve Bootstrap modal when user add to compare list on smart-phone.
+
+Make a paranomal 360 image for my shop.
+Research Zalo Api for post feed.
+Research ios for my shop in Apple store.
+
+
 Implement sale off button in Products admin page.
 
 Add new logic for sending order complete to hoanhdn2004@gmail.com

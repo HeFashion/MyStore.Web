@@ -4,7 +4,9 @@
 
 /* md */
 @media (min-width: 992px) and (max-width: 1199px) {
-
+    .blog-post-area .single-blog-post .vertical-img {
+        width: 60%;
+    }
     .usa {
         margin-right: 0;
     }
@@ -296,6 +298,10 @@
 
 /* XS Portrait */
 @media (max-width: 480px) {
+    .blog-post-area .single-blog-post .vertical-img {
+        width: 80%;
+        margin-left: 0;
+    }
 
     .contactinfo {
         text-align: center;
@@ -551,6 +557,11 @@
 }
 
 @media (max-width: 360px) {
+    .blog-post-area .single-blog-post .vertical-img {
+        width: 80%;
+        margin-left: 0;
+    }
+
     .contactinfo {
         text-align: center;
         padding-left: 25%;

@@ -23,5 +23,6 @@ namespace MyStore.App.Utilities
         public const string GOOGLE_PLUS_LINK = "googleLink";
         public const string FACE_BOOK_LINK = "facebookLink";
         public const string SHIP_ORDER_SESSION_KEY = "ShipOrdersSession";
+        public const string SORT_STRING_SESSION_KEY = "selectedSortString";
     }
 }

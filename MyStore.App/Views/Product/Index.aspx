@@ -25,11 +25,10 @@
 
     <script type="text/javascript">
         SendProductAction(":button.add-to-cart", "<%:HttpContext.Current.Request.RawUrl%>");
-
+        SortAction();
         var nextIndex = 0;
         var isEnded = false;
         var isLocked = true;
-
         $(window).load(function () {
             $(window).scroll(function () {
                 if (!isEnded && !isLocked) {

@@ -67,7 +67,7 @@
         var isLocked = true;
 
         SendProductAction(":button.add-to-cart", "<%:HttpContext.Current.Request.RawUrl%>");
-
+        SortAction();
         $(window).load(function () {
             $(window).scroll(function () {
                 if (!isEnded && !isLocked) {

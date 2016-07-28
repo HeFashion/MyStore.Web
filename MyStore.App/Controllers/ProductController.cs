@@ -97,7 +97,6 @@ namespace MyStore.App.Controllers
                 ViewData["SearchString"] = searchString;
                 products = products.Where(p => p.product_name.StartsWith(searchString) &&
                                                p.Ref_Product_Type.is_active);
-
             }
             else if (prodType != null && prodType.HasValue)
             {
@@ -108,14 +107,13 @@ namespace MyStore.App.Controllers
                 ViewData.Add("prodType", currentType);
                 products = products.Where(p => p.product_type_id == currentType &&
                                                p.Ref_Product_Type.is_active);
-
             }
             else
             {
                 products = products.Where(p => p.Ref_Product_Type.is_active);
             }
-            var result = products.OrderByDescending(p => p.product_created_date)
-                                 .Select(p => new ProductModel()
+
+            var result = products.Select(p => new ProductModel()
                                  {
                                      Id = p.product_id,
                                      Name = p.product_name,
@@ -126,6 +124,33 @@ namespace MyStore.App.Controllers
                                      DateCreated = p.product_created_date ?? DateTime.Now,
                                      Sale_Off = p.product_sale_off
                                  });
+            var cookies = HttpContext.Request.Cookies.Get(GeneralContanstClass.SORT_STRING_SESSION_KEY);
+            if (cookies != null)
+            {
+                string sortString = Convert.ToString(cookies.Value);
+                switch (sortString)
+                {
+                    case "Price-Asc":
+                        result = result.OrderBy(p => p.Price);
+                        break;
+                    case "Price-Dsc":
+                        result = result.OrderByDescending(p => p.Price);
+                        break;
+                    case "Date-Asc":
+                        result = result.OrderBy(p => p.DateCreated);
+                        break;
+                    case "Date-Dsc":
+                        result = result.OrderByDescending(p => p.DateCreated);
+                        break;
+                    default:
+                        result = result.OrderByDescending(p => p.DateCreated);
+                        break;
+                }
+            }
+            else
+                result = result.OrderByDescending(p => p.DateCreated);
+
+
             return result;
         }
         #endregion
@@ -264,16 +289,65 @@ namespace MyStore.App.Controllers
                                                           .Take(loadSize)
                                                           .ToList());
         }
-
         [HttpGet]
         public PartialViewResult FeatureItemPartial(string strListTitle, IEnumerable<ProductModel> partialModel)
         {
-
             if (partialModel == null) return null;
             ViewBag.ListTitle = strListTitle;
             ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
 
+            CreateSortItems();
             return PartialView("_FeatureItemPartial", partialModel);
+        }
+        private void CreateSortItems()
+        {
+            IList<SelectListItem> sortItem1 = new List<SelectListItem>();
+            SelectListItem dateItem = new SelectListItem()
+            {
+                Text = "Ngày Tạo",
+                Value = "Date",
+                Selected = true
+            };
+            sortItem1.Add(dateItem);
+
+            SelectListItem priceItem = new SelectListItem()
+            {
+                Text = "Giá Tiền",
+                Value = "Price",
+                Selected = false
+            };
+            sortItem1.Add(priceItem);
+
+            IList<SelectListItem> sortItem2 = new List<SelectListItem>();
+            SelectListItem ascItem = new SelectListItem()
+            {
+                Text = "Tăng Dần",
+                Value = "Asc",
+                Selected = false
+            };
+            sortItem2.Add(ascItem);
+
+            SelectListItem dscItem = new SelectListItem()
+            {
+                Text = "Giảm Dần",
+                Value = "Dsc",
+                Selected = true
+            };
+            sortItem2.Add(dscItem);
+            var cookies = HttpContext.Request.Cookies.Get(GeneralContanstClass.SORT_STRING_SESSION_KEY);
+            if (cookies != null)
+            {
+                string selectedSort = Convert.ToString(cookies.Value);
+                if (!string.IsNullOrEmpty(selectedSort))
+                {
+                    dateItem.Selected = selectedSort.Contains(dateItem.Value);
+                    priceItem.Selected = selectedSort.Contains(priceItem.Value);
+                    ascItem.Selected = selectedSort.Contains(ascItem.Value);
+                    dscItem.Selected = selectedSort.Contains(dscItem.Value);
+                }
+            }
+            ViewData.Add("SortList1", sortItem1);
+            ViewData.Add("SortList2", sortItem2);
         }
 
         [HttpGet]
@@ -386,6 +460,7 @@ namespace MyStore.App.Controllers
 
             return PartialView("_ProductImageDetails");
         }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

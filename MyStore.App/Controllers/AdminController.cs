@@ -212,8 +212,6 @@ namespace MyStore.App.Controllers
 
         public ActionResult Create()
         {
-
-
             ViewBag.product_type_id = GetProductTypeCombo(null);
 
             ViewBag.product_uom_id = new SelectList(db.Unit_Of_Measure, "UOM_id", "UOM_description");
@@ -225,7 +223,6 @@ namespace MyStore.App.Controllers
 
         //
         // POST: /Product/Create
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Product product)
@@ -337,7 +334,6 @@ namespace MyStore.App.Controllers
             {
                 return errorMsg;
             }
-
 
             return successMsg;
         }

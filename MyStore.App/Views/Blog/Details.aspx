@@ -96,7 +96,6 @@
         </div>
         <%} %>
 
-
         <div class="response-area">
             <div class="fb-comments" data-href="<%:Request.Url.AbsoluteUri %>" data-numposts="5"></div>
         </div>

@@ -1,4 +1,4 @@
-function ShowModal() {
+﻿function ShowModal() {
     var frmModal = $("#myModal");
     if (frmModal != null) {
         frmModal.modal("show");
@@ -53,15 +53,27 @@ function GetData(index) {
     return getData(sendData);
 }
 
-function SortList(getUrl) {
+function SortAction() {
+    $(document).on("click", "div#sortArea .dropdown-menu a", function (e) {
+        e.preventDefault();
+        var selectedOption = $(this).attr("id")
+        var parentOption = $(this).parents("div").attr("id");
 
+        var nextOption = parentOption == "sortArea1" ? "#sortArea2" : "#sortArea1";
+        var nextSelected = $(nextOption).children("button").val();
+        var strSort = parentOption == "sortArea1" ?
+                      selectedOption + "-" + nextSelected :
+                      nextSelected + "-" + selectedOption;
+        $.cookie("selectedSortString", strSort, { expires: 1 });
+        window.location = document.URL.replace(/#$/, '');
+        window.location.reload();
+    });
 }
 //$('#sl2').slider();
 
 var RGBChange = function () {
     $('#RGB').css('background', 'rgb(' + r.getValue() + ',' + g.getValue() + ',' + b.getValue() + ')')
 };
-
 /*scroll to top*/
 $(document).ready(function () {
     $(function () {

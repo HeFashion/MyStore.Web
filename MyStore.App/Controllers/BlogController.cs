@@ -31,11 +31,12 @@ namespace MyStore.App.Controllers
 
         //
         // GET: /Blog/
-        public ActionResult Index(int? pageNo)
+        public ActionResult Index(int? page)
         {
             int pageSize = 3;
-            int pageNum = pageNo ?? 1;
-            var blogs = db.Blogs.OrderByDescending(p => p.blog_id);
+            int pageNum = page ?? 1;
+            var blogs = db.Blogs
+                          .OrderByDescending(p => p.blog_id);
             IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
             dCrumbs.Add("Bài Viết", string.Empty);
             ViewData["BreadCrumbs"] = dCrumbs;
@@ -51,11 +52,19 @@ namespace MyStore.App.Controllers
             {
                 return HttpNotFound();
             }
-            int maxId = db.Blogs.Max(p => p.blog_id);
-            int minId = db.Blogs.Min(p => p.blog_id);
+            int nextId = db.Blogs
+                          .Where(p => p.blog_id > id)
+                          .OrderBy(p => p.blog_id)
+                          .Select(p => p.blog_id)
+                          .FirstOrDefault();
+            int prvId = db.Blogs
+                          .Where(p => p.blog_id < id)
+                          .OrderByDescending(p => p.blog_id)
+                          .Select(p => p.blog_id)
+                          .FirstOrDefault();
 
-            ViewBag.NextId = blog.blog_id >= maxId ? 0 : blog.blog_id + 1;
-            ViewBag.PrevId = blog.blog_id <= minId ? 0 : blog.blog_id - 1;
+            ViewBag.NextId = nextId;
+            ViewBag.PrevId = prvId;
 
             if (blog.blog_total_vote == null || blog.blog_total_vote.Value == 0)
                 ViewBag.BlogRate = 0;

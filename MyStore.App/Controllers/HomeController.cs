@@ -14,7 +14,7 @@ namespace MyStore.App.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(string sortString)
+        public ActionResult Index()
         {
             using (MyStore.App.Models.MyData.MyStoreEntities db = new Models.MyData.MyStoreEntities())
             {
@@ -45,25 +45,33 @@ namespace MyStore.App.Controllers
                                 Image = pro.product_image,
                                 DateCreated = pro.product_created_date ?? DateTime.Now
                             };
-                switch (sortString)
+                var cookies = HttpContext.Request.Cookies.Get(GeneralContanstClass.SORT_STRING_SESSION_KEY);
+                if (cookies != null)
                 {
-                    case "PriceAsc":
-                        model.OrderBy(p => p.Price);
-                        break;
-                    case "PriceDsc":
-                        model.OrderByDescending(p => p.Price);
-                        break;
-                    case "DateAsc":
-                        model.OrderBy(p => p.Price);
-                        break;
-                    case "DateDsc":
-                        model.OrderByDescending(p => p.Price);
-                        break;
-                    default:
-                        model.OrderByDescending(p => p.DateCreated);
-                        break;
+                    string sortString = Convert.ToString(cookies.Value);
+                    switch (sortString)
+                    {
+                        case "Price-Asc":
+                            model = model.OrderBy(p => p.Price);
+                            break;
+                        case "Price-Dsc":
+                            model = model.OrderByDescending(p => p.Price);
+                            break;
+                        case "Date-Asc":
+                            model = model.OrderBy(p => p.DateCreated);
+                            break;
+                        case "Date-Dsc":
+                            model = model.OrderByDescending(p => p.DateCreated);
+                            break;
+                        default:
+                            model = model.OrderByDescending(p => p.DateCreated);
+                            break;
+                    }
                 }
-
+                else
+                {
+                    model = model.OrderByDescending(p => p.DateCreated);
+                }
                 var recommendList = from rec in db.Product_Recommend
                                     join prd in db.Products on rec.product_id equals prd.product_id
                                     where prd.Ref_Product_Type.is_active
