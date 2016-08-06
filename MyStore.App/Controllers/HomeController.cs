@@ -104,7 +104,7 @@ namespace MyStore.App.Controllers
 
         public ActionResult Contact(bool? isDisplayMesg)
         {
-            MvcCaptcha.ResetCaptcha("SimpleCaptcha");
+            MvcCaptcha.ResetCaptcha("Captcha1987");
             ViewBag.IsDisplayMesg = isDisplayMesg ?? false;
             IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
             dCrumbs.Add("Địa Điểm", string.Empty);
@@ -115,7 +115,7 @@ namespace MyStore.App.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [CaptchaValidation("CaptchaCode", "SimpleCaptcha", "Mã số không đúng!")]
+        [CaptchaValidation("SimpleCode8787", "Captcha1987", "Mã số không đúng!")]
         public ActionResult OfferAdvice(MyStore.App.Models.MyData.User_Advices model)
         {
             if (ModelState.IsValid)
@@ -128,7 +128,7 @@ namespace MyStore.App.Controllers
 
                 return RedirectToAction("Contact");
             }
-            MvcCaptcha.ResetCaptcha("SimpleCaptcha");
+            MvcCaptcha.ResetCaptcha("Captcha1987");
             return View("Contact", model);
         }
 

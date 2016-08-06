@@ -542,6 +542,7 @@
     <Content Include="Scripts\rateObject.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\shoppingCart.js" />
+    <Content Include="Scripts\tawkTo.js" />
     <Content Include="Scripts\tinymce\jquery.tinymce.js" />
     <Content Include="Scripts\tinymce\jquery.tinymce.min.js" />
     <Content Include="Scripts\tinymce\license.txt" />
@@ -701,6 +702,7 @@
     <Content Include="Scripts\tinymce\themes\modern\theme.min.js" />
     <Content Include="Scripts\tinymce\tinymce.js" />
     <Content Include="Scripts\tinymce\tinymce.min.js" />
+    <Content Include="Scripts\zopimChat.js" />
     <Content Include="Views\Account\PasswordRecovery.aspx" />
     <Content Include="Views\Account\PasswordRecoveryConfirm.aspx" />
     <Content Include="Views\Account\RegisterConfirmation.aspx" />
@@ -801,6 +803,7 @@
     <Content Include="Views\Shared\Site_Admin.Master" />
     <Content Include="Views\Shared\SubSite.Master" />
     <Content Include="Views\Shared\_html5shiv.cshtml" />
+    <Content Include="Web.sitemap" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

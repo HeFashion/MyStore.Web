@@ -48,15 +48,15 @@
                             <%:Html.TextAreaFor(model => model.advise_body, new { @id="message", @required="required" ,@class="form-control" ,@rows="8" ,@placeholder="Lời nhắn của bạn"})%>
                         </div>
                         <div class="form-group col-md-6">
-                            <%: Html.TextBox("CaptchaCode", "", new { @placeholder = "Nhập vào mã số bên dưới", @class="form-control" })%>
-                            <% MvcCaptcha simpleCaptcha = new MvcCaptcha("SimpleCaptcha");
-                               simpleCaptcha.UseSmallIcons = true;
-                               simpleCaptcha.UserInputClientID = "CaptchaCode"; %>
-                            <%: Html.Captcha(simpleCaptcha) %>
+                            <%: Html.TextBox("SimpleCode8787", "", new { @placeholder = "Nhập vào mã số bên dưới", @class="form-control" })%>
+                            <% MvcCaptcha Captcha1987 = new MvcCaptcha("Captcha1987");
+                               Captcha1987.UseSmallIcons = true;
+                               Captcha1987.UserInputClientID = "SimpleCode8787"; %>
+                            <%: Html.Captcha(Captcha1987) %>
                         </div>
                         <div class="form-group col-md-12">
 
-                            <%: Html.ValidationMessage("CaptchaCode") %>
+                            <%: Html.ValidationMessage("SimpleCode8787") %>
                             <input type="submit" name="submit" class="btn btn-primary pull-right" value="Gửi Góp Ý">
                         </div>
                         <%} %>

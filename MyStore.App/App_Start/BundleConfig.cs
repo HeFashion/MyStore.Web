@@ -21,8 +21,10 @@ namespace MyStore.App
                         "~/Scripts/jquery.scrollUp.js",
                         "~/Scripts/jquery.prettyPhoto.js",
                         "~/Scripts/jquery.cookie-{version}.js",
+
 #if (!DEBUG)
                "~/Scripts/googleAnalysis.js",
+               "~/Scripts/tawkTo.js",
 #endif
  "~/Scripts/main.js"
                         ));

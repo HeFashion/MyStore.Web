@@ -1,4 +1,0 @@
-product: 268x249
-detail: 266x381
-recommend: 268x134
-cart: 110x110

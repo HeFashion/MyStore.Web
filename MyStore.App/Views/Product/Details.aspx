@@ -41,8 +41,7 @@
                 <%} %>
 
                 <img id="loadingImg"
-                    src="<%:Url.Content(System.IO.Path.Combine("~/Images","loading-img.gif")) %>"
-                    style="display: none" />
+                    src="<%:Url.Content(System.IO.Path.Combine("~/Images","loading-img.gif")) %>" />
 
             </div>
             <%if (ViewData.ContainsKey("DetailImg"))
@@ -203,6 +202,7 @@
         var isSmartPhone = false;
         $(window).load(function () {
             LoadingImage(false);
+
         });
 
         $(document).ready(function () {

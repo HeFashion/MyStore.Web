@@ -141,13 +141,15 @@ Add and show more product details images.
  3. Update all product folder by hand
  4. Add one button to render Footer and Detail image for each of product.
 
-Implement chat in my web(important)
+Implement chat in my web(done)
+Implement multi language in website.
+Add one more Post and add it into ad-slider.
+
 Improve Bootstrap modal when user add to compare list on smart-phone.
 
 Make a paranomal 360 image for my shop.
 Research Zalo Api for post feed.
 Research ios for my shop in Apple store.
-
 
 Implement sale off button in Products admin page.
 
