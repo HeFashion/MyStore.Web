@@ -1,0 +1,10 @@
+﻿@model MyStore.App.Models.Menu
+
+@{var classText = ViewBag.IsChild ? "list-group-item" : string.Empty;}
+<a href="@Url.Action("Index",
+                    "Product",
+                     new { slug = Model.MenuUrl })"
+   class="@classText">
+    <span class="badge pull-right">@Model.TotalProduct</span>
+    @Model.MenuDesc
+</a>

@@ -36,7 +36,7 @@
                                        new { @class = "btn remove-from-compare" });%>
                                     <%:Html.Raw(actionLink.ToString().Replace("ListCompare","<i class='fa fa fa-times'></i>Hủy bỏ")) %>
 
-                                    <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.Id })%>">
+                                    <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.GenerateSlug() })%>">
                                         <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",recommendItem.Image, "cart.jpg")) %>" alt="<%:recommendItem.Name %>" />
                                     </a>
                                 </div>
@@ -71,7 +71,7 @@
                                        new { @class = "btn remove-from-compare" });%>
                                     <%:Html.Raw(actionLink.ToString().Replace("ListCompare","<i class='fa fa fa-times'></i>Hủy bỏ")) %>
 
-                                    <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.Id })%>">
+                                    <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.GenerateSlug() })%>">
                                         <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",recommendItem.Image, "cart.jpg")) %>" alt="<%:recommendItem.Name %>" />
                                     </a>
                                 </div>

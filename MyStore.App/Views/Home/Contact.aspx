@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/SubSite.Master" Inherits="System.Web.Mvc.ViewPage<MyStore.App.Models.MyData.User_Advices>" %>
 
-<%@ Import Namespace="BotDetect.Web.UI.Mvc" %>
+<%@ Import Namespace="BotDetect.Web.Mvc" %>
 <asp:Content ID="contactTitle" ContentPlaceHolderID="TitleContent" runat="server">
     Liên lạc | Hè-Vải Sợi
 </asp:Content>
@@ -47,12 +47,13 @@
                             <%:Html.ValidationMessageFor(model => model.advise_body) %>
                             <%:Html.TextAreaFor(model => model.advise_body, new { @id="message", @required="required" ,@class="form-control" ,@rows="8" ,@placeholder="Lời nhắn của bạn"})%>
                         </div>
+
                         <div class="form-group col-md-6">
                             <%: Html.TextBox("SimpleCode8787", "", new { @placeholder = "Nhập vào mã số bên dưới", @class="form-control" })%>
-                            <% MvcCaptcha Captcha1987 = new MvcCaptcha("Captcha1987");
-                               Captcha1987.UseSmallIcons = true;
-                               Captcha1987.UserInputClientID = "SimpleCode8787"; %>
-                            <%: Html.Captcha(Captcha1987) %>
+                            <% MvcCaptcha simpleCaptcha = new MvcCaptcha("Captcha1987");
+                               simpleCaptcha.UseSmallIcons = true;
+                               simpleCaptcha.UserInputID = "SimpleCode8787"; %>
+                            <%: Html.Captcha(simpleCaptcha) %>
                         </div>
                         <div class="form-group col-md-12">
 

@@ -46,7 +46,7 @@
                 <div class="col-sm-4">
                     <div class="logo pull-left">
                         <a href="<%:Url.Action("Index", "Home") %>">
-                            <img src="<%: Url.Content("~/Images/home/logo.png") %>" alt="" />
+                            <img src="<%: Url.Content("~/Images/home/logo.png") %>" alt="" class="animated swing" />
                         </a>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="search_box pull-right">
-                        <%using (Html.BeginForm("Index", "Product", FormMethod.Get, new { @id = "frmSearch" }))
+                        <%using (Html.BeginForm("SearchProduct", "Product", FormMethod.Get, new { @id = "frmSearch" }))
                           { %>
                         <%:Html.TextBox("searchString", string.Empty, new { @placeholder = "Tìm kiếm theo mã" })%>
                         <a href="javascript:document.getElementById('frmSearch').submit()">

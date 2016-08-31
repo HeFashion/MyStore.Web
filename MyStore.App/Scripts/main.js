@@ -48,11 +48,6 @@ function getData(myData) {
     });
 }
 
-function GetData(index) {
-    var sendData = { "page": index };
-    return getData(sendData);
-}
-
 function SortAction() {
     $(document).on("click", "div#sortArea .dropdown-menu a", function (e) {
         e.preventDefault();
@@ -99,12 +94,12 @@ $(document).ready(function () {
         hideLeftMenu(false, $('#slide-submenu'));
     }
 
-    $('#slide-submenu').on('click', function () {
+    $('#slide-submenu').on("click", function () {
         hideLeftMenu(false, $(this));
         $.cookie("mini-submenu", 0, { expires: 10 });
     });
 
-    $('.mini-submenu').on('click', function () {
+    $('.mini-submenu').on("click", function () {
         hideLeftMenu(true, $(this));
         $.cookie("mini-submenu", 1, { expires: 10 });
     })

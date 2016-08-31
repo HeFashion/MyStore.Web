@@ -10,6 +10,7 @@ namespace MyStore.App.Models
     public class Menu
     {
         public int MenuId { get; set; }
+        public string MenuUrl { get; set; }
         public string MenuDesc { get; set; }
         public List<Menu> ChildMenu { get; set; }
         public int TotalProduct { get; set; }
@@ -31,7 +32,8 @@ namespace MyStore.App.Models
                                  ParentName = menu.product_type_description_vn,
                                  ChildId = menu.parent_product_type_id,
                                  ChildName = menu.product_type_description_vn,
-                                 OrderNo = menu.product_type_order
+                                 OrderNo = menu.product_type_order,
+                                 Url = menu.product_type_url
                              };
 
                 //Get All Child Menu
@@ -46,7 +48,8 @@ namespace MyStore.App.Models
                                  ParentName = parent.product_type_description_vn,
                                  ChildId = (int?)child.product_type_id,
                                  ChildName = child.product_type_description_vn,
-                                 OrderNo = parent.product_type_order
+                                 OrderNo = parent.product_type_order,
+                                 Url = child.product_type_url
                              };
 
                 var queryResult = query1.Union(query2)
@@ -65,7 +68,8 @@ namespace MyStore.App.Models
                                 MenuId = menu.ParentId,
                                 MenuDesc = menu.ParentName,
                                 TotalProduct = dbContext.Products
-                                                        .Count(p => p.product_type_id == menu.ParentId)
+                                                        .Count(p => p.product_type_id == menu.ParentId),
+                                MenuUrl = menu.Url
                             };
                             result.Add(menuItem);
                         }
@@ -86,7 +90,9 @@ namespace MyStore.App.Models
                                     MenuId = menu.ChildId ?? 0,
                                     MenuDesc = menu.ChildName,
                                     TotalProduct = dbContext.Products
-                                                            .Count(p => p.product_type_id == menu.ChildId)
+                                                            .Count(p => p.product_type_id == menu.ChildId),
+                                    MenuUrl = menu.Url
+                                    
                                 });
                             }
                         }

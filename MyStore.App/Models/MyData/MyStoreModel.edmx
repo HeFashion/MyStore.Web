@@ -4,61 +4,26 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MyStoreModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="MyStoreModelStoreContainer">
-          <EntitySet Name="Ad_Sliders" EntityType="MyStoreModel.Store.Ad_Sliders" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Blog_Actors" EntityType="MyStoreModel.Store.Blog_Actors" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Blogs" EntityType="MyStoreModel.Store.Blogs" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Order_Items" EntityType="MyStoreModel.Store.Order_Items" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Order_Status_Codes" EntityType="MyStoreModel.Store.Order_Status_Codes" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Orders" EntityType="MyStoreModel.Store.Orders" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Product_Recommend" EntityType="MyStoreModel.Store.Product_Recommend" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Products" EntityType="MyStoreModel.Store.Products" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Ref_Order_Item_Status_Codes" EntityType="MyStoreModel.Store.Ref_Order_Item_Status_Codes" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Ref_Product_Type" EntityType="MyStoreModel.Store.Ref_Product_Type" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Shipping_Bills" EntityType="MyStoreModel.Store.Shipping_Bills" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Unit_Of_Measure" EntityType="MyStoreModel.Store.Unit_Of_Measure" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="User_Advices" EntityType="MyStoreModel.Store.User_Advices" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Votes" EntityType="MyStoreModel.Store.Votes" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="Blog_Blog_Actor_FK" Association="MyStoreModel.Store.Blog_Blog_Actor_FK">
-            <End Role="Blog_Actors" EntitySet="Blog_Actors" />
-            <End Role="Blogs" EntitySet="Blogs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Items_Orders" Association="MyStoreModel.Store.FK_Order_Items_Orders">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="Order_Items" EntitySet="Order_Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Items_Ref_Order_Item_Status_Codes" Association="MyStoreModel.Store.FK_Order_Items_Ref_Order_Item_Status_Codes">
-            <End Role="Ref_Order_Item_Status_Codes" EntitySet="Ref_Order_Item_Status_Codes" />
-            <End Role="Order_Items" EntitySet="Order_Items" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_Order_Status_Codes" Association="MyStoreModel.Store.FK_Orders_Order_Status_Codes">
-            <End Role="Order_Status_Codes" EntitySet="Order_Status_Codes" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_Shipping_Bills" Association="MyStoreModel.Store.FK_Orders_Shipping_Bills">
-            <End Role="Shipping_Bills" EntitySet="Shipping_Bills" />
-            <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="MyStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Ad_Sliders">
           <Key>
             <PropertyRef Name="slider_id" />
           </Key>
-          <Property Name="slider_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="slider_title" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="slider_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="slider_title" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="slider_desc" Type="nvarchar(max)" />
           <Property Name="slider_link" Type="nvarchar" MaxLength="100" />
           <Property Name="slider_active" Type="bit" Nullable="false" />
-          <Property Name="slider_main_img" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="slider_main_img" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="slider_sub_img" Type="nvarchar" MaxLength="50" />
+          <Property Name="slider_order_num" Type="tinyint" />
         </EntityType>
         <EntityType Name="Blog_Actors">
           <Key>
             <PropertyRef Name="actor_id" />
           </Key>
-          <Property Name="actor_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="actor_name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="actor_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="actor_name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="actor_image" Type="nvarchar" MaxLength="200" />
           <Property Name="actor_description" Type="nvarchar(max)" />
         </EntityType>
@@ -66,7 +31,7 @@
           <Key>
             <PropertyRef Name="blog_id" />
           </Key>
-          <Property Name="blog_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="blog_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="blog_title" Type="nvarchar" MaxLength="200" />
           <Property Name="blog_img_title" Type="nchar" MaxLength="50" />
           <Property Name="blog_content" Type="nvarchar(max)" />
@@ -80,25 +45,25 @@
           <Key>
             <PropertyRef Name="order_item_id" />
           </Key>
-          <Property Name="order_item_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="order_item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="product_id" Type="int" Nullable="false" />
           <Property Name="order_id" Type="int" Nullable="false" />
           <Property Name="order_item_status_id" Type="int" Nullable="false" />
           <Property Name="order_item_quantity" Type="float" Nullable="false" />
-          <Property Name="order_item_amount" Type="decimal" />
+          <Property Name="order_item_amount" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Order_Status_Codes">
           <Key>
             <PropertyRef Name="order_status_id" />
           </Key>
-          <Property Name="order_status_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="order_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="order_status_description" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
             <PropertyRef Name="order_id" />
           </Key>
-          <Property Name="order_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_id" Type="int" />
           <Property Name="order_status_id" Type="int" Nullable="false" />
           <Property Name="email_address" Type="nvarchar" MaxLength="50" />
@@ -113,7 +78,7 @@
           <Key>
             <PropertyRef Name="recommend_id" />
           </Key>
-          <Property Name="recommend_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="recommend_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="product_id" Type="int" Nullable="false" />
           <Property Name="recommend_order" Type="smallint" />
         </EntityType>
@@ -121,12 +86,12 @@
           <Key>
             <PropertyRef Name="product_id" />
           </Key>
-          <Property Name="product_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="product_type_id" Type="int" Nullable="false" />
           <Property Name="product_name" Type="nvarchar" MaxLength="10" />
           <Property Name="product_uom_id" Type="int" Nullable="false" />
           <Property Name="product_description" Type="nvarchar(max)" />
-          <Property Name="product_price" Type="decimal" />
+          <Property Name="product_price" Type="decimal" Precision="18" Scale="0" />
           <Property Name="product_color" Type="nvarchar" MaxLength="100" />
           <Property Name="product_size" Type="nvarchar" MaxLength="100" />
           <Property Name="product_image" Type="nvarchar(max)" />
@@ -141,34 +106,35 @@
           <Key>
             <PropertyRef Name="order_item_status_id" />
           </Key>
-          <Property Name="order_item_status_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="order_item_status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="order_item_status_description" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Ref_Product_Type">
           <Key>
             <PropertyRef Name="product_type_id" />
           </Key>
-          <Property Name="product_type_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="product_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="parent_product_type_id" Type="int" />
           <Property Name="product_type_description_vn" Type="nvarchar" MaxLength="1000" />
           <Property Name="product_type_description_en" Type="nvarchar" MaxLength="1000" />
           <Property Name="is_active" Type="bit" Nullable="false" />
           <Property Name="product_type_order" Type="tinyint" Nullable="false" />
-          <Property Name="product_type_code" Type="nvarchar" Nullable="false" MaxLength="5" />
+          <Property Name="product_type_code" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="product_type_url" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Shipping_Bills">
           <Key>
             <PropertyRef Name="shipping_id" />
           </Key>
-          <Property Name="shipping_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="shipping_code" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="shipping_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="shipping_code" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="shipping_date" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="Unit_Of_Measure">
           <Key>
             <PropertyRef Name="UOM_id" />
           </Key>
-          <Property Name="UOM_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UOM_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UOM_description" Type="nvarchar" MaxLength="10" />
           <Property Name="Del_Flag" Type="bit" Nullable="false" />
         </EntityType>
@@ -176,9 +142,9 @@
           <Key>
             <PropertyRef Name="advise_id" />
           </Key>
-          <Property Name="advise_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="user_name" Type="nvarchar" Nullable="false" MaxLength="100" />
-          <Property Name="user_mail" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="advise_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="user_mail" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="advise_subject" Type="nvarchar" MaxLength="500" />
           <Property Name="advise_body" Type="nvarchar(max)" />
         </EntityType>
@@ -186,15 +152,15 @@
           <Key>
             <PropertyRef Name="vote_id" />
           </Key>
-          <Property Name="vote_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="vote_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="vote_type" Type="smallint" Nullable="false" />
           <Property Name="ip_address" Type="nvarchar" MaxLength="20" />
           <Property Name="vote_score" Type="int" />
           <Property Name="vote_object_id" Type="int" />
         </EntityType>
         <Association Name="Blog_Blog_Actor_FK">
-          <End Role="Blog_Actors" Type="MyStoreModel.Store.Blog_Actors" Multiplicity="0..1" />
-          <End Role="Blogs" Type="MyStoreModel.Store.Blogs" Multiplicity="*" />
+          <End Role="Blog_Actors" Type="Self.Blog_Actors" Multiplicity="0..1" />
+          <End Role="Blogs" Type="Self.Blogs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Blog_Actors">
               <PropertyRef Name="actor_id" />
@@ -205,8 +171,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Items_Orders">
-          <End Role="Orders" Type="MyStoreModel.Store.Orders" Multiplicity="1" />
-          <End Role="Order_Items" Type="MyStoreModel.Store.Order_Items" Multiplicity="*" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Order_Items" Type="Self.Order_Items" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Orders">
               <PropertyRef Name="order_id" />
@@ -217,8 +183,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Items_Ref_Order_Item_Status_Codes">
-          <End Role="Ref_Order_Item_Status_Codes" Type="MyStoreModel.Store.Ref_Order_Item_Status_Codes" Multiplicity="1" />
-          <End Role="Order_Items" Type="MyStoreModel.Store.Order_Items" Multiplicity="*" />
+          <End Role="Ref_Order_Item_Status_Codes" Type="Self.Ref_Order_Item_Status_Codes" Multiplicity="1" />
+          <End Role="Order_Items" Type="Self.Order_Items" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ref_Order_Item_Status_Codes">
               <PropertyRef Name="order_item_status_id" />
@@ -229,8 +195,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_Order_Status_Codes">
-          <End Role="Order_Status_Codes" Type="MyStoreModel.Store.Order_Status_Codes" Multiplicity="1" />
-          <End Role="Orders" Type="MyStoreModel.Store.Orders" Multiplicity="*" />
+          <End Role="Order_Status_Codes" Type="Self.Order_Status_Codes" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Order_Status_Codes">
               <PropertyRef Name="order_status_id" />
@@ -241,8 +207,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_Shipping_Bills">
-          <End Role="Shipping_Bills" Type="MyStoreModel.Store.Shipping_Bills" Multiplicity="0..1" />
-          <End Role="Orders" Type="MyStoreModel.Store.Orders" Multiplicity="*" />
+          <End Role="Shipping_Bills" Type="Self.Shipping_Bills" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Shipping_Bills">
               <PropertyRef Name="shipping_id" />
@@ -252,6 +218,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="MyStoreModelStoreContainer">
+          <EntitySet Name="Ad_Sliders" EntityType="Self.Ad_Sliders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Blog_Actors" EntityType="Self.Blog_Actors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Blogs" EntityType="Self.Blogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Items" EntityType="Self.Order_Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Status_Codes" EntityType="Self.Order_Status_Codes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_Recommend" EntityType="Self.Product_Recommend" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ref_Order_Item_Status_Codes" EntityType="Self.Ref_Order_Item_Status_Codes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ref_Product_Type" EntityType="Self.Ref_Product_Type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shipping_Bills" EntityType="Self.Shipping_Bills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unit_Of_Measure" EntityType="Self.Unit_Of_Measure" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Advices" EntityType="Self.User_Advices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Votes" EntityType="Self.Votes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Blog_Blog_Actor_FK" Association="Self.Blog_Blog_Actor_FK">
+            <End Role="Blog_Actors" EntitySet="Blog_Actors" />
+            <End Role="Blogs" EntitySet="Blogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Items_Orders" Association="Self.FK_Order_Items_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Order_Items" EntitySet="Order_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Items_Ref_Order_Item_Status_Codes" Association="Self.FK_Order_Items_Ref_Order_Item_Status_Codes">
+            <End Role="Ref_Order_Item_Status_Codes" EntitySet="Ref_Order_Item_Status_Codes" />
+            <End Role="Order_Items" EntitySet="Order_Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Order_Status_Codes" Association="Self.FK_Orders_Order_Status_Codes">
+            <End Role="Order_Status_Codes" EntitySet="Order_Status_Codes" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Shipping_Bills" Association="Self.FK_Orders_Shipping_Bills">
+            <End Role="Shipping_Bills" EntitySet="Shipping_Bills" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -393,6 +395,7 @@
           <Property Type="Boolean" Name="is_active" Nullable="false" />
           <Property Type="Byte" Name="product_type_order" Nullable="false" />
           <Property Type="String" Name="product_type_code" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="product_type_url" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Unit_Of_Measure">
           <Key>
@@ -508,6 +511,7 @@
           <Property Type="Boolean" Name="slider_active" Nullable="false" />
           <Property Type="String" Name="slider_main_img" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="slider_sub_img" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="slider_order_num" Type="Byte" />
         </EntityType>
         <EnumType Name="OrderStatus" UnderlyingType="Int16">
           <Member Name="New" Value="1" />
@@ -648,7 +652,8 @@
     <EntitySetMapping Name="Ref_Product_Type">
       <EntityTypeMapping TypeName="IsTypeOf(MyStoreModel.Ref_Product_Type)">
         <MappingFragment StoreEntitySet="Ref_Product_Type">
-          <ScalarProperty Name="product_type_code" ColumnName="product_type_code" />
+          <ScalarProperty Name="product_type_url" ColumnName="product_type_url" />
+                <ScalarProperty Name="product_type_code" ColumnName="product_type_code" />
                 <ScalarProperty Name="product_type_order" ColumnName="product_type_order" />
                 <ScalarProperty Name="is_active" ColumnName="is_active" />
                 <ScalarProperty Name="product_type_id" ColumnName="product_type_id" />
@@ -681,6 +686,7 @@
           <EntitySetMapping Name="Ad_Sliders">
             <EntityTypeMapping TypeName="MyStoreModel.Ad_Sliders">
               <MappingFragment StoreEntitySet="Ad_Sliders">
+                <ScalarProperty Name="slider_order_num" ColumnName="slider_order_num" />
                 <ScalarProperty Name="slider_sub_img" ColumnName="slider_sub_img" />
                 <ScalarProperty Name="slider_main_img" ColumnName="slider_main_img" />
                 <ScalarProperty Name="slider_active" ColumnName="slider_active" />
@@ -782,6 +788,7 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

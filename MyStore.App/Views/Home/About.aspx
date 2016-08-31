@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
 
 <asp:Content ID="aboutTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Giới Thiệu
+    Hè Vải Sợi - Giới Thiệu
 </asp:Content>
 
 <asp:Content ID="aboutContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -20,7 +20,7 @@
                 </ul>
 
             </div>
-            <p>Với kinh nghiệm hơn <b>10 năm</b> trong lĩnh vực vải sợi, <strong><strong>Hè - Vải Sợi</strong></strong> chuyên bán các loại vải phù hợp mọi lứa tuổi, đặc biệt là <strong>vải áo dài</strong>.</p>
+            <p>Với kinh nghiệm hơn <b>10 năm</b> trong lĩnh vực vải sợi, <strong>Hè - Vải Sợi</strong> chuyên bán các loại vải phù hợp mọi lứa tuổi, đặc biệt là <strong>vải áo dài</strong>.</p>
             <a href="<%: Url.Content("~/images/home/banner.jpg") %>" rel="prettyPhoto[myShop]" title="Áo dài">
                 <img src="<%: Url.Content("~/images/home/banner.jpg") %>" alt="shop outside">
             </a>
@@ -33,7 +33,7 @@
             </p>
             <br>
             <a href="<%: Url.Content("~/images/home/texture_focus.jpg") %>" rel="prettyPhoto[myShop]" title="Một góc của shop">
-                <img src="<%: Url.Content("~/images/home/texture_focus.jpg") %>" alt="texture focus">
+                <img alt="texture focus" src="<%: Url.Content("~/images/home/texture_focus.jpg") %>">
             </a>
             <a href="<%: Url.Content("~/images/home/right_shop.jpg") %>" rel="prettyPhoto[myShop]" title="Một góc của shop">
                 <img src="<%: Url.Content("~/images/home/right_shop.jpg") %>" alt="right shop">
@@ -49,11 +49,12 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
-    <%: Scripts.Render("~/Scripts/facebook.js") %>
-    <%: Scripts.Render("~/Scripts/googleplus.js") %>
-    <script type="text/javascript">
+    <%--<%: Scripts.Render("~/Scripts/facebook.js") %>
+    <%: Scripts.Render("~/Scripts/googleplus.js") %>--%>
+    <script type="text/javascript" charset="utf-8">
         $(document).ready(function () {
-            $("a[rel^='prettyPhoto']").prettyPhoto();
+            $("a[rel^='prettyPhoto']").prettyPhoto({ social_tools: false });
         });
+
     </script>
 </asp:Content>

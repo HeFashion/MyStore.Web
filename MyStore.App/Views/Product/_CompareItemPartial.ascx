@@ -2,7 +2,7 @@
 
 <div class="product-image-wrapper">
     <div class="view-product">
-        <a href="<%:Url.Action("Details", "Product", new { id = Model.Id })%>" target="_blank">
+        <a href="<%:Url.Action("Details", "Product", new { id = Model.GenerateSlug() })%>" target="_blank">
             <img src="<%: Url.Content(System.IO.Path.Combine("~/Images/shop", Model.Image,"detail.jpg")) %>"
                 alt="<%:Model.Image %>" />
         </a>

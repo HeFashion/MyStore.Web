@@ -18,7 +18,7 @@
                     <%foreach (MyStore.App.ViewModels.ProductModel recommendItem in Model.Take(4))%>
                     <%{ %>
 
-                    <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.Id })%>">
+                    <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.GenerateSlug() })%>">
                         <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",recommendItem.Image, "cart.jpg")) %>" alt="<%:recommendItem.Name %>" />
                     </a>
 
@@ -30,7 +30,7 @@
                     <%var takeList = Model.Skip(i).Take(4); %>
                     <%foreach (MyStore.App.ViewModels.ProductModel recommendItem in takeList)%>
                     <%{%>
-                    <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.Id })%>">
+                    <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.GenerateSlug() })%>">
                         <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",recommendItem.Image, "cart.jpg")) %>" alt="<%:recommendItem.Name %>" />
                     </a>
                     <%} %>

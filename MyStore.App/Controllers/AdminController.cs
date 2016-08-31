@@ -14,7 +14,7 @@ using NPOI.SS.UserModel;
 using MyStore.App.Models.MyData;
 using MyStore.App.ViewModels;
 using MyStore.App.Utilities;
-using System.Data.Objects.SqlClient;
+using System.Data.SqlClient;
 using MyStore.App.Filters;
 
 namespace MyStore.App.Controllers
@@ -168,7 +168,6 @@ namespace MyStore.App.Controllers
 
         //
         // GET: /Admin/
-
         public ActionResult Index(string sortOrder, string searchString, int? page)
         {
             int pageSize = Convert.ToInt32(this.Session[GeneralContanstClass.PageSize_Session_Key]);
@@ -217,9 +216,6 @@ namespace MyStore.App.Controllers
             ViewBag.product_uom_id = new SelectList(db.Unit_Of_Measure, "UOM_id", "UOM_description");
             return View("CreateProduct");
         }
-
-        //
-        // POST: /Admin/Create
 
         //
         // POST: /Product/Create

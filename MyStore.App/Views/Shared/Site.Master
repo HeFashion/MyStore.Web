@@ -6,6 +6,7 @@
 <head runat="server">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="fb:app_id" content="1670009249904633" />
     <asp:ContentPlaceHolder ID="MetaContent" runat="server">
     </asp:ContentPlaceHolder>
     <title>
@@ -16,9 +17,6 @@
     <link href="https://fonts.googleapis.com/css?family=Abel" rel='stylesheet' type='text/css'>
     <%: Styles.Render("~/Content/themes/mystyle/css") %>
     <%: Scripts.Render("~/bundles/main/jquery") %>
-
-    <%--<%: Scripts.Render("~/Scripts/tawkTo.js") %>--%>
-
     <!--[if lt IE 9]>
     <script src="<%:Url.Content("~/Scripts/html5shiv.js") %>"></script>
     <script src="<%:Url.Content("~/Scripts/respond.min.js") %>"></script>

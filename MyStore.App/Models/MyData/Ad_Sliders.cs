@@ -21,5 +21,6 @@ namespace MyStore.App.Models.MyData
         public bool slider_active { get; set; }
         public string slider_main_img { get; set; }
         public string slider_sub_img { get; set; }
+        public Nullable<byte> slider_order_num { get; set; }
     }
 }

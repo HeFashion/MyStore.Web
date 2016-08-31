@@ -17,7 +17,7 @@
                     <div class="product-image-wrapper">
                         <div class="single-products">
                             <div class="productinfo text-center">
-                                <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.Id })%>">
+                                <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.GenerateSlug() })%>">
                                     <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",recommendItem.Image, "index.jpg")) %>" alt="" />
                                 </a>
                                 <h2>
@@ -62,7 +62,7 @@
                     <div class="product-image-wrapper">
                         <div class="single-products">
                             <div class="productinfo text-center">
-                                <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.Id })%>">
+                                <a href="<%:Url.Action("Details", "Product", new { id=recommendItem.GenerateSlug() })%>">
                                     <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop",recommendItem.Image, "index.jpg")) %>" alt="" />
                                 </a>
                                 <h2>

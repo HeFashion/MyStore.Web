@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-using BotDetect.Web.UI.Mvc;
+using BotDetect.Web.Mvc;
 using PagedList;
 
 using MyStore.App.ViewModels;
@@ -21,7 +21,7 @@ namespace MyStore.App.Controllers
                 ViewBag.ListTitle = "Tất Cả Các Mặt Hàng";
                 ViewData["slider"] = db.Ad_Sliders
                                        .Where(p => p.slider_active)
-                                       .OrderBy(p => p.slider_id)
+                                       .OrderBy(p => p.slider_order_num)
                                        .ToList();
 
                 ViewBag.DateCompare = this.Session[GeneralContanstClass.Date_Compare_Session_Key] != null ?
@@ -45,7 +45,7 @@ namespace MyStore.App.Controllers
                                 Image = pro.product_image,
                                 DateCreated = pro.product_created_date ?? DateTime.Now
                             };
-                var cookies = HttpContext.Request.Cookies.Get(GeneralContanstClass.SORT_STRING_SESSION_KEY);
+                var cookies = HttpContext.Request.Cookies.Get(GeneralContanstClass.SORT_STRING_COOKIES_KEY);
                 if (cookies != null)
                 {
                     string sortString = Convert.ToString(cookies.Value);
@@ -114,10 +114,13 @@ namespace MyStore.App.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [CaptchaValidation("SimpleCode8787", "Captcha1987", "Mã số không đúng!")]
         public ActionResult OfferAdvice(MyStore.App.Models.MyData.User_Advices model)
         {
+            IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
+            dCrumbs.Add("Địa Điểm", string.Empty);
+            ViewData["BreadCrumbs"] = dCrumbs;
+            ViewBag.IsDisplayMesg = false;
             if (ModelState.IsValid)
             {
                 using (MyStore.App.Models.MyData.MyStoreEntities db = new Models.MyData.MyStoreEntities())
@@ -126,8 +129,10 @@ namespace MyStore.App.Controllers
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("Contact");
+                MvcCaptcha.ResetCaptcha("Captcha1987");
+                return RedirectToAction("Contact", new { isDisplayMesg = true });
             }
+
             MvcCaptcha.ResetCaptcha("Captcha1987");
             return View("Contact", model);
         }

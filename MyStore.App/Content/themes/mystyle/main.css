@@ -57,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a#scrollUp {
-    bottom: 0px;
+    bottom: 0;
     right: 10px;
     padding: 5px 10px;
     background: #FE980F;
@@ -2166,7 +2166,7 @@ h2.title {
 .blog-post-area .single-blog-post a img {
     border: 1px solid #F7F7F0;
     width: 80%;
-    margin-bottom: 30px;
+    /*margin-bottom: 30px;*/
     position: relative;
     left: 10%;
 }
@@ -2292,7 +2292,7 @@ h2.title {
         font-weight: 700;
         padding: 4px;
         text-transform: uppercase;
-        width: 70px;
+        width: 73px;
     }
 
         .pager-area .pager li a:hover {

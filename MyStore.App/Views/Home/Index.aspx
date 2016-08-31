@@ -1,9 +1,22 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<System.Collections.Generic.IList<MyStore.App.ViewModels.ProductModel>>" %>
 
 <%@ Import Namespace="PagedList.Mvc" %>
+<asp:Content ID="indexMeta" ContentPlaceHolderID="MetaContent" runat="server">
+    <meta property="og:title" content="Hè-Vải Sợi" />
+    <%var result = string.Empty;
+      Uri requestUrl = HttpContext.Current.Request.Url;
+
+      result = string.Format("{0}://{1}{2}",
+                             requestUrl.Scheme,
+                             requestUrl.Authority,
+                             VirtualPathUtility.ToAbsolute(Url.Content("~/Images/home/metaImg.jpg"))); %>
+    <meta property="og:image" content="<%: result%>" />
+    <meta property="og:url" content="<%:Request.Url.AbsoluteUri%>" />
+    <meta property="og:description" content="Chuyên bán các loại vải sợi cho Nam & Nữ, uy tín, giao hàng toàn quốc. Xem hàng ngay" />
+</asp:Content>
 
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Trang Chủ | Hè-Vải Sợi
+    Hè Vải Sợi - Bán cái loại vải sợi Nam & Nữ.
 </asp:Content>
 
 <asp:Content ID="indexFeatured" ContentPlaceHolderID="FeaturedContent" runat="server">
@@ -56,7 +69,6 @@
     <%var recommendList = ViewData["RecommendList"] as IList<MyStore.App.ViewModels.ProductModel>;%>
     <%: Html.Action("RecommendProductPartial", "Product", new{model=recommendList})%>
     <%: Html.Action("FeatureItemPartial", "Product", new {strListTitle = ViewBag.ListTitle,partialModel= Model}) %>
-   
 </asp:Content>
 <asp:Content ID="scriptSection" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%:Scripts.Render("~/bundles/home/index")%>
@@ -68,14 +80,15 @@
 
         SendProductAction(":button.add-to-cart", "<%:HttpContext.Current.Request.RawUrl%>");
         SortAction();
-        $(window).load(function () {
+        $(window).on("load", function () {
             $(window).scroll(function () {
                 if (!isEnded && !isLocked) {
                     if ($(this).scrollTop() + $(window).height() > $('#footer').offset().top + 30) {
                         var sendData = {
                             "page": nextIndex,
                             "prodType": "<%:ViewData["prodType"]%>",
-                            "searchString": "<%:ViewData["SearchString"]%>"
+                            "searchString": "<%:ViewData["SearchString"]%>",
+                            "sortKey": $.cookie("selectedSortString")
                         };
                         getData(sendData);
                     }

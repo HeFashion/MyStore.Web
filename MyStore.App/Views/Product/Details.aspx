@@ -14,7 +14,7 @@
 </asp:Content>
 
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Chi Tiết | Hè-Vải Sợi
+    Hè Vải Sợi - <%:Model.Description %>
 </asp:Content>
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -107,7 +107,7 @@
                   } %>
                 <%if (!string.IsNullOrEmpty(srcImage)) %>
                 <%{ %>
-                <img src="<%:Url.Content(srcImage) %>" class="newarrival" alt="" />
+                <img src="<%:Url.Content(srcImage) %>" class="newarrival animated flash" alt="" />
                 <%} %>
                 <h2><%:Model.Description %></h2>
 
@@ -121,7 +121,7 @@
                     <span>
                         <label>Thêm:</label>
                         <input type="text" value="1" id="txtQuantity" />
-                        <button type="button" value="<%:Model.Id %>" class="btn btn-default cart">
+                        <button id="btnAddToCart" type="button" value="<%:Model.Id %>" class="btn btn-default cart">
                             <i class="fa fa-shopping-cart"></i>
                             vào giỏ hàng
                         </button>
@@ -200,38 +200,34 @@
 
     <script>
         var isSmartPhone = false;
-        $(window).load(function () {
+        $(window).on("load", function () {
+            ZoomImage(isSmartPhone);
             LoadingImage(false);
-
         });
 
         $(document).ready(function () {
-             <%if (!MyStore.App.Utilities.DeviceHelper.IsSmartPhone(Request.UserAgent))
-               {%>
+            <%if (!MyStore.App.Utilities.DeviceHelper.IsSmartPhone(Request.UserAgent))
+              {%>
             isSmartPhone = true;
             <%}
-               else
-               {%>
+              else
+              {%>
             isSmartPhone = false;
             <%}%>
 
             LoadingImage(true);
-            ZoomImage(isSmartPhone);
 
             $("#txtQuantity").numericInput({ allowFloat: true });
+            //$("#txtQuantity").on("change", function (e) { alert($("#txtQuantity").val()); })
 
             Rating_Initialize("<%:ViewBag.BlogRate%>",
                               "<%:Model.Id%>",
                               "<%:(short)MyStore.App.Models.MyData.VoteType.Product %>");
 
-            SendProductAction(":button.add-to-cart", "<%:HttpContext.Current.Request.RawUrl%>");
+            var btnAddToCart = $("#btnAddToCart");
+            AddToCartWithNumber(btnAddToCart, "<%:Model.Id%>");
 
-            var btnAddToCart = $(":button.cart");
-            var sendInfo = {
-                productId: "<%:Model.Id%>",
-                productQuantity: $("#txtQuantity").val()
-            };
-            AddToCartWithNumber(btnAddToCart, sendInfo);
+            SendProductAction(".add-to-cart", "<%:HttpContext.Current.Request.RawUrl%>");
 
             var imageDetail = $("#slider-details .carousel-inner .item a");
             SwapImageAsyn(imageDetail, "<%:Model.Image%>");

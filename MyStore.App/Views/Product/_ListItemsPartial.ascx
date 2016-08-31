@@ -13,7 +13,7 @@
                 <div class="overlay-content">
                     <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#") %> <sup>đ</sup></h2>
                     <p><%: item.Description %></p>
-                    <a href="<%:Url.Action("Details", "Product", new {id = item.Id })%>" class="btn view-details">
+                    <a href="<%:Url.Action("Details", "Product", new {id = item.GenerateSlug() })%>" class="btn view-details">
                         <i class="fa fa-external-link"></i>
                         Chi tiết
                     </a>

@@ -2,3 +2,4 @@
 /MyStore.App/obj
 /MyStore.App/web.config
 /MyStore.App/App_Start/AuthConfig.cs
+/MyStore.App/Images/home/*.png

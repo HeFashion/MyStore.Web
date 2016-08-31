@@ -47,9 +47,13 @@ function SwapImageAsyn(target, strImg) {
     });
 }
 
-function AddToCartWithNumber(target, sendData) {
+function AddToCartWithNumber(target, proId) {
     target.click(function (e) {
         e.preventDefault();
+        var sendData = {
+            productId: proId,
+            productQuantity: $("#txtQuantity").val()
+        };
         AddToCart(sendData);
     });
 }

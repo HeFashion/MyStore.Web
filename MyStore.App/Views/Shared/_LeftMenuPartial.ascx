@@ -31,13 +31,8 @@
                     <%if (menuItem.ChildMenu == null ||
                           menuItem.ChildMenu.Count <= 0)
                       { %>
-                    <a href="<%:Url.Action("Index", 
-                               "Product", 
-                               new { prodType=menuItem.MenuId },
-                               null) %>">
-                        <span class="badge pull-right"><%:menuItem.TotalProduct %></span>
-                        <%:menuItem.MenuDesc %>
-                    </a>
+                    <%ViewBag.IsChild = false; %>
+                    <%:Html.Partial("_LeftMenuItemPartial", menuItem) %>
                     <%}
                       else
                       {%>
@@ -58,18 +53,12 @@
             <div id="<%:string.Format("collapsible-{0}", menuItem.MenuId) %>" class="collapse panel-collapse">
                 <div class="panel-body">
                     <ul>
-                        <%foreach (var subMenu in menuItem.ChildMenu)
+                        <%foreach (var childMenu in menuItem.ChildMenu)
                           {%>
                         <li>
-                            <a href="<%:Url.Action("Index", 
-                               "Product", 
-                               new { prodType=subMenu.MenuId },
-                               null) %>"
-                                class="list-group-item">
-                                <span class="badge pull-right"><%:subMenu.TotalProduct %></span>
-                                <%:subMenu.MenuDesc %>
-                            </a>
 
+                            <%ViewBag.IsChild = true; %>
+                            <%:Html.Partial("_LeftMenuItemPartial", childMenu) %>
                         </li>
                         <%} %>
                     </ul>

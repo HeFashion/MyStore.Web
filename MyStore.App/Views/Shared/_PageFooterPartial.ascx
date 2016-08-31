@@ -35,6 +35,7 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="address">
+
                         <a href="<%:Convert.ToString(System.Configuration.ConfigurationManager.AppSettings[MyStore.App.Utilities.GeneralContanstClass.PAGE_GOV]) %>" target="_blank">
                             <img src="<%:Url.Content("~/Images/bo_cong_thuong.png") %>" alt="" />
                         </a>

@@ -7,6 +7,7 @@
     .blog-post-area .single-blog-post .vertical-img {
         width: 60%;
     }
+
     .usa {
         margin-right: 0;
     }
@@ -554,6 +555,14 @@
         .features_items .header_items .btn-group > .btn-group:first-child:not(:last-child) > .btn:last-child, .btn-group > .btn-group:first-child:not(:last-child) > .dropdown-toggle {
             margin-right: 5px;
         }
+
+    .footer-top .col-sm-3 {
+        width: 100%;
+    }
+
+    .address {
+        text-align: center;
+    }
 }
 
 @media (max-width: 360px) {

@@ -142,8 +142,32 @@ Add and show more product details images.
  4. Add one button to render Footer and Detail image for each of product.
 
 Implement chat in my web(done)
+Fix _image Footer for mobie screen.(done)
+Fix problem when user loading detail product in mobie.(done, need test)
+Fix problem with Tiny MCE.(done)
+Continue testing after upgrade to MVC5(done, need test)
+
+Fix problem prettyPhoto not work anymore.(done)
+
+Freindly url for Product/Index.
+ 1. Modify Product entiy(done)
+ 2. Modify ProductController/Index action(done)
+ 3. Change all URL in website.(done)
+ 4. Fix wrong url with breadcrumbs(fixed)
+Add one more Post and add it into ad-slider.(done)
+
+SEO freindly url for Details page(done)
+Disallow (url)
+create meta image for each of Product Catalog.(3 images done)
+
+Improve get recommend product.(DONE)
+Implement persistense cart, not store in session like current.
+
+Continue with google adword.
+
+
 Implement multi language in website.
-Add one more Post and add it into ad-slider.
+
 
 Improve Bootstrap modal when user add to compare list on smart-phone.
 

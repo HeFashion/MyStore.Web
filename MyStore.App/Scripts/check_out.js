@@ -1,17 +1,21 @@
 ﻿$(document).ready(function () {
     CheckedAction();
-    $("#rdbUsePass, #rdbUnusePass").change(function () {
+    $("#rdbUsePass").on("change", function (e) {
+        CheckedAction();
+    });
 
+    $("#rdbUnusePass").on("change", function (e) {
         CheckedAction();
     });
 });
 
 function CheckedAction() {
-    if ($("#rdbUsePass").attr("checked")) {
+
+    if ($("#rdbUsePass").is(":checked")) {
         $("#frmOne").show();
         $("#frmTwo").hide();
     }
-    else {
+    else if ($("#rdbUnusePass").is(":checked")) {
         $("#frmOne").hide();
         $("#frmTwo").show();
     }

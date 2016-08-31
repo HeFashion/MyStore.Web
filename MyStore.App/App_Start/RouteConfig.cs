@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -14,14 +15,66 @@ namespace MyStore.App
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             // BotDetect requests must not be routed
             routes.IgnoreRoute("{*botdetect}", new { botdetect = @"(.*)BotDetectCaptcha\.ashx" });
+
+            routes.MapRoute(
+                 name: "PrdCatalog",
+                 url: "product/index/{slug}",
+                 defaults: new { controller = "Product", action = "Index" },
+                 constraints: new { slug = ".+" });
+
+            routes.Add("ProductDetails",
+                    new SEOFriendlyRouter("Product/Details/{id}",
+                        new RouteValueDictionary(new { controller="Product", action="Details" }),
+                    new MvcRouteHandler())
+                    );
+
             routes.MapRoute(
                 name: "Default",
-                //url: "{controller}/{action}/{prodType}/{page}",
-                //defaults: new { controller = "Product", action = "Index", prodType = UrlParameter.Optional, page = UrlParameter.Optional }
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-
             );
+
+
         }
     }
+    /*
+    internal class SeoFriendlyRoute : Route
+    {
+        public SeoFriendlyRoute(string url, RouteValueDictionary defaults, IRouteHandler routeHandler)
+            : base(url, defaults, routeHandler)
+        {
+        }
+
+        public override RouteData GetRouteData(HttpContextBase httpContext)
+        {
+            var routeData = base.GetRouteData(httpContext);
+
+            if (routeData != null)
+            {
+                if (routeData.Values.ContainsKey("id"))
+                    routeData.Values["id"] = GetIdValue(routeData.Values["id"]);
+            }
+
+            return routeData;
+        }
+
+        private object GetIdValue(object id)
+        {
+            if (id != null)
+            {
+                string idValue = id.ToString();
+
+                var regex = new Regex(@"^(?<id>\d+).*$");
+                var match = regex.Match(idValue);
+
+                if (match.Success)
+                {
+                    return match.Groups["id"].Value;
+                }
+            }
+
+            return id;
+        }
+    }
+    */
 }
