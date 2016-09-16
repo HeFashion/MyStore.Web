@@ -45,6 +45,7 @@
 
 /* sm */
 @media (min-width: 768px) and (max-width: 991px) {
+
     .usa {
         margin-right: 0;
     }
@@ -504,7 +505,7 @@
     }
 
     .blog-post-area .post-meta ul li {
-        margin-right: 7px;
+        margin-right: 5px;
     }
 
     .shipping {

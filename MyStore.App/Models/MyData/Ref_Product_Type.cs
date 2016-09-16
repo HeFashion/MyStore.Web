@@ -22,12 +22,13 @@ namespace MyStore.App.Models.MyData
     
         public int product_type_id { get; set; }
         public Nullable<int> parent_product_type_id { get; set; }
-        public string product_type_description_vn { get; set; }
-        public string product_type_description_en { get; set; }
         public bool is_active { get; set; }
         public byte product_type_order { get; set; }
         public string product_type_code { get; set; }
         public string product_type_url { get; set; }
+        public string product_type_title_vn { get; set; }
+        public string product_type_title_en { get; set; }
+        public string product_type_description { get; set; }
     
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Ref_Product_Type> Child_Product_Types { get; set; }

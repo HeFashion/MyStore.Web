@@ -29,9 +29,9 @@ namespace MyStore.App.Models
                              select new
                              {
                                  ParentId = menu.product_type_id,
-                                 ParentName = menu.product_type_description_vn,
+                                 ParentName = menu.product_type_title_vn,
                                  ChildId = menu.parent_product_type_id,
-                                 ChildName = menu.product_type_description_vn,
+                                 ChildName = menu.product_type_title_vn,
                                  OrderNo = menu.product_type_order,
                                  Url = menu.product_type_url
                              };
@@ -45,9 +45,9 @@ namespace MyStore.App.Models
                              select new
                              {
                                  ParentId = parent.product_type_id,
-                                 ParentName = parent.product_type_description_vn,
+                                 ParentName = parent.product_type_title_vn,
                                  ChildId = (int?)child.product_type_id,
-                                 ChildName = child.product_type_description_vn,
+                                 ChildName = child.product_type_title_vn,
                                  OrderNo = parent.product_type_order,
                                  Url = child.product_type_url
                              };

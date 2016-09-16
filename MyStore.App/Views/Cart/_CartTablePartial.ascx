@@ -55,7 +55,7 @@
                 <p><%:item.TotalAmount.ToString("#,###.#") %></p>
             </td>
             <td class="cart-delete">
-                <a title="Xóa khỏi giỏ" href="<%:Url.Action("Remove", "Cart", new { id=item.ProductId })%>">
+                <a title="Xóa khỏi giỏ" href="<%:Url.Action("Remove", "Cart", new { prodId=item.ProductId })%>">
                     <i class="fa fa-times"></i>
                 </a>
             </td>

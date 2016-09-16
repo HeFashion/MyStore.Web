@@ -34,7 +34,7 @@
 
             <td class="cart-image">
                 <a href="<%:Url.Action("Details", "Product", new { id = Model[i].ItemProductId })%>">
-                    <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop", Model[i].ItemImage, "cart.jpg"))%>" alt="">
+                    <img src="<%:Url.Content(System.IO.Path.Combine("~/Images/shop", Model[i].ItemImage, "cart.jpg"))%>" alt="<%:Model[i].ItemCode%>">
                 </a>
             </td>
             <td class="cart-description">

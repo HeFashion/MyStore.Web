@@ -137,7 +137,7 @@ namespace MyStore.App.Controllers
         private SelectList GetProductTypeCombo(int? selectedId)
         {
             var productType = db.Ref_Product_Type
-                                    .Select(p => new { p.product_type_id, p.product_type_description_vn });
+                                    .Select(p => new { p.product_type_id, p.product_type_title_vn });
             int selectedValue = 0;
             if (selectedId == null)
             {
@@ -146,7 +146,7 @@ namespace MyStore.App.Controllers
             else
                 selectedValue = selectedId.Value;
 
-            return new SelectList(productType, "product_type_id", "product_type_description_vn", selectedValue);
+            return new SelectList(productType, "product_type_id", "product_type_title_vn", selectedValue);
         }
 
         #endregion
@@ -247,7 +247,7 @@ namespace MyStore.App.Controllers
             }
             ViewBag.product_type_id = new SelectList(db.Ref_Product_Type,
                                                     "product_type_id",
-                                                    "product_type_description_vn",
+                                                    "product_type_title_vn",
                                                     product.product_type_id);
             ViewBag.product_uom_id = new SelectList(db.Unit_Of_Measure.Where(p => p.Del_Flag == false),
                                                     "UOM_id",
@@ -297,7 +297,7 @@ namespace MyStore.App.Controllers
                 return RedirectToLocal(returnUrl);
             }
             ViewBag.ReturnUrl = returnUrl;
-            ViewBag.product_type_id = new SelectList(db.Ref_Product_Type, "product_type_id", "product_type_description_vn", product.product_type_id);
+            ViewBag.product_type_id = new SelectList(db.Ref_Product_Type, "product_type_id", "product_type_title_vn", product.product_type_id);
             ViewBag.product_uom_id = new SelectList(db.Unit_Of_Measure, "UOM_id", "UOM_description", product.product_uom_id);
             return View("EditProduct", product);
         }
@@ -383,7 +383,7 @@ namespace MyStore.App.Controllers
             int fileCount = allFiles.Length;
 
             int prodType = db.Ref_Product_Type
-                             .Where(p => p.product_type_description_en == "Temp")
+                             .Where(p => p.product_type_title_en == "Temp")
                              .Select(p => p.product_type_id)
                              .SingleOrDefault();
             int prodUOM = db.Unit_Of_Measure
@@ -439,7 +439,7 @@ namespace MyStore.App.Controllers
             int pro_id = 0;
             var proType = db.Ref_Product_Type
                             .Where(p => p.product_type_id == selectedType)
-                            .Select(p => new { typeCode = p.product_type_code, typeName = p.product_type_description_vn })
+                            .Select(p => new { typeCode = p.product_type_code, typeName = p.product_type_title_vn })
                             .SingleOrDefault();
             foreach (var item in lstProduct)
             {
@@ -528,7 +528,7 @@ namespace MyStore.App.Controllers
         public ActionResult CreateCatalog()
         {
             var parentType = db.Ref_Product_Type.Where(p => p.parent_product_type_id == null);
-            ViewBag.parent_product_type_id = new SelectList(parentType, "product_type_id", "product_type_description_vn");
+            ViewBag.parent_product_type_id = new SelectList(parentType, "product_type_id", "product_type_title_vn");
             return View("CreateProductCatalog");
         }
 
@@ -590,7 +590,7 @@ namespace MyStore.App.Controllers
                                .Where(p => p.parent_product_type_id == null);
             ViewBag.parent_product_type_id = new SelectList(parentType,
                                                             "product_type_id",
-                                                            "product_type_description_vn",
+                                                            "product_type_title_vn",
                                                             productType.parent_product_type_id);
             return View("EditCatalog", productType);
         }
@@ -624,7 +624,7 @@ namespace MyStore.App.Controllers
                               .Where(p => p.parent_product_type_id == null);
             ViewBag.parent_product_type_id = new SelectList(parentType,
                                                             "product_type_id",
-                                                            "product_type_description_vn");
+                                                            "product_type_title_vn");
 
             return View("EditCatalog", productType);
         }

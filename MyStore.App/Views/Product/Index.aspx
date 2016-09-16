@@ -1,9 +1,9 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<System.Collections.Generic.IList<MyStore.App.ViewModels.ProductModel>>" %>
 
 <%@ Import Namespace="PagedList.Mvc" %>
-
 <asp:Content ID="indexMeta" ContentPlaceHolderID="MetaContent" runat="server">
     <meta property="og:title" content="<%:ViewBag.ProductTypeName %>" />
+    <meta property="og:description" content="<%:ViewBag.ProductTypeDescription %>" />
     <%var result = string.Empty;
       Uri requestUrl = HttpContext.Current.Request.Url;
 
@@ -22,7 +22,7 @@
 <asp:Content ID="indexFeatured" ContentPlaceHolderID="FeaturedContent" runat="server">
     <section id="advertisement">
         <div class="container">
-            <img src="<%: Url.Content("~/Images/shop/panel.gif") %>" alt="panel" />
+            <img src="<%: Url.Content("~/Images/shop/panel.gif") %>" alt="Hè vải sợi panel" />
         </div>
     </section>
 

@@ -36,7 +36,7 @@
                     <%: Html.Partial("_LeftMenuPartial") %>
                 </div>
 
-                <div class="col-sm-9 padding-right" id="main-content">
+                <div class="col-sm-9" id="main-content">
                     <asp:ContentPlaceHolder ID="MainContent" runat="server" />
                 </div>
             </div>

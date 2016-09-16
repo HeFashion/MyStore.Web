@@ -2,6 +2,7 @@
 
 <asp:Content ID="indexMeta" ContentPlaceHolderID="MetaContent" runat="server">
     <meta property="og:title" content="<%:Model.Description %>" />
+    <meta property="og:description" content="<%:Model.OtherDetails %>" />
     <%var result = string.Empty;
       Uri requestUrl = HttpContext.Current.Request.Url;
 

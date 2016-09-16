@@ -285,7 +285,10 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
-    <Compile Include="Controllers\CheckShoppingCartAttribute.cs" />
+    <Compile Include="Controllers\CheckShoppingCartAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -311,6 +314,12 @@
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyData\Blog_Actors.cs">
+      <DependentUpon>MyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MyData\Cart.cs">
+      <DependentUpon>MyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MyData\Cart_Items.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyData\MyMenu.cs" />
@@ -368,7 +377,9 @@
     <Compile Include="Models\MyData\VoteType.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\CartHelper.cs" />
+    <Compile Include="Utilities\CartHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Utilities\DecimalHelper.cs" />
     <Compile Include="Utilities\DeviceHelper.cs" />
     <Compile Include="Utilities\GeneralContanstClass.cs" />
@@ -790,8 +801,8 @@
     <Content Include="Views\Product\Compare.aspx" />
     <Content Include="Views\Product\Details.aspx" />
     <Content Include="Views\Product\Index.aspx" />
-    <Content Include="Views\Product\ShoppingCart.aspx" />
-    <Content Include="Views\Product\_CartTablePartial.ascx" />
+    <Content Include="Views\Cart\ShoppingCart.aspx" />
+    <Content Include="Views\Cart\_CartTablePartial.ascx" />
     <Content Include="Views\Product\_CompareItemPartial.ascx" />
     <Content Include="Views\Product\_CompletedAddToCart.ascx" />
     <Content Include="Views\Product\_FeatureItemPartial.ascx" />
@@ -819,6 +830,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LeftMenuItemPartial.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\Error.cshtml" />
+    <Content Include="Views\Shared\SubSite.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -842,7 +856,6 @@
     <Content Include="Views\Home\About.aspx" />
     <Content Include="Views\Home\Contact.aspx" />
     <Content Include="Views\Home\Index.aspx" />
-    <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Views\Shared\_LoginPartial.aspx" />
     <Content Include="Views\Shared\Site.Master" />
     <Content Include="Views\Web.config">

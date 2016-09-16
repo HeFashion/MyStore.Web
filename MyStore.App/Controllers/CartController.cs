@@ -5,10 +5,27 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using MyStore.App.ViewModels;
+using MyStore.App.Models;
+
 namespace MyStore.App.Controllers
 {
     public class CartController : Controller
     {
+        /*
+        MyStore.App.Models.MyData.MyStoreEntities db;
+        public CartController()
+        {
+            db = new Models.MyData.MyStoreEntities();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (db != null)
+                db.Dispose();
+            base.Dispose(disposing);
+
+        }
+        */
         /// <summary>
         /// Add a product to Cart
         /// </summary>
@@ -19,18 +36,9 @@ namespace MyStore.App.Controllers
         {
             try
             {
-                ViewModels.ShoppingCart cart = ViewModels.ShoppingCart.GetCart(this.HttpContext);
-                bool result = cart.AddToCart(productId, productQuantity ?? 1);
-                cart.SaveChanges(this.HttpContext);
-
-                if (result)
-                {
-                    return Json(new { status = true });
-                }
-                else
-                {
-                    return Json(new { status = false });
-                }
+                Guid cartId = CartHelper.GetCartId(this.HttpContext);
+                CartHelper.AddItem(cartId, productId, productQuantity);
+                return Json(new { status = true });
             }
             catch (Exception)
             {
@@ -42,7 +50,10 @@ namespace MyStore.App.Controllers
         // GET: /Cart/
         public ActionResult Index(string returnUrl)
         {
-            return RedirectToAction("ShowCart", "Product", new { @returnUrl = returnUrl });
+            ViewBag.BreadCrumbActive = "Giỏ Hàng";
+            ViewBag.ReturnUrl = returnUrl;
+            Guid cartId = CartHelper.GetCartId(this.HttpContext);
+            return View("ShoppingCart", CartHelper.GetCartDetails(cartId));
         }
 
         /// <summary>
@@ -50,11 +61,11 @@ namespace MyStore.App.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Remove(int id)
+        public ActionResult Remove(int prodId)
         {
-            ViewModels.ShoppingCart cart = ViewModels.ShoppingCart.GetCart(this.HttpContext);
-            bool result = cart.RemoveFromCart(id);
-            cart.SaveChanges(this.HttpContext);
+            Guid cartId = CartHelper.GetCartId(this.HttpContext);
+            bool result = CartHelper.RemoveItem(cartId, prodId);
+            if (!result) return HttpNotFound();
 
             return Index(string.Empty);
         }
@@ -67,13 +78,16 @@ namespace MyStore.App.Controllers
         /// <returns></returns>
         public ActionResult ChangeQuantity(int id, double qty)
         {
-            ViewModels.ShoppingCart cart = ViewModels.ShoppingCart.GetCart(this.HttpContext);
-            if (qty > 0 && qty < 50)
-            {
-                bool result = cart.ChangeQuantity(id, qty);
-                cart.SaveChanges(this.HttpContext);
-            }
-            return RedirectToAction("ShoppingCartList", "Product");
+            Guid cartId = CartHelper.GetCartId(this.HttpContext);
+            bool result = CartHelper.ChangeQuantity(cartId, id, qty);
+            if (!result) return HttpNotFound();
+
+            return PartialView("_CartTablePartial", CartHelper.GetCartDetails(cartId));
         }
+
+        #region Private Functions
+
+
+        #endregion
     }
 }

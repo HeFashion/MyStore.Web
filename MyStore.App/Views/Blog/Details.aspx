@@ -10,10 +10,10 @@
                              requestUrl.Scheme,
                              requestUrl.Authority,
                              VirtualPathUtility.ToAbsolute(Url.Content(System.IO.Path.Combine("~",
-                                                                "Images",
-                                                                "blog",
-                                                                string.Format("Blog_{0}", Model.blog_id),
-                                                                Model.blog_img_title)))); %>
+                                                           "Images",
+                                                           "blog",
+                                                           string.Format("Blog_{0}", Model.blog_id),
+                                                           Model.blog_img_title)))); %>
     <meta property="og:image" content="<%: result%>" />
     <meta property="og:url" content="<%:Request.Url.AbsoluteUri%>" />
 </asp:Content>

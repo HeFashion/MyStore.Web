@@ -41,6 +41,22 @@
           <Property Name="blog_total_score" Type="int" />
           <Property Name="actor_id" Type="int" />
         </EntityType>
+        <EntityType Name="Cart_Items">
+          <Key>
+            <PropertyRef Name="cart_item_id" />
+          </Key>
+          <Property Name="cart_item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_id" Type="int" />
+          <Property Name="cart_item_quantity" Type="float" />
+          <Property Name="cart_id" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Carts">
+          <Key>
+            <PropertyRef Name="cart_id" />
+          </Key>
+          <Property Name="cart_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="cart_created_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="Order_Items">
           <Key>
             <PropertyRef Name="order_item_id" />
@@ -115,12 +131,13 @@
           </Key>
           <Property Name="product_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="parent_product_type_id" Type="int" />
-          <Property Name="product_type_description_vn" Type="nvarchar" MaxLength="1000" />
-          <Property Name="product_type_description_en" Type="nvarchar" MaxLength="1000" />
-          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="product_type_title_vn" Type="nvarchar" MaxLength="1000" />
+          <Property Name="product_type_title_en" Type="nvarchar" MaxLength="1000" />
           <Property Name="product_type_order" Type="tinyint" Nullable="false" />
           <Property Name="product_type_code" Type="nvarchar" MaxLength="5" Nullable="false" />
           <Property Name="product_type_url" Type="nvarchar" MaxLength="200" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="product_type_description" Type="nvarchar" MaxLength="156" />
         </EntityType>
         <EntityType Name="Shipping_Bills">
           <Key>
@@ -167,6 +184,18 @@
             </Principal>
             <Dependent Role="Blogs">
               <PropertyRef Name="actor_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cart_CartItems">
+          <End Role="Carts" Type="Self.Carts" Multiplicity="0..1" />
+          <End Role="Cart_Items" Type="Self.Cart_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carts">
+              <PropertyRef Name="cart_id" />
+            </Principal>
+            <Dependent Role="Cart_Items">
+              <PropertyRef Name="cart_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -222,6 +251,8 @@
           <EntitySet Name="Ad_Sliders" EntityType="Self.Ad_Sliders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Blog_Actors" EntityType="Self.Blog_Actors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Blogs" EntityType="Self.Blogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cart_Items" EntityType="Self.Cart_Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Carts" EntityType="Self.Carts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Items" EntityType="Self.Order_Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Status_Codes" EntityType="Self.Order_Status_Codes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
@@ -236,6 +267,10 @@
           <AssociationSet Name="Blog_Blog_Actor_FK" Association="Self.Blog_Blog_Actor_FK">
             <End Role="Blog_Actors" EntitySet="Blog_Actors" />
             <End Role="Blogs" EntitySet="Blogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cart_CartItems" Association="Self.FK_Cart_CartItems">
+            <End Role="Carts" EntitySet="Carts" />
+            <End Role="Cart_Items" EntitySet="Cart_Items" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Items_Orders" Association="Self.FK_Order_Items_Orders">
             <End Role="Orders" EntitySet="Orders" />
@@ -309,6 +344,12 @@
             <End Role="Blog" EntitySet="Blogs" />
           </AssociationSet>
           <EntitySet Name="Product_Recommend" EntityType="MyStoreModel.Product_Recommend" />
+          <EntitySet Name="Cart_Items" EntityType="MyStoreModel.Cart_Items" />
+          <EntitySet Name="Carts" EntityType="MyStoreModel.Cart" />
+          <AssociationSet Name="FK_Cart_CartItems" Association="MyStoreModel.FK_Cart_CartItems">
+            <End Role="Cart" EntitySet="Carts" />
+            <End Role="Cart_Items" EntitySet="Cart_Items" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Order_Items">
           <Key>
@@ -387,8 +428,6 @@
           </Key>
           <Property Name="product_type_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="parent_product_type_id" Type="Int32" />
-          <Property Name="product_type_description_vn" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
-          <Property Name="product_type_description_en" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Products" Relationship="MyStoreModel.fk_Product_ProductType" FromRole="Ref_Product_Type" ToRole="Products" />
           <NavigationProperty Name="Child_Product_Types" Relationship="MyStoreModel.fk_Parent_ProductId" FromRole="Ref_Product_Type" ToRole="Ref_Product_Type1" />
           <NavigationProperty Name="Parent_Product_Type" Relationship="MyStoreModel.fk_Parent_ProductId" FromRole="Ref_Product_Type1" ToRole="Ref_Product_Type" />
@@ -396,6 +435,9 @@
           <Property Type="Byte" Name="product_type_order" Nullable="false" />
           <Property Type="String" Name="product_type_code" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="product_type_url" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="product_type_title_vn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="product_type_title_en" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="product_type_description" Type="String" MaxLength="156" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Unit_Of_Measure">
           <Key>
@@ -599,6 +641,36 @@
           <Property Type="Int32" Name="product_id" Nullable="false" />
           <Property Type="Int16" Name="recommend_order" />
         </EntityType>
+        <EntityType Name="Cart_Items">
+          <Key>
+            <PropertyRef Name="cart_item_id" />
+          </Key>
+          <Property Name="cart_item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_id" Type="Int32" />
+          <Property Name="cart_id" Type="Guid" />
+          <NavigationProperty Name="Cart" Relationship="MyStoreModel.FK_Cart_CartItems" FromRole="Cart_Items" ToRole="Cart" />
+          <Property Name="cart_item_quantity" Type="Double" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="cart_id" />
+          </Key>
+          <Property Name="cart_id" Type="Guid" Nullable="false" />
+          <Property Name="cart_created_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Cart_Items" Relationship="MyStoreModel.FK_Cart_CartItems" FromRole="Cart" ToRole="Cart_Items" />
+        </EntityType>
+        <Association Name="FK_Cart_CartItems">
+          <End Type="MyStoreModel.Cart" Role="Cart" Multiplicity="0..1" />
+          <End Type="MyStoreModel.Cart_Items" Role="Cart_Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="cart_id" />
+            </Principal>
+            <Dependent Role="Cart_Items">
+              <PropertyRef Name="cart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -652,15 +724,16 @@
     <EntitySetMapping Name="Ref_Product_Type">
       <EntityTypeMapping TypeName="IsTypeOf(MyStoreModel.Ref_Product_Type)">
         <MappingFragment StoreEntitySet="Ref_Product_Type">
-          <ScalarProperty Name="product_type_url" ColumnName="product_type_url" />
+          <ScalarProperty Name="product_type_description" ColumnName="product_type_description" />
+                <ScalarProperty Name="product_type_title_en" ColumnName="product_type_title_en" />
+                <ScalarProperty Name="product_type_title_vn" ColumnName="product_type_title_vn" />
+                <ScalarProperty Name="product_type_url" ColumnName="product_type_url" />
                 <ScalarProperty Name="product_type_code" ColumnName="product_type_code" />
                 <ScalarProperty Name="product_type_order" ColumnName="product_type_order" />
                 <ScalarProperty Name="is_active" ColumnName="is_active" />
                 <ScalarProperty Name="product_type_id" ColumnName="product_type_id" />
           <ScalarProperty Name="parent_product_type_id" ColumnName="parent_product_type_id" />
-          <ScalarProperty Name="product_type_description_vn" ColumnName="product_type_description_vn" />
-          <ScalarProperty Name="product_type_description_en" ColumnName="product_type_description_en" />
-        </MappingFragment>
+          </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Unit_Of_Measure">
@@ -769,6 +842,24 @@
                 <ScalarProperty Name="recommend_order" ColumnName="recommend_order" />
                 <ScalarProperty Name="product_id" ColumnName="product_id" />
                 <ScalarProperty Name="recommend_id" ColumnName="recommend_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cart_Items">
+            <EntityTypeMapping TypeName="MyStoreModel.Cart_Items">
+              <MappingFragment StoreEntitySet="Cart_Items">
+                <ScalarProperty Name="cart_item_quantity" ColumnName="cart_item_quantity" />
+                <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="cart_item_id" ColumnName="cart_item_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="MyStoreModel.Cart">
+              <MappingFragment StoreEntitySet="Carts">
+                <ScalarProperty Name="cart_created_date" ColumnName="cart_created_date" />
+                <ScalarProperty Name="cart_id" ColumnName="cart_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

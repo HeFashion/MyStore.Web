@@ -15,7 +15,7 @@ namespace MyStore.App.Controllers
             var shoppingCart = CartHelper.GetCartDetail(filterContext.HttpContext);
             if (shoppingCart == null || shoppingCart.Count <= 0)
             {
-                filterContext.HttpContext.Response.Redirect("~/Product/ShowCart");
+                filterContext.HttpContext.Response.Redirect("~/Cart/ShowCart");
             }
         }
     }

@@ -24,19 +24,19 @@
         </div>
 
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.product_type_description_vn) %>
+            <%: Html.LabelFor(model => model.product_type_title_vn) %>
         </div>
         <div class="editor-field">
-            <%: Html.EditorFor(model => model.product_type_description_vn) %>
-            <%: Html.ValidationMessageFor(model => model.product_type_description_vn) %>
+            <%: Html.EditorFor(model => model.product_type_title_vn) %>
+            <%: Html.ValidationMessageFor(model => model.product_type_title_vn) %>
         </div>
 
         <div class="editor-label">
-            <%: Html.LabelFor(model => model.product_type_description_en) %>
+            <%: Html.LabelFor(model => model.product_type_title_en) %>
         </div>
         <div class="editor-field">
-            <%: Html.EditorFor(model => model.product_type_description_en) %>
-            <%: Html.ValidationMessageFor(model => model.product_type_description_en) %>
+            <%: Html.EditorFor(model => model.product_type_title_en) %>
+            <%: Html.ValidationMessageFor(model => model.product_type_title_en) %>
         </div>
 
         <p>

@@ -29,10 +29,10 @@
            { %>
         <tr>
             <td style="font-weight: 500">
-                <%: Html.DisplayFor(modelItem => item.product_type_description_vn) %>
+                <%: Html.DisplayFor(modelItem => item.product_type_title_vn) %>
             </td>
             <td style="font-weight: 500">
-                <%: Html.DisplayFor(modelItem => item.product_type_description_en) %>
+                <%: Html.DisplayFor(modelItem => item.product_type_title_en) %>
             </td>
             <td style="font-weight: 500">
                 <%: Html.DisplayFor(modelItem => item.product_type_code) %>
@@ -46,10 +46,10 @@
           {%>
         <tr>
             <td style="text-indent: 50px">
-                <%: Html.DisplayFor(modelItem => childItem.product_type_description_vn)%>
+                <%: Html.DisplayFor(modelItem => childItem.product_type_title_vn)%>
             </td>
             <td style="text-indent: 50px">
-                <%: Html.DisplayFor(modelItem => childItem.product_type_description_en) %>
+                <%: Html.DisplayFor(modelItem => childItem.product_type_title_en) %>
             </td>
             <td style="text-indent: 50px">
                 <%: Html.DisplayFor(modelItem => childItem.product_type_code) %>

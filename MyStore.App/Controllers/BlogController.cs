@@ -25,7 +25,8 @@ namespace MyStore.App.Controllers
         }
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            if (db != null)
+                db.Dispose();
             base.Dispose(disposing);
         }
 

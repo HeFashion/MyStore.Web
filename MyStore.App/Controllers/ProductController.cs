@@ -65,7 +65,7 @@ namespace MyStore.App.Controllers
 
             var query = db.Ref_Product_Type
                           .Where(p => p.product_type_id == typeId)
-                          .Select(p => p.product_type_description_vn);
+                          .Select(p => p.product_type_title_vn);
 
             return query.SingleOrDefault();
         }
@@ -73,15 +73,16 @@ namespace MyStore.App.Controllers
         private int GetProductTypeId(int prodID)
         {
             var query = db.Products.Where(p => p.product_id == prodID)
-                                           .Select(p => p.product_type_id);
+                                   .Select(p => p.product_type_id);
             int result = query.SingleOrDefault();
             return result == 0 ? 1 : result;
         }
 
         private string GetProductTypeSlug(int prodID)
         {
-            var query = db.Products.Where(p => p.product_id == prodID)
-                                           .Select(p => p.Ref_Product_Type.product_type_url);
+            var query = db.Products
+                          .Where(p => p.product_id == prodID)
+                          .Select(p => p.Ref_Product_Type.product_type_url);
             string result = query.SingleOrDefault();
             result = string.IsNullOrEmpty(result) ? GetProductTypeSlug(GetDefaultProductType()) : result;
             return result;
@@ -197,35 +198,34 @@ namespace MyStore.App.Controllers
         }
         #endregion
 
-        [HttpGet]
-        public ActionResult ShowCart(string returnUrl)
-        {
-            ViewBag.BreadCrumbActive = "Giỏ Hàng";
-            ViewBag.ReturnUrl = returnUrl;
-            return View("ShoppingCart", CartHelper.GetCartDetail(this.HttpContext));
-        }
-
         //
         // GET: /Product/'
         [HttpGet]
         public ActionResult Index(string slug)
         {
             int pageSize = Convert.ToInt32(this.Session[GeneralContanstClass.PageSize_Session_Key]);
-            int productType = GetDefaultProductType();
+            int prodTypeId = GetDefaultProductType();
             if (!string.IsNullOrEmpty(slug))
-                productType = CheckProductTypeId(slug);
-
-            ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
-            ViewBag.ProductTypeName = GetProductTypeName(productType);
-
+                prodTypeId = CheckProductTypeId(slug);
+            var prdTypeQuery = from q in db.Ref_Product_Type
+                               where q.product_type_id == prodTypeId
+                               select new
+                               {
+                                   Title = q.product_type_title_vn,
+                                   Description = q.product_type_description
+                               };
+            var prdTypeResult = prdTypeQuery.SingleOrDefault();
             IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
-            string strCrumb = GetProductTypeName(productType);
+            string strCrumb = prdTypeResult.Title;
             dCrumbs.Add(strCrumb, string.Empty);
             ViewData["BreadCrumbs"] = dCrumbs;
             var cookies = HttpContext.Request.Cookies.Get(GeneralContanstClass.SORT_STRING_COOKIES_KEY);
 
-            var result = GetFindQuery(productType, string.Empty, cookies == null ? string.Empty : cookies.Value);
+            var result = GetFindQuery(prodTypeId, string.Empty, cookies == null ? string.Empty : cookies.Value);
 
+            ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
+            ViewBag.ProductTypeName = prdTypeResult.Title;
+            ViewBag.ProductTypeDescription = prdTypeResult.Description;
             ViewBag.ImageName = string.Concat(slug, ".jpg");
 
             return View(result.Take(pageSize)
@@ -236,8 +236,6 @@ namespace MyStore.App.Controllers
         public ActionResult SearchProduct(string searchString)
         {
             int pageSize = Convert.ToInt32(this.Session[GeneralContanstClass.PageSize_Session_Key]);
-            ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
-            ViewBag.ProductTypeName = searchString;
 
             IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
             string strCrumb = "Tìm Kiếm";
@@ -245,6 +243,11 @@ namespace MyStore.App.Controllers
             ViewData["BreadCrumbs"] = dCrumbs;
             var cookies = HttpContext.Request.Cookies.Get(GeneralContanstClass.SORT_STRING_COOKIES_KEY);
             var result = GetFindQuery(null, searchString, cookies == null ? string.Empty : cookies.Value);
+
+            ViewBag.DateCompare = Convert.ToInt32(this.Session[GeneralContanstClass.Date_Compare_Session_Key]);
+            ViewBag.ProductTypeName = searchString;
+            ViewBag.ProductTypeDescription = "Hè Vải Sợi - Tìm Kiếm";
+            ViewBag.ImageName = string.Empty;
 
             return View("Index", result.Take(pageSize)
                               .ToList());
@@ -262,7 +265,7 @@ namespace MyStore.App.Controllers
                         select new ProductModel()
                         {
                             Id = pro.product_id,
-                            Type = pro.Ref_Product_Type.product_type_description_vn,
+                            Type = pro.Ref_Product_Type.product_type_title_vn,
                             Name = pro.product_name,
                             Description = pro.product_description,
                             UOM = puom.UOM_description,
@@ -325,16 +328,6 @@ namespace MyStore.App.Controllers
         {
             ViewBag.RecommendTitle = "Shop Giới Thiệu";
             return PartialView("_RecommendItemsPartial", model);
-        }
-
-        [HttpGet]
-        public PartialViewResult ShoppingCartList(IEnumerable<ShoppingCartViewModel> dataModel)
-        {
-
-            if (dataModel != null)
-                return PartialView("_CartTablePartial", dataModel);
-            else
-                return PartialView("_CartTablePartial", CartHelper.GetCartDetail(this.HttpContext));
         }
 
         [HttpGet]

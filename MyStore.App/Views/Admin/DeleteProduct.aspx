@@ -13,10 +13,10 @@
         <legend>Product</legend>
 
         <div class="display-label">
-            <%: Html.DisplayNameFor(model => model.Ref_Product_Type.product_type_description_vn) %>
+            <%: Html.DisplayNameFor(model => model.Ref_Product_Type.product_type_title_vn) %>
         </div>
         <div class="display-field">
-            <%: Html.DisplayFor(model => model.Ref_Product_Type.product_type_description_vn) %>
+            <%: Html.DisplayFor(model => model.Ref_Product_Type.product_type_title_vn) %>
         </div>
 
         <div class="display-label">

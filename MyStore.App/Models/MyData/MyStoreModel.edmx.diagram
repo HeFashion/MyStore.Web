@@ -24,10 +24,13 @@
         <EntityTypeShape EntityType="MyStoreModel.Shipping_Bills" Width="1.5" PointX="7.75" PointY="13.375" />
         <AssociationConnector Association="MyStoreModel.FK_Orders_Shipping_Bills" />
         <EntityTypeShape EntityType="MyStoreModel.Blog" Width="1.5" PointX="11.625" PointY="1.375" />
-        <EntityTypeShape EntityType="MyStoreModel.Vote" Width="1.5" PointX="10.25" PointY="10" />
+        <EntityTypeShape EntityType="MyStoreModel.Vote" Width="1.5" PointX="9.125" PointY="6.875" />
         <EntityTypeShape EntityType="MyStoreModel.Blog_Actors" Width="1.5" PointX="15" PointY="1.875" />
         <AssociationConnector Association="MyStoreModel.Blog_Blog_Actor_FK" />
         <EntityTypeShape EntityType="MyStoreModel.Product_Recommend" Width="1.5" PointX="8" PointY="3.75" />
+        <EntityTypeShape EntityType="MyStoreModel.Cart_Items" Width="1.5" PointX="11.625" PointY="9.875" />
+        <EntityTypeShape EntityType="MyStoreModel.Cart" Width="1.5" PointX="9.375" PointY="10.125" />
+        <AssociationConnector Association="MyStoreModel.FK_Cart_CartItems" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

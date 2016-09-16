@@ -30,7 +30,8 @@
 
             <%var sortList2 = ViewData["SortList2"] as IList<SelectListItem>; %>
             <div class="btn-group" id="sortArea2">
-                <%seletedItem = sortList2.Where(p => p.Selected == true).SingleOrDefault(); %>
+                <%seletedItem = sortList2.Where(p => p.Selected == true)
+                                         .SingleOrDefault(); %>
                 <button type="button"
                     class="btn btn-default dropdown-toggle usa"
                     data-toggle="dropdown"
@@ -39,7 +40,8 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-right">
-                    <%otherItem = sortList2.Where(p => p.Selected == false).SingleOrDefault(); %>
+                    <%otherItem = sortList2.Where(p => p.Selected == false)
+                                           .SingleOrDefault(); %>
                     <li>
                         <a href="#" id="<%:otherItem.Value %>">
                             <%:otherItem.Text %>

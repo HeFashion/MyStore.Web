@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <asp:contentplaceholder id="TitleContent" />
+    </title>
+    <link href="@Url.Content("~/favicon.ico")" rel="shortcut icon" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,400italic,500,700,100|Open+Sans:400,800,300,600,700&subset=vietnamese' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+    @Styles.Render("~/Content/themes/mystyle/css")
+    <!--[if lt IE 9]>
+    <script src="<%:Url.Content("~/Scripts/html5shiv.js") %>"></script>
+    <script src="<%:Url.Content("~/Scripts/respond.min.js") %>"></script>
+    <![endif]-->
+</head>
+<body>
+    @Html.Partial("_PageHeaderPartial")
+    <asp:contentplaceholder id="FeaturedContent" />
+
+    <asp:contentplaceholder id="MainContent" />
+
+    @Html.Partial("_PageFooterPartial")
+
+    @Scripts.Render("~/bundles/main/jquery")
+    <asp:contentplaceholder id="ScriptsSectio" />
+</body>
+</html>

@@ -24,5 +24,6 @@ namespace MyStore.App.Utilities
         public const string FACE_BOOK_LINK = "facebookLink";
         public const string SHIP_ORDER_SESSION_KEY = "ShipOrdersSession";
         public const string SORT_STRING_COOKIES_KEY = "selectedSortString";
+        public const string SHOPPING_CART_COOKIES_KEY = "HeVaiSoiShoppingCookies";
     }
 }

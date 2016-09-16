@@ -633,12 +633,12 @@ ul.sub-menu {
             text-decoration: underline;
         }
 
-#progress img {
-    width: 100%;
-}
 /*************************
 ******* Home ******
 **************************/
+#progress img {
+    width: 100%;
+}
 
 
 #slider {
@@ -2149,7 +2149,7 @@ h2.title {
 
 
 .single-blog-post .caption-text {
-    text-align: center!important;
+    text-align: center !important;
     padding: 0;
     line-height: 12px;
     font-size: 11px;

@@ -39,5 +39,7 @@ namespace MyStore.App.Models.MyData
         public DbSet<Vote> Votes { get; set; }
         public DbSet<Blog_Actors> Blog_Actors { get; set; }
         public DbSet<Product_Recommend> Product_Recommend { get; set; }
+        public DbSet<Cart_Items> Cart_Items { get; set; }
+        public DbSet<Cart> Carts { get; set; }
     }
 }

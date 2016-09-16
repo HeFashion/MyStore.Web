@@ -52,7 +52,7 @@ namespace MyStore.App
 
             // build left menu
             IList<MyStore.App.Models.Menu> myMenu = MyStore.App.Models.MyMenu.BuildMenu();
-            this.Session[GeneralContanstClass.Menu_Session_Key] = myMenu;
+            Application[GeneralContanstClass.Menu_Session_Key] = myMenu;
 
             //get default value for web site
             var dateCompareSetting = ConfigurationManager.AppSettings[GeneralContanstClass.Date_Compare_Session_Key];

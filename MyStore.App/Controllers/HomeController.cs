@@ -37,7 +37,7 @@ namespace MyStore.App.Controllers
                             select new ProductModel()
                             {
                                 Id = pro.product_id,
-                                Type = pro.Ref_Product_Type.product_type_description_vn,
+                                Type = pro.Ref_Product_Type.product_type_title_vn,
                                 Name = pro.product_name,
                                 Description = pro.product_description,
                                 UOM = pro.Unit_Of_Measure.UOM_description,

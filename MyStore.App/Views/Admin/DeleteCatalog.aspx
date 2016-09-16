@@ -27,17 +27,17 @@
         </div>
 
         <div class="display-label">
-            <%: Html.DisplayNameFor(model => model.product_type_description_vn) %>
+            <%: Html.DisplayNameFor(model => model.product_type_title_vn) %>
         </div>
         <div class="display-field">
-            <%: Html.DisplayFor(model => model.product_type_description_vn) %>
+            <%: Html.DisplayFor(model => model.product_type_title_vn) %>
         </div>
 
         <div class="display-label">
-            <%: Html.DisplayNameFor(model => model.product_type_description_en) %>
+            <%: Html.DisplayNameFor(model => model.product_type_title_en) %>
         </div>
         <div class="display-field">
-            <%: Html.DisplayFor(model => model.product_type_description_en) %>
+            <%: Html.DisplayFor(model => model.product_type_title_en) %>
         </div>
     </fieldset>
     <% using (Html.BeginForm("DeleteCatalogConfirmed", "Admin", new { id = Model.product_type_id }))

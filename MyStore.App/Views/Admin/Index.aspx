@@ -117,7 +117,7 @@
             </td>
             <td><%: Html.DisplayFor(modelItem => item.product_id)%></td>
             <td>
-                <%: Html.DisplayFor(modelItem => item.Ref_Product_Type.product_type_description_vn) %>
+                <%: Html.DisplayFor(modelItem => item.Ref_Product_Type.product_type_title_vn) %>
             </td>
             <td>
                 <%: Html.DisplayFor(modelItem => item.product_name) %>
