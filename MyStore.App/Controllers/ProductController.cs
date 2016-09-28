@@ -167,10 +167,8 @@ namespace MyStore.App.Controllers
                                      DateCreated = p.product_created_date ?? DateTime.Now,
                                      Sale_Off = p.product_sale_off
                                  });
-            //var cookies = HttpContext.Request.Cookies.Get(GeneralContanstClass.SORT_STRING_COOKIES_KEY);
             if (!string.IsNullOrEmpty(sortString))
             {
-                //string sortString = Convert.ToString(cookies.Value);
                 switch (sortString)
                 {
                     case "Price-Asc":

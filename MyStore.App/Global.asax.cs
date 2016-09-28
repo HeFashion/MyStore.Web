@@ -29,7 +29,8 @@ namespace MyStore.App
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
-
+            //Load log4net
+            log4net.Config.XmlConfigurator.Configure(new System.IO.FileInfo(Server.MapPath("~/Web.config")));
         }
 
         protected void Session_Start(object sender, EventArgs e)

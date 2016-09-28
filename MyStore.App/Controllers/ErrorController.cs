@@ -8,9 +8,17 @@ namespace MyStore.App.Controllers
 {
     public class ErrorController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(ErrorController));
         public ActionResult Index()
         {
-            return View("Error");
+            log.Debug("test begin");
+            var error = Server.GetLastError();
+            if (error != null)
+                ViewBag.ErrorMessage = error.Message;
+            log.Error(error);
+
+            log.Debug("test end");
+            return View();
         }
         // GET: Error
         public ActionResult NotFound()

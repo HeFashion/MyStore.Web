@@ -831,8 +831,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LeftMenuItemPartial.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
-    <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Shared\SubSite.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>

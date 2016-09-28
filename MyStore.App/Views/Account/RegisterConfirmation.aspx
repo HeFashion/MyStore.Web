@@ -13,9 +13,6 @@
                         <h2><%:ViewBag.Title %></h2>
 
                         <%:Html.Raw(ViewBag.Message) %>
-                       <%-- <p>
-                            <%:ViewBag.Message %>
-                        </p>--%>
                     </div>
                 </div>
             </div>

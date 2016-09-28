@@ -161,9 +161,28 @@ Disallow (url)
 create meta image for each of Product Catalog.(3 images done)
 
 Improve get recommend product.(DONE)
+
 Implement persistense cart, not store in session like current.
+  1. Store cart_id in cookies(done)
+  2. Get and set value for cart from cookies(done)
+  3. Need test Checkout step(done)
+  3. Finish testing and deploy to product(done)
+Add one more col for description in Ref_Product_Type(done)
+
+Custom 404 error page.
+   1. Add to web.confif, need test(done)
+
+Remove div overlay for Product item index.(done)
+
+Custom Error page, add to log4net.
+
+Fix left menu position 
+Create apple icon touch
+Fix wrong read mode when open blog in mobile device.
+Continue generate sitemap with Visio
 
 Continue with google adword.
+Add hglang for meta tag
 
 
 Implement multi language in website.
@@ -191,6 +210,5 @@ change the way to show product overlay
 Add more detail to _CompletedAddToCart
 
 Add log4net into project.
-
 
 Implete RichTextEditor for create new blog.

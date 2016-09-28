@@ -1,15 +1,20 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IEnumerable<MyStore.App.ViewModels.ProductModel>>" %>
 <% foreach (var item in Model)%>
 <%{%>
-<div class="col-sm-3">
+<div class="col-sm-4">
     <div class="product-image-wrapper">
         <div class="single-products">
             <div class="productinfo text-center">
-                <img src="<%: Url.Content(System.IO.Path.Combine("~/Images/shop", item.Image,"index.jpg")) %>" alt="" />
+                <a href="<%:Url.Action("Details", "Product", new {id = item.GenerateSlug() })%>">
+                    <img src="<%: Url.Content(System.IO.Path.Combine("~/Images/shop", item.Image,"index.jpg")) %>" alt="<%:item.Description %>" />
+                </a>
                 <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#")  %> <sup>đ</sup></h2>
-                <%--<p><%: item.Description %></p>--%>
+                <p><%: item.Description %></p>
+                <button value="<%: item.Id %>" class="btn add-to-cart">
+                    <i class="fa fa-shopping-cart"></i>+1 giỏ hàng
+                </button>
             </div>
-            <div class="product-overlay">
+            <%--  <div class="product-overlay">
                 <div class="overlay-content">
                     <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#") %> <sup>đ</sup></h2>
                     <p><%: item.Description %></p>
@@ -21,7 +26,7 @@
                         <i class="fa fa-shopping-cart"></i>+1 giỏ hàng
                     </button>
                 </div>
-            </div>
+            </div>--%>
             <%string srcImage = string.Empty; %>
             <%switch (item.Sale_Off)
               {
@@ -36,7 +41,7 @@
               } %>
             <%if (!string.IsNullOrEmpty(srcImage)) %>
             <%{ %>
-            <img src="<%:Url.Content(srcImage) %>" class="new" alt="" />
+            <img src="<%:Url.Content(srcImage) %>" class="new" alt="sale off" />
             <%} %>
         </div>
         <div class="choose">

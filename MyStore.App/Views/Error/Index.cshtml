@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/SubSite.cshtml";
+}
+
+@section TitleContent{
+    "Hè Vải Sợi - Error"
+}
+
+<div class="container text-center">
+    <div class="content-404">
+        <img class="img-responsive img-circle" src="@Url.Content("~/Images/error.jpg")" alt="Error" />
+        <h1><b>OPPS!</b>Lỗi Hệ Thống</h1>
+        <p>
+            Xin lỗi vì sự bất tiện này... <br />
+            Đã xảy ra một sự cố không mong muốn trong hệ thống.
+            <br />
+            Vui lòng click vào nút bên dưới để quay trở lại.
+        </p>
+        <h2><a href="/">Quay Lại Trang Chủ</a></h2>
+    </div>
+</div>
