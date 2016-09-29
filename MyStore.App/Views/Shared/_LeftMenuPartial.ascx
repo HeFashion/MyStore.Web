@@ -6,7 +6,9 @@
         <span class="icon-bar"></span>
     </div>
     <div id="accordian" class="list-group category-products">
-        <span class="list-group-item header">Phân Loại
+        <span class="list-group-item header">
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            Các loại vải sợi
             <%if (Request.Browser.IsMobileDevice &&
                   MyStore.App.Utilities.DeviceHelper.IsSmartPhone(Request.UserAgent))
               {%>
@@ -67,12 +69,21 @@
             <%} %>
         </div>
         <%} %>
-        <!--shipping-->
-        <div id="shippingImg" class="shipping text-center">
-            <img src="<%: Url.Content("~/Images/home/shipping.jpg") %>" alt="" />
-        </div>
-        <!--/shipping-->
     </div>
+    <!--facebook page-->
+    <div class="facebook-page">
 
+        <h2>Facebook Page</h2>
+        <div class="fb-page" data-href="https://www.facebook.com/hevaisoi/" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+            <blockquote cite="https://www.facebook.com/hevaisoi/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/hevaisoi/">Hè Vải Sợi</a></blockquote>
+        </div>
+    </div>
+    <!--/facebook page-->
+
+    <!--shipping-->
+    <div id="shippingImg" class="shipping text-center">
+        <img src="<%: Url.Content("~/Images/home/shipping.jpg") %>" alt="" />
+    </div>
+    <!--/shipping-->
 
 </div>
