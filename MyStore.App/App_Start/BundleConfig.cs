@@ -20,13 +20,14 @@ namespace MyStore.App
                         "~/Scripts/price-range.js",
                         "~/Scripts/jquery.scrollUp.js",
                         "~/Scripts/jquery.prettyPhoto.js",
-                        "~/Scripts/jquery.cookie-{version}.js",
-
 #if (!DEBUG)
+               "~/Scripts/facebook.js",
+               "~/Scripts/googleplus.js",
                "~/Scripts/googleAnalysis.js",
                "~/Scripts/tawkTo.js",
 #endif
- "~/Scripts/main.js"
+                         "~/Scripts/jquery.cookie-{version}.js",
+                         "~/Scripts/main.js"
                         ));
             bundles.Add(new ScriptBundle("~/bundles/admin/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
@@ -87,7 +88,7 @@ namespace MyStore.App
                         "~/Content/themes/mystyle/bootstrap-social.css",
                         "~/Content/themes/mystyle/font-awesome.css",
                         "~/Content/themes/mystyle/prettyPhoto.css",
-                        "~/Content/themes/mystyle/price-range.css",
+                        //"~/Content/themes/mystyle/price-range.css",
                         "~/Content/themes/mystyle/animate.css",
                         "~/Content/themes/mystyle/main.css",
                         "~/Content/themes/mystyle/responsive.css"));
@@ -102,18 +103,10 @@ namespace MyStore.App
                "~/Scripts/jquery.elevateZoom.js",
                "~/Scripts/numericInput.js",
                "~/Scripts/addtocart.js",
-#if (!DEBUG)
-               "~/Scripts/facebook.js",
-               "~/Scripts/googleplus.js",
-#endif
- "~/Scripts/rateObject.js"));
+               "~/Scripts/rateObject.js"));
             bundles.Add(new ScriptBundle("~/bundles/blog/details").Include(
                 "~/Scripts/jquery.rateyo.js",
-#if (!DEBUG)
-               "~/Scripts/facebook.js",
-               "~/Scripts/googleplus.js",
-#endif
- "~/Scripts/rateObject.js"
+                "~/Scripts/rateObject.js"
                 ));
             bundles.Add(new ScriptBundle("~/bundles/product/compare").Include(
               "~/Scripts/jquery.elevateZoom.js",

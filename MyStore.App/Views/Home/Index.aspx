@@ -82,6 +82,7 @@
         SortAction();
         $(window).on("load", function () {
             $(window).scroll(function () {
+
                 if (!isEnded && !isLocked) {
                     if ($(this).scrollTop() + $(window).height() > $('#footer').offset().top + 30) {
                         var sendData = {
@@ -93,10 +94,31 @@
                         getData(sendData);
                     }
                 }
+
+                //var mydiv = $("#left-menu");
+                //if ($(window).scrollTop() > $(window).height() + mydiv.scrollTop()
+                //      && $(this).scrollTop() + $(window).height() < $('#footer').offset().top
+                //    ) {
+                //    mydiv.css({
+                //        "marginTop": $(window).scrollTop() - $(window).height() + "px"
+                //    });
+                //}
+                //else {
+                //    mydiv.css({
+                //        "marginBottom": "0"
+                //    });
+                //}
+
+                //mydiv.stop()
+                //     .animate({
+                //         "marginTop": $(this).scrollTop() - $(window).height() + "px"
+                //     }, "slow");
+
             });
         });
         $(document).ready(function () {
             isLocked = false;
+
         });
 
     </script>

@@ -5,7 +5,7 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: none;
+    background: url('/images/bg-repeat-4.jpg');
     position: relative;
     font-weight: 400;
 }
@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Roboto', sans-serif;
 }
 
-.btn:hover,
+.left-sidebar .list-group, .left-sidebar .facebook-page .btn:hover,
 .btn:focus {
     outline: none;
     box-shadow: none;
@@ -79,6 +79,12 @@ a#scrollUp {
 /**************************
  *******Header CSS*********
  **************************/
+#main-content {
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 7px #666;
+}
+
 .contactinfo ul li:first-child {
     margin-left: -15px;
 }
@@ -146,7 +152,6 @@ a#scrollUp {
 
 #header {
     background: url("/Images/header_background.png");
-    /*background-repeat: repeat-x;*/
     background-size: contain;
 }
 
@@ -172,6 +177,12 @@ a#scrollUp {
         .header-middle .container .row .col-sm-8 {
             padding-right: 0;
         }
+
+/*#slider-carousel {
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 7px #666;
+}*/
 
 .user-account {
     border-radius: 0;
@@ -727,15 +738,18 @@ ul.sub-menu {
 }
 
 .category-products {
-    margin-bottom: 35px;
     padding-bottom: 20px;
 }
 
 .left-sidebar {
 }
 
-    .left-sidebar .list-group {
-        margin: 10px 0;
+
+    .left-sidebar .list-group,
+    .left-sidebar .facebook-page {
+        background: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 7px #666;
     }
 
     .left-sidebar .list-group-item {
@@ -746,13 +760,17 @@ ul.sub-menu {
         font-weight: 500;
     }
 
-        .left-sidebar .list-group-item.header {
+    .left-sidebar .facebook-page {
+    }
+
+        .left-sidebar .list-group-item.header,
+        .left-sidebar .facebook-page h2 {
             color: #FE980F;
             font-family: 'Roboto', sans-serif;
             font-size: 18px;
             font-weight: 700;
             padding-top: 0;
-            text-align: center;
+            text-align: left;
             text-transform: uppercase;
             position: relative;
             z-index: 3;
@@ -760,42 +778,66 @@ ul.sub-menu {
             border: none;
         }
 
+        .left-sidebar .facebook-page h2 {
+            padding: 5px 5px;
+        }
+
+            .left-sidebar .list-group-item.header:before,
+            .left-sidebar .facebook-page h2:before {
+                content: ' ';
+                display: block;
+                width: 86%;
+                height: 2px;
+                background-color: #FE980F;
+                position: absolute;
+                left: 12%;
+                bottom: 15%;
+            }
+
+            .left-sidebar .facebook-page h2:before {
+                left: 3%;
+                width: 95%;
+            }
+
     .left-sidebar .badge {
     }
 
-    .left-sidebar .mini-submenu {
-        display: none;
-        background-color: rgba(0, 0, 0, 0);
-        border: 1px solid rgba(0, 0, 0, 0.9);
-        border-radius: 4px;
-        padding: 9px;
-        /*position: relative;*/
-        width: 42px;
-    }
+.mini-submenu {
+    display: none;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid rgba(0, 0, 0, 0.9);
+    border-radius: 4px;
+    padding: 9px;
+    width: 42px;
+    margin-bottom: 10px;
+}
 
-        .left-sidebar .mini-submenu:hover {
-            cursor: pointer;
-        }
-
-        .left-sidebar .mini-submenu .icon-bar {
-            border-radius: 1px;
-            display: block;
-            height: 2px;
-            width: 22px;
-            margin-top: 3px;
-        }
-
-        .left-sidebar .mini-submenu .icon-bar {
-            background-color: #000;
-        }
-
-    .left-sidebar #slide-submenu {
-        background: rgba(0, 0, 0, 0.45);
-        display: inline-block;
-        padding: 0 8px;
-        border-radius: 4px;
+    .mini-submenu:hover {
         cursor: pointer;
     }
+
+    .mini-submenu .icon-bar {
+        border-radius: 1px;
+        display: block;
+        height: 2px;
+        width: 22px;
+        margin-top: 3px;
+        background-color: #000;
+    }
+
+.left-sidebar #slide-submenu {
+    background: rgba(0, 0, 0, 0.45);
+    display: inline-block;
+    padding: 0 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    position: absolute;
+    right: 5%;
+    top: -3.5%;
+    color: #FE980F;
+    font-size: 18px;
+    font-weight: 900;
+}
 
 h2.title {
     color: #FE980F;
@@ -831,13 +873,13 @@ h2.title {
     padding: 5px 20px;
 }
 
-    .category-products .panel-default .panel-heading .panel-title a {
-        color: #696763;
-        font-family: 'Roboto', sans-serif;
-        font-size: 14px;
-        text-decoration: none;
-        text-transform: uppercase;
-    }
+r .category-products .panel-default .panel-heading .panel-title a {
+    color: #696763;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
 
 .panel-group .panel-heading + .panel-collapse .panel-body {
     border-top: 0 none;
@@ -873,7 +915,6 @@ h2.title {
     padding-top: 15px;
 }
 
-
     .brands-name .nav-stacked li a {
         background-color: #FFFFFF;
         color: #696763;
@@ -890,10 +931,7 @@ h2.title {
         }
 
 .shipping {
-    /*background-color: #F2F2F2;*/
-    margin-top: 40px;
     overflow: hidden;
-    padding-top: 20px;
     position: relative;
 }
 
@@ -960,7 +998,6 @@ h2.title {
 
 .product-image-wrapper {
     border: 1px solid #F7F7F5;
-    /*border-image: url('/Images/border01.png') 50 round;*/
     overflow: hidden;
     margin-bottom: 30px;
 }
@@ -1229,6 +1266,7 @@ h2.title {
 *******Product Details CSS******
 ********************************/
 
+
 #similar-product {
     margin-top: 40px;
 }
@@ -1241,6 +1279,10 @@ h2.title {
     padding-left: 25px;
     padding-right: 25px;
 }
+
+/*#advertisement .container {
+    padding-right: 0;
+}*/
 
 .product-details {
     margin-bottom: 40px;

@@ -300,6 +300,14 @@
 
 /* XS Portrait */
 @media (max-width: 480px) {
+    #advertisement {
+        margin-bottom: 20px;
+    }
+
+    #main-content {
+        margin: 0 5px;
+    }
+
     .blog-post-area .single-blog-post .vertical-img {
         width: 80%;
         margin-left: 0;

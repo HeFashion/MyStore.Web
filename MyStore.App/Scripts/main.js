@@ -6,11 +6,13 @@
 }
 function hideLeftMenu(isHide, element) {
     if (isHide) {
-        element.next('.list-group').toggle('slide');
+        //element.next('.list-group').toggle('slide');
+        $('.left-sidebar').toggle('slide');
         $('.mini-submenu').hide();
     }
     else {
-        element.closest('.list-group').fadeOut('slide', function () {
+        //element.closest('.list-group').fadeOut('slide', function () {
+        $('.left-sidebar').fadeOut('slide', function () {
             $('.mini-submenu').fadeIn();
         });
     }

@@ -1,23 +1,24 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<dynamic>" %>
+<div class="mini-submenu">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+</div>
+
 <div class="left-sidebar">
-    <div class="mini-submenu">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </div>
+
     <div id="accordian" class="list-group category-products">
+        <%if (Request.Browser.IsMobileDevice &&
+                  MyStore.App.Utilities.DeviceHelper.IsSmartPhone(Request.UserAgent))
+          {%>
+
+        <span class="pull-right" id="slide-submenu">
+            <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+        </span>
+        <%} %>
         <span class="list-group-item header">
             <i class="fa fa-tags" aria-hidden="true"></i>
             Các loại vải sợi
-            <%if (Request.Browser.IsMobileDevice &&
-                  MyStore.App.Utilities.DeviceHelper.IsSmartPhone(Request.UserAgent))
-              {%>
-
-            <span class="pull-right" id="slide-submenu">
-                <i class="fa fa-times"></i>
-            </span>
-            <%} %>
-
         </span>
         <%IList<MyStore.App.Models.Menu> myMenu = this.Session[MyStore.App.Utilities.GeneralContanstClass.Menu_Session_Key] as List<MyStore.App.Models.Menu>; %>
         <%if (myMenu == null)
