@@ -21,6 +21,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -184,6 +185,8 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
@@ -390,6 +393,7 @@
     <Compile Include="ViewModels\FooterBlogListViewModel.cs" />
     <Compile Include="ViewModels\OrderDetailViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
+    <Compile Include="ViewModels\ProductTypeModel.cs" />
     <Compile Include="ViewModels\ShippingInfoViewModel.cs" />
     <Compile Include="ViewModels\ShoppingCartViewModel.cs" />
     <Compile Include="ViewModels\ProductModel.cs" />
@@ -399,6 +403,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="WebServices\HeVaiSoiService.svc.cs">
+      <DependentUpon>HeVaiSoiService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\IHeVaiSoiService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -447,6 +455,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\themes\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\themes\mystyle\animate.css" />
+    <Content Include="Content\themes\mystyle\animate.min.css" />
     <Content Include="Content\themes\mystyle\bootstrap-social.css" />
     <Content Include="Content\themes\mystyle\bootstrap.css" />
     <Content Include="Content\themes\mystyle\bootstrap.min.css" />
@@ -457,8 +466,10 @@
     <Content Include="Content\themes\mystyle\jquery.rateyo.min.css" />
     <Content Include="Content\themes\mystyle\main.css" />
     <Content Include="Content\themes\mystyle\prettyPhoto.css" />
+    <Content Include="Content\themes\mystyle\prettyPhoto.min.css" />
     <Content Include="Content\themes\mystyle\price-range.css" />
     <Content Include="Content\themes\mystyle\responsive.css" />
+    <Content Include="Content\themes\mystyle\responsive.min.css" />
     <Content Include="EmailTemplates\PasswordResetTemplate.htm" />
     <Content Include="EmailTemplates\PasswordConfirmationTemplate.htm" />
     <Content Include="favicon.ico" />
@@ -468,6 +479,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </Content>
+    <Content Include="WebServices\HeVaiSoiService.svc" />
     <EntityDeploy Include="Models\MyData\MyStoreModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MyStoreModel.Designer.cs</LastGenOutput>
@@ -493,7 +505,6 @@
     <Content Include="Content\themes\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\themes\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\themes\fonts\FontAwesome.otf" />
-    <None Include="app.config" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />

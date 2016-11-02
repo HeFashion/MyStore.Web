@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a class="btn btn-default get" href="<%:Url.Action("Index", "Cart", new {returnUrl=ViewBag.ReturnUrl })%>">
+        <a class="btn btn-primary" href="<%:Url.Action("Index", "Cart", new {returnUrl=ViewBag.ReturnUrl })%>">
             <i class="fa fa-shopping-cart"></i>
             Giỏ hàng
         </a>
@@ -56,6 +56,6 @@
             <i class="fa fa-money"></i>
             Thanh toán
         </a>--%>
-        <a class="btn btn-default get" data-dismiss="modal">Tiếp Tục>></a>
+        <a class="btn btn-primary" data-dismiss="modal">Tiếp Tục>></a>
     </div>
 </div>

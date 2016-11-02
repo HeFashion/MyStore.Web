@@ -91,8 +91,8 @@ namespace MyStore.App.Controllers
         private IList<ProductModel> GetRecommendProduct(int productId)
         {
             int prodTypeId = db.Products.Where(p => p.product_id == productId)
-                                                                   .Select(p => p.product_type_id)
-                                                                   .FirstOrDefault();
+                                        .Select(p => p.product_type_id)
+                                        .FirstOrDefault();
             var products = from pro in db.Products
                            join puom in db.Unit_Of_Measure on pro.product_uom_id equals puom.UOM_id
                            where pro.product_type_id == prodTypeId

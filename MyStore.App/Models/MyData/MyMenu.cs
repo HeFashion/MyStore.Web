@@ -3,22 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using MyStore.App.ViewModels;
 using MyStore.App.Models.MyData;
 
 namespace MyStore.App.Models
 {
-    public class Menu
-    {
-        public int MenuId { get; set; }
-        public string MenuUrl { get; set; }
-        public string MenuDesc { get; set; }
-        public List<Menu> ChildMenu { get; set; }
-        public int TotalProduct { get; set; }
-        public short MenuOrder { get; set; }
-    }
+    
     public static class MyMenu
     {
-        public static IList<Menu> BuildMenu()
+        public static IList<ProductTypeModel> BuildMenu()
         {
             using (MyStoreEntities dbContext = new MyStoreEntities())
             {
@@ -57,41 +50,41 @@ namespace MyStore.App.Models
                                         .ToList();
                 if (queryResult != null && queryResult.Count > 0)
                 {
-                    IList<Menu> result = new List<Menu>();
+                    IList<ProductTypeModel> result = new List<ProductTypeModel>();
                     foreach (var menu in queryResult)
                     {
-                        Menu menuItem = null;
-                        if (!result.Any(p => p.MenuId == menu.ParentId))
+                        ProductTypeModel menuItem = null;
+                        if (!result.Any(p => p.TypeId == menu.ParentId))
                         {
-                            menuItem = new Menu()
+                            menuItem = new ProductTypeModel()
                             {
-                                MenuId = menu.ParentId,
-                                MenuDesc = menu.ParentName,
+                                TypeId = menu.ParentId,
+                                TypeDesc = menu.ParentName,
                                 TotalProduct = dbContext.Products
                                                         .Count(p => p.product_type_id == menu.ParentId),
-                                MenuUrl = menu.Url
+                                TypeUrl = menu.Url
                             };
                             result.Add(menuItem);
                         }
                         else
                         {
-                            menuItem = result.Where(p => p.MenuId == menu.ParentId)
+                            menuItem = result.Where(p => p.TypeId == menu.ParentId)
                                              .SingleOrDefault();
                         }
 
                         if (menu.ChildId != null)
                         {
-                            if (menuItem.ChildMenu == null)
-                                menuItem.ChildMenu = new List<Menu>();
-                            if (!menuItem.ChildMenu.Any(p => p.MenuId == (menu.ChildId ?? 0)))
+                            if (menuItem.ChildType == null)
+                                menuItem.ChildType = new List<ProductTypeModel>();
+                            if (!menuItem.ChildType.Any(p => p.TypeId == (menu.ChildId ?? 0)))
                             {
-                                menuItem.ChildMenu.Add(new Menu()
+                                menuItem.ChildType.Add(new ProductTypeModel()
                                 {
-                                    MenuId = menu.ChildId ?? 0,
-                                    MenuDesc = menu.ChildName,
+                                    TypeId = menu.ChildId ?? 0,
+                                    TypeDesc = menu.ChildName,
                                     TotalProduct = dbContext.Products
                                                             .Count(p => p.product_type_id == menu.ChildId),
-                                    MenuUrl = menu.Url
+                                    TypeUrl = menu.Url
                                     
                                 });
                             }

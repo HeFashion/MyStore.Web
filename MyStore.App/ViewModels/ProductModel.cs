@@ -1,25 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System.Web;
 
 namespace MyStore.App.ViewModels
 {
+    [DataContract]
+    [Serializable]
     public class ProductModel
     {
+        [DataMember]
         public int Id { get; set; }
+        [DataMember]
         public string Type { get; set; }
+        [DataMember]
         public string Name { get; set; }
+        [DataMember]
         public string UOM { get; set; }
+        [DataMember]
         public string Description { get; set; }
+        [DataMember]
         public decimal? Price { get; set; }
+        [DataMember]
         public string Image { get; set; }
+        [DataMember]
         public DateTime DateCreated { get; set; }
+        [DataMember]
         public string OtherDetails { get; set; }
+        [DataMember]
         public int Total_Voted { get; set; }
+        [DataMember]
         public int Total_Score { get; set; }
+        [DataMember]
         public Int16 Sale_Off { get; set; }
+
+        protected internal ProductModel() { }
 
         public string GenerateSlug()
         {

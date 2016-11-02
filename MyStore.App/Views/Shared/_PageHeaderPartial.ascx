@@ -96,7 +96,7 @@
                             </li>
                             <li>
                                 <a href="<%:Url.Action("Contact", "Home") %>" class="btn btn-default">
-                                    <i class="fa fa-map-o"></i>
+                                    <i class="fa fa-map-marker"></i>
                                     Địa Điểm
                                 </a>
                             </li>

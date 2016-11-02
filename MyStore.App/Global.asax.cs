@@ -52,7 +52,7 @@ namespace MyStore.App
             }
 
             // build left menu
-            IList<MyStore.App.Models.Menu> myMenu = MyStore.App.Models.MyMenu.BuildMenu();
+            IList<MyStore.App.ViewModels.ProductTypeModel> myMenu = MyStore.App.Models.MyMenu.BuildMenu();
             Application[GeneralContanstClass.Menu_Session_Key] = myMenu;
 
             //get default value for web site

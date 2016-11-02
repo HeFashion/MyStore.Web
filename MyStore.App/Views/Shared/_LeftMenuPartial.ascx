@@ -20,7 +20,7 @@
             <i class="fa fa-tags" aria-hidden="true"></i>
             Các loại vải sợi
         </span>
-        <%IList<MyStore.App.Models.Menu> myMenu = this.Session[MyStore.App.Utilities.GeneralContanstClass.Menu_Session_Key] as List<MyStore.App.Models.Menu>; %>
+        <%IList<MyStore.App.ViewModels.ProductTypeModel> myMenu = this.Session[MyStore.App.Utilities.GeneralContanstClass.Menu_Session_Key] as List<MyStore.App.ViewModels.ProductTypeModel>; %>
         <%if (myMenu == null)
           {
               myMenu = MyStore.App.Models.MyMenu.BuildMenu();
@@ -31,8 +31,8 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <%if (menuItem.ChildMenu == null ||
-                          menuItem.ChildMenu.Count <= 0)
+                    <%if (menuItem.ChildType == null ||
+                          menuItem.ChildType.Count <= 0)
                       { %>
                     <%ViewBag.IsChild = false; %>
                     <%:Html.Partial("_LeftMenuItemPartial", menuItem) %>
@@ -41,22 +41,22 @@
                       {%>
                     <a data-toggle="collapse"
                         data-parent="#accordian"
-                        href="<%:string.Format("#collapsible-{0}", menuItem.MenuId) %>">
+                        href="<%:string.Format("#collapsible-{0}", menuItem.TypeId) %>">
                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                        <%:menuItem.MenuDesc %>
+                        <%:menuItem.TypeDesc %>
                     </a>
                     <%}%>
                     
                 </h4>
             </div>
-            <%if (menuItem.ChildMenu != null &&
-                  menuItem.ChildMenu.Count > 0)
+            <%if (menuItem.ChildType != null &&
+                  menuItem.ChildType.Count > 0)
               { %>
 
-            <div id="<%:string.Format("collapsible-{0}", menuItem.MenuId) %>" class="collapse panel-collapse">
+            <div id="<%:string.Format("collapsible-{0}", menuItem.TypeId) %>" class="collapse panel-collapse">
                 <div class="panel-body">
                     <ul>
-                        <%foreach (var childMenu in menuItem.ChildMenu)
+                        <%foreach (var childMenu in menuItem.ChildType)
                           {%>
                         <li>
 

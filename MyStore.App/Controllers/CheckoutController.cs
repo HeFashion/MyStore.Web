@@ -15,6 +15,7 @@ using MyStore.App.Models.MyData;
 using MyStore.App.Utilities;
 using System.Threading;
 using MyStore.App.Filters;
+using System.Threading.Tasks;
 
 namespace MyStore.App.Controllers
 {
@@ -211,7 +212,7 @@ namespace MyStore.App.Controllers
         [HttpPost]
         [CheckShoppingCart]
         [InitializeSimpleMembership]
-        public ActionResult DeliveryInformation(CheckoutViewModel viewModel)
+        public async Task<ActionResult> DeliveryInformation(CheckoutViewModel viewModel)
         {
             if (ModelState.IsValidField("CustomerName") &&
                 ModelState.IsValidField("OrderAddress") &&
@@ -236,6 +237,9 @@ namespace MyStore.App.Controllers
                     else
                     {
                         this.CreateOrder(model);
+                        await MailMananager.GetInstance()
+                                           .SendCheckoutCompletedEmail("hoanhdn2004@gmail.com",
+                                                                       "thanhgiang9229@gmail.com");
                         return View("CheckoutCompleted");
                     }
 

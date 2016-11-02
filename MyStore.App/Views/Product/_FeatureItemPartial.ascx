@@ -57,7 +57,7 @@
     <%:Html.Partial("_ListItemsPartial", Model) %>
 </div>
 
-<div id="progress" style="display: none">
+<div id="progress" style="display:none">
     <img src="<%:Url.Content("~/Images/loading.gif") %>" alt="load" />
 </div>
 

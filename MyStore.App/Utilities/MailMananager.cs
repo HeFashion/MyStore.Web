@@ -115,5 +115,30 @@ namespace MyStore.App.Utilities
                 await outClient.SendMailAsync(message);
             }
         }
+        public async Task SendCheckoutCompletedEmail(string recieverEmail, string ccEmail)
+        {
+
+            string sendEmail = ConfigurationManager.AppSettings[GeneralContanstClass.PAGE_EMAIL];
+            if (string.IsNullOrEmpty(sendEmail)) return;
+
+            using (var outClient = GetClient())
+            {
+                var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress(sendEmail);
+                message.To.Add(recieverEmail);
+                message.CC.Add(ccEmail);
+                message.Subject = "HeVaiSoi - Yêu cầu đặt hàng";
+                string mailBody = string.Format("Vừa có một đơn hàng đã được đặt xong. <br/>Kiểm tra hệ thống để biết đơn hàng vừa tạo.");
+                //mailBody = mailBody;
+                message.Body = mailBody;
+
+                message.IsBodyHtml = true;
+                message.Priority = MailPriority.High;
+
+                await outClient.SendMailAsync(message);
+            }
+        }
     }
 }

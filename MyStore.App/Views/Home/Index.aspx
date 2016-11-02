@@ -74,6 +74,7 @@
     <%:Scripts.Render("~/bundles/home/index")%>
 
     <script type="text/javascript">
+
         var nextIndex = 0;
         var isEnded = false;
         var isLocked = true;
@@ -94,25 +95,6 @@
                         getData(sendData);
                     }
                 }
-
-                //var mydiv = $("#left-menu");
-                //if ($(window).scrollTop() > $(window).height() + mydiv.scrollTop()
-                //      && $(this).scrollTop() + $(window).height() < $('#footer').offset().top
-                //    ) {
-                //    mydiv.css({
-                //        "marginTop": $(window).scrollTop() - $(window).height() + "px"
-                //    });
-                //}
-                //else {
-                //    mydiv.css({
-                //        "marginBottom": "0"
-                //    });
-                //}
-
-                //mydiv.stop()
-                //     .animate({
-                //         "marginTop": $(this).scrollTop() - $(window).height() + "px"
-                //     }, "slow");
 
             });
         });

@@ -300,12 +300,25 @@
 
 /* XS Portrait */
 @media (max-width: 480px) {
+    .girl {
+        padding-top: 10px;
+    }
+
+    #progress img {
+        width: 100%;
+    }
+
+    .get {
+        margin-top: 0;
+    }
+
     #advertisement {
         margin-bottom: 20px;
     }
 
     #main-content {
         margin: 0 5px;
+        margin-bottom: 5px;
     }
 
     .blog-post-area .single-blog-post .vertical-img {

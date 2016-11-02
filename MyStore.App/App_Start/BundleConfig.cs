@@ -21,12 +21,12 @@ namespace MyStore.App
                         "~/Scripts/jquery.scrollUp.js",
                         "~/Scripts/jquery.prettyPhoto.js",
 #if (!DEBUG)
-               "~/Scripts/facebook.js",
+ "~/Scripts/facebook.js",
                "~/Scripts/googleplus.js",
                "~/Scripts/googleAnalysis.js",
                "~/Scripts/tawkTo.js",
 #endif
-                         "~/Scripts/jquery.cookie-{version}.js",
+ "~/Scripts/jquery.cookie-{version}.js",
                          "~/Scripts/main.js"
                         ));
             bundles.Add(new ScriptBundle("~/bundles/admin/jquery").Include(
@@ -85,10 +85,12 @@ namespace MyStore.App
 
             bundles.Add(new StyleBundle("~/Content/themes/mystyle/css").Include(
                         "~/Content/themes/mystyle/bootstrap.css",
-                        "~/Content/themes/mystyle/bootstrap-social.css",
                         "~/Content/themes/mystyle/font-awesome.css",
                         "~/Content/themes/mystyle/prettyPhoto.css",
-                        //"~/Content/themes/mystyle/price-range.css",
+#if (DEBUG)
+                        "~/Content/themes/mystyle/price-range.css",
+#endif
+                        "~/Content/themes/mystyle/bootstrap-social.css",
                         "~/Content/themes/mystyle/animate.css",
                         "~/Content/themes/mystyle/main.css",
                         "~/Content/themes/mystyle/responsive.css"));

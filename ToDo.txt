@@ -175,10 +175,12 @@ Custom 404 error page.
 Remove div overlay for Product item index.(done)
 
 Custom Error page, add to log4net.(done)
+Cannot checkout completed.(fixed)
 
-Mobile shopping cart wrong border for table .
+Mobile shopping cart wrong border for table .(done)
+
 Mobile checkout step wrong inden for "dặn dò khi giao hàng"
-Cannot checkout completed.
+
 
 Create Zalo, Facebook, Google panel in left
 Add welcome back when user has already shopping to web.
