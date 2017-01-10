@@ -282,7 +282,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SEOFriendlyRouter.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
@@ -403,10 +402,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="WebServices\HeVaiSoiService.svc.cs">
-      <DependentUpon>HeVaiSoiService.svc</DependentUpon>
-    </Compile>
-    <Compile Include="WebServices\IHeVaiSoiService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -479,7 +474,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </Content>
-    <Content Include="WebServices\HeVaiSoiService.svc" />
     <EntityDeploy Include="Models\MyData\MyStoreModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MyStoreModel.Designer.cs</LastGenOutput>

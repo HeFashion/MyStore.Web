@@ -8,7 +8,7 @@
 
     <h2>Edit Advertisement</h2>
 
-    <% using (Html.BeginForm())
+    <% using (Html.BeginForm("EditSliderConfirmed", "Admin", FormMethod.Post))
        { %>
     <%: Html.AntiForgeryToken() %>
     <%: Html.ValidationSummary(true) %>
@@ -95,7 +95,6 @@
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
     <%: Styles.Render("~/bundles/bootstapadmin") %>
-
     <%: Scripts.Render("~/Scripts/bootstrap.js")%>
     <%: Scripts.Render("~/Scripts/edit.advertisement.js") %>
 </asp:Content>

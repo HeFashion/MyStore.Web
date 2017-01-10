@@ -19,12 +19,11 @@ namespace MyStore.App
     public class MvcApplication : System.Web.HttpApplication
     {
 
-
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
 
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            //GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
@@ -53,7 +52,7 @@ namespace MyStore.App
 
             // build left menu
             IList<MyStore.App.ViewModels.ProductTypeModel> myMenu = MyStore.App.Models.MyMenu.BuildMenu();
-            Application[GeneralContanstClass.Menu_Session_Key] = myMenu;
+            this.Session[GeneralContanstClass.Menu_Session_Key] = myMenu;
 
             //get default value for web site
             var dateCompareSetting = ConfigurationManager.AppSettings[GeneralContanstClass.Date_Compare_Session_Key];

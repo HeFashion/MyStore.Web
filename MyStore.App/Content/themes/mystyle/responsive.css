@@ -300,6 +300,9 @@
 
 /* XS Portrait */
 @media (max-width: 480px) {
+    #left-menu {
+        padding: 0 5px;
+    }
     .girl {
         padding-top: 10px;
     }

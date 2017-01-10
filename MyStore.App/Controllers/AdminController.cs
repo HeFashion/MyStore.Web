@@ -24,6 +24,7 @@ namespace MyStore.App.Controllers
     public class AdminController : Controller
     {
         private MyStoreEntities db = new MyStoreEntities();
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(typeof(AdminController));
         private static int _insertedCount = 0;
 
         #region **Private Functions**
@@ -785,14 +786,23 @@ namespace MyStore.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditSlider(Ad_Sliders updateObj)
+        [ValidateInput(false)]
+        public ActionResult EditSliderConfirmed(Ad_Sliders updateObj)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Ad_Sliders.Attach(updateObj);
-                db.Entry(updateObj).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("ListOfSlider");
+                if (ModelState.IsValid)
+                {
+                    db.Ad_Sliders.Attach(updateObj);
+                    db.Entry(updateObj).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("ListOfSlider");
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error when edit slider", ex);
+                throw;
             }
 
             return View(updateObj);

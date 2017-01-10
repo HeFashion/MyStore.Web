@@ -179,10 +179,12 @@ Cannot checkout completed.(fixed)
 
 Mobile shopping cart wrong border for table .(done)
 
+Allow delete multi product in Admin site.
+
 Mobile checkout step wrong inden for "dặn dò khi giao hàng"
 
 
-Create Zalo, Facebook, Google panel in left
+Create Zalo, Facebook in the left site.
 Add welcome back when user has already shopping to web.
 
 Fix left menu position 
