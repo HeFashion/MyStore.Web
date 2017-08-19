@@ -57,6 +57,15 @@
           <Property Name="cart_id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="cart_created_date" Type="datetime" />
         </EntityType>
+        <EntityType Name="Cloth">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ImgUrl" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Price" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
         <EntityType Name="Order_Items">
           <Key>
             <PropertyRef Name="order_item_id" />
@@ -253,6 +262,7 @@
           <EntitySet Name="Blogs" EntityType="Self.Blogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cart_Items" EntityType="Self.Cart_Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Carts" EntityType="Self.Carts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cloth" EntityType="Self.Cloth" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Items" EntityType="Self.Order_Items" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Status_Codes" EntityType="Self.Order_Status_Codes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
@@ -350,6 +360,7 @@
             <End Role="Cart" EntitySet="Carts" />
             <End Role="Cart_Items" EntitySet="Cart_Items" />
           </AssociationSet>
+          <EntitySet Name="Clothes" EntityType="MyStoreModel.Cloth" />
         </EntityContainer>
         <EntityType Name="Order_Items">
           <Key>
@@ -671,6 +682,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Cloth">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImgUrl" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -860,6 +880,16 @@
               <MappingFragment StoreEntitySet="Carts">
                 <ScalarProperty Name="cart_created_date" ColumnName="cart_created_date" />
                 <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clothes">
+            <EntityTypeMapping TypeName="MyStoreModel.Cloth">
+              <MappingFragment StoreEntitySet="Cloth">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ImgUrl" ColumnName="ImgUrl" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

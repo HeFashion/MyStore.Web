@@ -282,6 +282,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\SEOFriendlyRouter.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
@@ -290,12 +291,14 @@
     <Compile Include="Controllers\CheckShoppingCartAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\ClothController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\VoteController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
+    <Compile Include="Filters\WebApiAuthentication.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -322,6 +325,9 @@
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyData\Cart_Items.cs">
+      <DependentUpon>MyStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MyData\Cloth.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyData\MyMenu.cs" />

@@ -41,5 +41,6 @@ namespace MyStore.App.Models.MyData
         public DbSet<Product_Recommend> Product_Recommend { get; set; }
         public DbSet<Cart_Items> Cart_Items { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<Cloth> Clothes { get; set; }
     }
 }
