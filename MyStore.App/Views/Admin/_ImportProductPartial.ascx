@@ -11,14 +11,14 @@
         </tr>
 
     </table>
-    <a href="#" id="btnSubmit">OK</a>
+    <button id="btnSubmit">OK</button>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#progressbar").progressbar({
             value: 0
         });
-        $("#btnSubmit").button().click(function (e) {
+        $("#btnSubmit").click(function (e) {
             e.preventDefault();
             var intervalID = setInterval(updateProgress, 250);
             $.ajax({

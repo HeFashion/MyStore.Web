@@ -259,7 +259,6 @@ namespace MyStore.App.Controllers
 
         //
         // GET: /Admin/Edit/5
-
         public ActionResult Edit(string returnUrl, int id = 0)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -279,7 +278,6 @@ namespace MyStore.App.Controllers
 
         //
         // POST: /Admin/Edit/5
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditConfirmed(Product product, string returnUrl)
@@ -337,7 +335,6 @@ namespace MyStore.App.Controllers
 
         //
         // GET: /Admin/Delete/5
-
         public ActionResult Delete(string returnUrl, int id = 0)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -351,7 +348,6 @@ namespace MyStore.App.Controllers
 
         //
         // POST: /Admin/Delete/5
-
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id, string returnUrl)
@@ -513,6 +509,35 @@ namespace MyStore.App.Controllers
             }
         }
 
+        public PartialViewResult DeleteCheckedPartial()
+        {
+            return PartialView("_DeleteCheckedPartial");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCheckedConfirm(IList<string> lstProduct)
+        {
+            int count = 0;
+            try
+            {
+                foreach (string prodId in lstProduct)
+                {
+                    int id = Convert.ToInt32(prodId);
+                    Product deleteObj = db.Products.Find(id);
+                    if (deleteObj != null)
+                    {
+                        db.Products.Remove(deleteObj);
+                        count++;
+                    }
+                }
+                db.SaveChanges();
+                return Json(new { msg = string.Format("Total {0} products is deleted.", count) });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { msg = string.Format("Error: {0}", ex.Message) });
+            }
+        }
         #endregion
 
         #region Product Catalog Management
@@ -861,6 +886,7 @@ namespace MyStore.App.Controllers
             this.HttpContext.Session[GeneralContanstClass.SHIP_ORDER_SESSION_KEY] = selectedOrder;
             return PartialView("_ShipProductPartial");
         }
+
         [HttpPost]
         public ActionResult ShipOrdersConfirmed(ShippingInfoViewModel model)
         {

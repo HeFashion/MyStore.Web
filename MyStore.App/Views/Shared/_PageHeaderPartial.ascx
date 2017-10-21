@@ -100,6 +100,12 @@
                                     Địa Điểm
                                 </a>
                             </li>
+                            <li>
+                                <a href ="<%:Url.Action("MobileApp", "Home") %>"class="btn btn-default">
+                                    <i class="fa fa-mobile"></i>
+                                    Mobile App
+                                </a>
+                            </li>
                             <%if (Request.IsAuthenticated)
                               {%>
                             <li>

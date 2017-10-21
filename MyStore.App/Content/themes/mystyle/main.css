@@ -2142,13 +2142,14 @@ h2.title {
     font-weight: 500;
     margin-bottom: 17px;
 }
-
+.blog-post-area .single-blog-post .app-introduce{
+    text-align: center;
+}
 .single-blog-post a {
     color: #FE980F;
     font-style: italic;
     text-decoration: underline;
 }
-
 
 .single-blog-post .caption-text {
     text-align: center !important;
@@ -2592,6 +2593,11 @@ h2.title {
     margin-bottom: 70px;
 }
 
+
+.app-introduce p{
+    text-align: initial;
+}
+
 .contact-info .heading,
 .contact-form .heading {
     text-transform: capitalize;
@@ -2846,6 +2852,7 @@ input[type="checkbox"].input-validation-error {
 *********************************/
 .pagination-container {
     margin: 20px 0;
+    align-content:center;
 }
 
 

@@ -39,7 +39,7 @@
                             },
                             new { @id="btnImportExcel" })%>
 
-        <%: Ajax.ActionLink("Move Product",
+        <%: Ajax.ActionLink("Move Product", 
                             "GetMoveProductPartial",
                             null,
                             new AjaxOptions
@@ -50,6 +50,18 @@
                                 OnComplete = "OpenDialog(150,380)"
                             },
                             new { @id="btnMove" })%>
+
+        <%: Ajax.ActionLink("Delete All",
+                            "DeleteCheckedPartial",
+                            null,
+                            new AjaxOptions
+                            {
+                                HttpMethod = "Get",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "modalContent",
+                                OnComplete = "OpenDialog(150,380)"
+                            },
+                            new { @id="btnDeleteAll" })%>
     </p>
 
     <%using (Html.BeginForm("Index", "Admin", FormMethod.Get))
@@ -68,12 +80,12 @@
                                                  page})) %>
     <table class="product-table">
         <tr>
-            <td colspan="10">
+            <th colspan="10">
                 <label>
                     <%: Html.CheckBox("IsSelectedAll")%>
                     Check/Uncheck All
                 </label>
-            </td>
+            </th>
         </tr>
 
         <tr>
@@ -93,7 +105,6 @@
             <th>
                 <%: Html.DisplayName("Price") %>
             </th>
-
             <th>
                 <%: Html.DisplayName("Desc") %>
             </th>
@@ -142,7 +153,7 @@
                 <%: Html.TextBoxFor(modelItem => item.product_description, new { @class = "description" })%>
             </td>
             <td>
-                <%: Html.TextAreaFor(modelItem => item.other_detail, new { @class = "long-description" })%>
+                <%: Html.TextAreaFor(modelItem => item.other_detail)%>
             </td>
             <td>
                 <label id="<%:string.Format("status{0}", item.product_id) %>"></label>
@@ -150,21 +161,17 @@
             </td>
             <%}%>
 
-            <td>
+            <%--  
+              <td>
                 <%: Html.ActionLink("Delete", 
                                     "Delete", 
                                     new {returnUrl=HttpContext.Current.Request.RawUrl , id=item.product_id}) %>
             </td>
-
+            --%>
         </tr>
         <% } %>
     </table>
 
-    <%:Html.PagedListPager(Model, 
-                           page=>Url.Action("Index",
-                                            new {sortOrder = ViewBag.SortOrder,
-                                                 searchString = ViewBag.SearchString,
-                                                 page})) %>
     <%-- Modal popup for details --%>
     <div id="myModal" class="modal fade" role="dialog">
         <div id="modalContent" class="modal-dialog">
@@ -176,7 +183,6 @@
 </asp:Content>
 
 <asp:Content ID="Content4" ContentPlaceHolderID="ScriptsSection" runat="server">
-    <%: Styles.Render("~/Content/PagedList.css") %>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -184,6 +190,7 @@
             $("#btnImport").button();
             $("#btnImportExcel").button();
             $("#btnMove").button();
+            $("#btnDeleteAll").button();
             $("#IsSelectedAll").change(function () {
                 $("input:checkbox").prop('checked', $(this).prop("checked"));
             });
@@ -194,10 +201,8 @@
 
                 // format number
                 $(this).val(function (index, value) {
-                    return value
-                    .replace(/\D/g, "")
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    ;
+                    return value.replace(/\D/g, "")
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 });
             });
 

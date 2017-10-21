@@ -17,6 +17,7 @@ namespace MyStore.App
                 defaults: new { controller = "cloth", action = "ItemCount", id = RouteParameter.Optional }
             );
             config.Formatters.Remove(config.Formatters.XmlFormatter);
+
         }
     }
 }

@@ -113,6 +113,23 @@ namespace MyStore.App.Controllers
             return View();
         }
 
+        public ActionResult Policy()
+        {
+            IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
+            dCrumbs.Add("Chính Sách", string.Empty);
+            ViewData["BreadCrumbs"] = dCrumbs;
+            return View("Policy");
+        }
+
+        public ActionResult MobileApp()
+        {
+            IDictionary<string, string> dCrumbs = new Dictionary<string, string>();
+            dCrumbs.Add("Mobile App", string.Empty);
+            ViewData["BreadCrumbs"] = dCrumbs;
+            ViewBag.Message = "Ứng Dụng Thử Áo Dài trên mobile";
+            return View("MobileApp");
+        }
+
         [HttpPost]
         [CaptchaValidation("SimpleCode8787", "Captcha1987", "Mã số không đúng!")]
         public ActionResult OfferAdvice(MyStore.App.Models.MyData.User_Advices model)

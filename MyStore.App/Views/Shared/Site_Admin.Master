@@ -9,7 +9,7 @@
     </title>
     <link href="<%: Url.Content("~/favicon.ico") %>" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
-    <%: Styles.Render("~/Content/AdminCss") %>
+    <%: Styles.Render("~/Content/admincss") %>
     <%: Styles.Render("~/Content/themes/base/css") %>
     <%: Scripts.Render("~/bundles/admin/jquery") %>
     <script src="<%:Url.Content("~/Scripts/tinymce/tinymce.min.js") %>"></script>
@@ -19,7 +19,9 @@
     <header>
         <div class="content-wrapper">
             <div class="float-left">
-                <p class="site-title"><%: Html.ActionLink("Admin Site", "Index", "Admin") %></p>
+                <p class="site-title">
+                    <%: Html.ActionLink("Admin Site", "Index", "Admin") %>
+                </p>
             </div>
             <div class="float-right">
                 <section id="login">

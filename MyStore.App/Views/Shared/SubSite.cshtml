@@ -22,8 +22,7 @@
     @Html.Partial("_PageHeaderPartial")
     @RenderSection("FeaturedContent", false)
 
-    @*<asp:contentplaceholder id="MainContent" />*@
-    @RenderBody()
+    @RenderSection("MainContent", true)
 
     @Html.Partial("_PageFooterPartial")
 

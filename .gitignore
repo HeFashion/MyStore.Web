@@ -4,3 +4,4 @@
 /MyStore.App/App_Start/AuthConfig.cs
 /MyStore.App/Images/home/*.png
 /packages
+/MyStore.App/logs/*.txt

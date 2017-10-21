@@ -300,9 +300,17 @@
 
 /* XS Portrait */
 @media (max-width: 480px) {
+    .blog-post-area .single-blog-post .app-introduce iframe {
+        /*position: absolute;*/
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+
     #left-menu {
         padding: 0 5px;
     }
+
     .girl {
         padding-top: 10px;
     }
@@ -595,6 +603,8 @@
         width: 80%;
         margin-left: 0;
     }
+
+
 
     .contactinfo {
         text-align: center;

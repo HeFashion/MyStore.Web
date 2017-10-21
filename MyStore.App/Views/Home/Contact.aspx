@@ -40,7 +40,6 @@
                         </div>
                         <div class="form-group col-md-12">
                             <%:Html.ValidationMessageFor(model => model.advise_subject) %>
-
                             <%:Html.TextBoxFor(model => model.advise_subject, new { @class = "form-control", @required = "required", @placeholder = "Tiêu đề" })%>
                         </div>
                         <div class="form-group col-md-12">

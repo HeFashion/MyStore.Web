@@ -330,6 +330,9 @@
     <Compile Include="Models\MyData\Cloth.cs">
       <DependentUpon>MyStoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MyData\ClothCatalog.cs">
+      <DependentUpon>MyStoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MyData\MyMenu.cs" />
     <Compile Include="Models\MyData\MyStoreModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -395,6 +398,8 @@
     <Compile Include="Utilities\MessageBoxHelper.cs" />
     <Compile Include="ViewModels\BlogVoteViewModel.cs" />
     <Compile Include="ViewModels\CheckoutViewModel.cs" />
+    <Compile Include="ViewModels\ClothCatalogModel.cs" />
+    <Compile Include="ViewModels\ClothModel.cs" />
     <Compile Include="ViewModels\FooterBlogListViewModel.cs" />
     <Compile Include="ViewModels\OrderDetailViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
@@ -412,7 +417,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\pagedList.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -839,13 +844,15 @@
     <None Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.json" />
     <None Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <None Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.woff" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LeftMenuItemPartial.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Shared\SubSite.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Shared\_FacebookPixelPartial.cshtml" />
+    <Content Include="Views\Home\Policy.cshtml" />
+    <Content Include="Views\Home\MobileApp.cshtml" />
+    <Content Include="Views\Shared\SiteMaster.cshtml" />
+    <Content Include="Views\Admin\_DeleteCheckedPartial.cshtml" />
     <None Include="Web.config">
       <SubType>Designer</SubType>
     </None>
@@ -855,7 +862,7 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.css" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Account\_ChangePasswordPartial.aspx" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.aspx" />

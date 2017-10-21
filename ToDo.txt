@@ -179,7 +179,7 @@ Cannot checkout completed.(fixed)
 
 Mobile shopping cart wrong border for table .(done)
 
-Allow delete multi product in Admin site.
+Allow delete multi product in Admin site.(done)
 
 Mobile checkout step wrong inden for "dặn dò khi giao hàng"
 
@@ -224,3 +224,4 @@ Add more detail to _CompletedAddToCart
 Add log4net into project.
 
 Implete RichTextEditor for create new blog.
+Create new page for introduction App android
