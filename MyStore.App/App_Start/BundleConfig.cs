@@ -21,7 +21,7 @@ namespace MyStore.App
                         "~/Scripts/jquery.scrollUp.js",
                         "~/Scripts/jquery.prettyPhoto.js",
 #if (!DEBUG)
- "~/Scripts/facebook.js",
+               "~/Scripts/facebook.js",
                "~/Scripts/googleplus.js",
                "~/Scripts/googleAnalysis.js",
                "~/Scripts/tawkTo.js",

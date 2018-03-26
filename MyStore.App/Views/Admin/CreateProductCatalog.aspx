@@ -20,7 +20,7 @@
             <%: Html.LabelFor(model => model.parent_product_type_id) %>
         </div>
         <div class="editor-field">
-            <%: Html.DropDownList("parent_product_type_id",string.Empty) %>
+            <%: Html.DropDownList("parent_product_type_id", string.Empty) %>
         </div>
 
         <div class="editor-label">

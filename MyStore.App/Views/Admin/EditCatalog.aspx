@@ -1,12 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site_Admin.Master" Inherits="System.Web.Mvc.ViewPage<MyStore.App.Models.MyData.Ref_Product_Type>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-    EditCatalog
+    Edit Catalog
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>EditCatalog</h2>
+    <h2>Edit Catalog</h2>
 
     <% using (Html.BeginForm())
        { %>
@@ -23,7 +23,7 @@
             <%: Html.LabelFor(model => model.parent_product_type_id) %>
         </div>
         <div class="editor-field">
-            <%:Html.DropDownList("parent_product_type_id", Convert.ToString(Model.parent_product_type_id)) %>
+            <%: Html.DropDownList("parent_product_type_id", Convert.ToString(Model.parent_product_type_id)) %>
             <%: Html.ValidationMessageFor(model => model.parent_product_type_id) %>
         </div>
 

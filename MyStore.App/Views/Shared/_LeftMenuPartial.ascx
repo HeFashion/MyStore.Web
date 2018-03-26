@@ -83,7 +83,9 @@
 
     <!--shipping-->
     <div id="shippingImg" class="shipping text-center">
-        <img src="<%: Url.Content("~/Images/home/shipping.jpg") %>" alt="" />
+        <a href="https://www.facebook.com/hevaisoi/">
+            <img src="<%: Url.Content("~/Images/home/facepage.jpg") %>" alt="facepage" />
+        </a>
     </div>
     <!--/shipping-->
 

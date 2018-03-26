@@ -10,9 +10,9 @@
                 </a>
                 <h2><%: MyStore.App.Utilities.DecimalHelper.ToString(item.Price, "#,###.#")  %> <sup>đ</sup></h2>
                 <p><%: item.Description %></p>
-                <button value="<%: item.Id %>" class="btn add-to-cart">
+               <%-- <button value="<%: item.Id %>" class="btn add-to-cart">
                     <i class="fa fa-shopping-cart"></i>+1 giỏ hàng
-                </button>
+                </button>--%>
             </div>
             <%--  <div class="product-overlay">
                 <div class="overlay-content">

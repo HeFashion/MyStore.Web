@@ -41,7 +41,7 @@
     </header>
     <div id="body">
         <asp:ContentPlaceHolder ID="FeaturedContent" runat="server" />
-        <section class="content-wrapper main-content clear-fix">
+        <section class="content-wrappe  r main-content clear-fix">
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </section>
     </div>

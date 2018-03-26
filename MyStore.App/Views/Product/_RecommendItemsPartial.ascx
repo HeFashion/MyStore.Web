@@ -25,9 +25,9 @@
                                     <sup>đ</sup>
                                 </h2>
                                 <p><%:recommendItem.Description %></p>
-                                <button class="btn add-to-cart" value="<%:recommendItem.Id %>">
+                                <%--<button class="btn add-to-cart" value="<%:recommendItem.Id %>">
                                     <i class="fa fa-shopping-cart"></i>+1 giỏ hàng
-                                </button>
+                                </button>--%>
                             </div>
                         </div>
                         <div class="choose">
@@ -70,9 +70,9 @@
                                     <sup>đ</sup>
                                 </h2>
                                 <p><%: recommendItem.Description %></p>
-                                <button type="button" class="btn btn-default add-to-cart" value="<%:recommendItem.Id %>">
+                                <%--<button type="button" class="btn btn-default add-to-cart" value="<%:recommendItem.Id %>">
                                     <i class="fa fa-shopping-cart"></i>+1 giỏ hàng
-                                </button>
+                                </button>--%>
                             </div>
                         </div>
                         <div class="choose">
